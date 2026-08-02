@@ -1,0 +1,15 @@
+{
+  "tabs": {
+    "home": "होम",
+    "customers": "ग्राहक",
+    "loans": "ऋण",
+    "schedule": "अनुसूची",
+    "settings": "सेटिंग्स"
+  },
+  "settings": {
+    "language": {
+      "title": "भाषा",
+      "system": "सिस्टम"
+    }
+  }
+}

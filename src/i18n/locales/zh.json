@@ -1,0 +1,15 @@
+{
+  "tabs": {
+    "home": "首页",
+    "customers": "客户",
+    "loans": "贷款",
+    "schedule": "日程",
+    "settings": "设置"
+  },
+  "settings": {
+    "language": {
+      "title": "语言",
+      "system": "系统"
+    }
+  }
+}

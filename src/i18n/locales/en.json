@@ -1,0 +1,15 @@
+{
+  "tabs": {
+    "home": "Home",
+    "customers": "Customers",
+    "loans": "Loans",
+    "schedule": "Schedule",
+    "settings": "Settings"
+  },
+  "settings": {
+    "language": {
+      "title": "Language",
+      "system": "System"
+    }
+  }
+}

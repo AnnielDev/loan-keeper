@@ -1,0 +1,15 @@
+{
+  "tabs": {
+    "home": "Accueil",
+    "customers": "Clients",
+    "loans": "Prêts",
+    "schedule": "Calendrier",
+    "settings": "Paramètres"
+  },
+  "settings": {
+    "language": {
+      "title": "Langue",
+      "system": "Système"
+    }
+  }
+}
