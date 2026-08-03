@@ -10,6 +10,42 @@
     "language": {
       "title": "Idioma",
       "system": "Sistema"
+    },
+    "theme": {
+      "title": "Apariencia",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
+    },
+    "account": {
+      "title": "Cuenta",
+      "signOut": "Cerrar sesión"
     }
+  },
+  "auth": {
+    "signIn": {
+      "title": "Iniciar sesión",
+      "submit": "Iniciar sesión",
+      "switchToSignUp": "¿No tienes una cuenta? Regístrate"
+    },
+    "signUp": {
+      "title": "Crear cuenta",
+      "submit": "Registrarse",
+      "switchToSignIn": "¿Ya tienes una cuenta? Inicia sesión"
+    },
+    "fields": {
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "name": "Nombre"
+    },
+    "errors": {
+      "generic": "Algo salió mal. Inténtalo de nuevo."
+    }
+  },
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "invalidEmail": "Introduce un correo electrónico válido",
+    "passwordWeak": "La contraseña debe tener al menos 8 caracteres e incluir una mayúscula, una minúscula, un número y un carácter especial (@$!%*?&)",
+    "minLength": "Este campo es muy corto"
   }
 }

@@ -13,7 +13,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-const ACTIVE_PILL_COLOR = "rgba(37, 99, 235, 0.12)";
+import { useAppTheme } from "@/hooks/useAppTheme";
 
 type TabBarButtonProps = Omit<PressableProps, "children" | "style"> & {
   children?: React.ReactNode;
@@ -28,6 +28,7 @@ export function TabBarButton({
   onPressOut,
   ...pressableProps
 }: TabBarButtonProps) {
+  const { colors } = useAppTheme();
   const isSelected = accessibilityState?.selected ?? false;
   const pillProgress = useSharedValue(isSelected ? 1 : 0);
   const pressScale = useSharedValue(1);
@@ -61,7 +62,13 @@ export function TabBarButton({
         onPressOut?.(event);
       }}
     >
-      <Animated.View style={[styles.pill, pillStyle]} />
+      <Animated.View
+        style={[
+          styles.pill,
+          { backgroundColor: colors.tabPillActive },
+          pillStyle,
+        ]}
+      />
       <Animated.View style={contentStyle}>{children}</Animated.View>
     </Pressable>
   );
@@ -78,6 +85,5 @@ const styles = StyleSheet.create({
     width: 48,
     height: 40,
     borderRadius: 20,
-    backgroundColor: ACTIVE_PILL_COLOR,
   },
 });

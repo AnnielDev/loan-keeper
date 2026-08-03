@@ -1,13 +1,19 @@
-import { useTranslation } from 'react-i18next';
-import { Text } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from "react-i18next";
+import { Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+import { useAppTheme } from "@/hooks/useAppTheme";
 
 export default function CustomersTabScreen() {
   const { t } = useTranslation();
+  const { colors } = useAppTheme();
 
   return (
-    <SafeAreaView edges={['top']}>
-      <Text>{t('tabs.customers')}</Text>
+    <SafeAreaView
+      edges={["top"]}
+      style={{ flex: 1, backgroundColor: colors.background }}
+    >
+      <Text style={{ color: colors.text }}>{t("tabs.customers")}</Text>
     </SafeAreaView>
   );
 }

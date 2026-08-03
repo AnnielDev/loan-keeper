@@ -1,16 +1,19 @@
 import { Icon } from "@/components/general/Icon";
 import { TabBarBackground } from "@/components/tab-bar/TabBarBackground";
 import { TabBarButton } from "@/components/tab-bar/TabBarButton";
+import { useAppTheme } from "@/hooks/useAppTheme";
 import { Tabs } from "expo-router";
 
 export default function TabsLayout() {
+  const { colors } = useAppTheme();
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarActiveTintColor: "#2563EB",
-        tabBarInactiveTintColor: "#6B7280",
+        tabBarActiveTintColor: colors.tabBarActive,
+        tabBarInactiveTintColor: colors.tabBarInactive,
         tabBarButton: (props) => <TabBarButton {...props} />,
         tabBarBackground: () => <TabBarBackground />,
         tabBarStyle: {

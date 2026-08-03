@@ -10,6 +10,42 @@
     "language": {
       "title": "语言",
       "system": "系统"
+    },
+    "theme": {
+      "title": "外观",
+      "light": "浅色",
+      "dark": "深色",
+      "system": "系统"
+    },
+    "account": {
+      "title": "账户",
+      "signOut": "退出登录"
     }
+  },
+  "auth": {
+    "signIn": {
+      "title": "登录",
+      "submit": "登录",
+      "switchToSignUp": "还没有账户？注册"
+    },
+    "signUp": {
+      "title": "创建账户",
+      "submit": "注册",
+      "switchToSignIn": "已经有账户？登录"
+    },
+    "fields": {
+      "email": "电子邮箱",
+      "password": "密码",
+      "name": "姓名"
+    },
+    "errors": {
+      "generic": "出错了，请重试。"
+    }
+  },
+  "validation": {
+    "required": "此字段为必填项",
+    "invalidEmail": "请输入有效的电子邮箱地址",
+    "passwordWeak": "密码至少需要8个字符，并包含大写字母、小写字母、数字和特殊字符（@$!%*?&）",
+    "minLength": "此字段过短"
   }
 }
