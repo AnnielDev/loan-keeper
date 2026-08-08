@@ -17,7 +17,13 @@ import { useAppTheme } from "@/hooks/useAppTheme";
 import { useFormField } from "@/hooks/useFormField";
 import { ApiError } from "@/services/api";
 import { useAuthStore } from "@/store/auth";
-import { required } from "@/utils/validation";
+import {
+  email as emailRule,
+  MAX_EMAIL_LENGTH,
+  MAX_PASSWORD_LENGTH,
+  maxLength,
+  required,
+} from "@/utils/validation";
 
 export default function SignIn() {
   const { t } = useTranslation();
@@ -28,11 +34,11 @@ export default function SignIn() {
 
   const emailField = useFormField<string>(
     "",
-    useMemo(() => [required()], []),
+    useMemo(() => [required(), emailRule(), maxLength(MAX_EMAIL_LENGTH)], []),
   );
   const passwordField = useFormField<string>(
     "",
-    useMemo(() => [required()], []),
+    useMemo(() => [required(), maxLength(MAX_PASSWORD_LENGTH)], []),
   );
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,9 +56,13 @@ export default function SignIn() {
         password: passwordField.value,
       });
     } catch (err) {
-      setError(
-        err instanceof ApiError ? err.message : t("auth.errors.generic"),
-      );
+      if (err instanceof ApiError && (err.status === 401 || err.status === 400)) {
+        // Avoid echoing backend messages that could distinguish "unknown
+        // email" from "wrong password" and enable account enumeration.
+        setError(t("auth.errors.invalidCredentials"));
+      } else {
+        setError(t("auth.errors.generic"));
+      }
     }
   };
 
@@ -71,6 +81,7 @@ export default function SignIn() {
             autoCapitalize="none"
             autoComplete="email"
             keyboardType="email-address"
+            maxLength={MAX_EMAIL_LENGTH}
             placeholder="you@example.com"
             placeholderTextColor={colors.textSecondary}
           />
@@ -92,6 +103,7 @@ export default function SignIn() {
               secureTextEntry={!showPassword}
               autoCapitalize="none"
               autoComplete="password"
+              maxLength={MAX_PASSWORD_LENGTH}
               placeholder="••••••••"
               placeholderTextColor={colors.textSecondary}
             />

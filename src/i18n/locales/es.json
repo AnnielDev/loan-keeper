@@ -39,13 +39,15 @@
       "name": "Nombre"
     },
     "errors": {
-      "generic": "Algo salió mal. Inténtalo de nuevo."
+      "generic": "Algo salió mal. Inténtalo de nuevo.",
+      "invalidCredentials": "Correo electrónico o contraseña incorrectos."
     }
   },
   "validation": {
     "required": "Este campo es obligatorio",
     "invalidEmail": "Introduce un correo electrónico válido",
     "passwordWeak": "La contraseña debe tener al menos 8 caracteres e incluir una mayúscula, una minúscula, un número y un carácter especial (@$!%*?&)",
-    "minLength": "Este campo es muy corto"
+    "minLength": "Este campo es muy corto",
+    "maxLength": "Este campo es demasiado largo"
   }
 }

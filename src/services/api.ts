@@ -1,6 +1,12 @@
+import { isJwtExpired } from "@/utils/jwt";
 import type { ApiSuccess } from "@/types/auth";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
+const REQUEST_TIMEOUT_MS = 15_000;
+
+if (!__DEV__ && API_URL && !API_URL.startsWith("https://")) {
+  throw new Error("EXPO_PUBLIC_API_URL must use HTTPS in production builds");
+}
 
 type AuthAccessor = {
   getAccessToken: () => string | null;
@@ -37,13 +43,27 @@ async function rawFetch<T>(path: string, options: RequestInit = {}): Promise<T> 
     throw new Error("EXPO_PUBLIC_API_URL is not configured");
   }
 
-  const response = await fetch(`${API_URL}${path}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+  let response: Response;
+  try {
+    response = await fetch(`${API_URL}${path}`, {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...options.headers,
+      },
+      signal: controller.signal,
+    });
+  } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") {
+      throw new ApiError("Request timed out", 408);
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
 
   const isJson = response.headers.get("content-type")?.includes("application/json");
   const body = isJson ? await response.json() : undefined;
@@ -90,7 +110,12 @@ function refreshAccessToken(): Promise<string | null> {
 
 export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): Promise<T> {
   const { skipAuth, skipRefresh, ...rest } = options;
-  const accessToken = authAccessor?.getAccessToken() ?? null;
+  let accessToken = authAccessor?.getAccessToken() ?? null;
+
+  // Proactively refresh an expired token instead of waiting for a 401 round-trip.
+  if (accessToken && !skipAuth && !skipRefresh && isJwtExpired(accessToken)) {
+    accessToken = await refreshAccessToken();
+  }
 
   const headers = {
     ...rest.headers,

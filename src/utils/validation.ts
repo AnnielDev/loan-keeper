@@ -2,6 +2,11 @@ import { EMAIL_REGEX, PASSWORD_REGEX } from "@/utils/regex";
 
 export type ValidationRule<T = string> = (value: T) => string | null;
 
+// RFC 5321 practical email cap / reasonable UI caps to stop unbounded input.
+export const MAX_EMAIL_LENGTH = 254;
+export const MAX_PASSWORD_LENGTH = 128;
+export const MAX_NAME_LENGTH = 120;
+
 export const required =
   (messageKey = "validation.required"): ValidationRule<string> =>
   (value) =>
@@ -16,6 +21,11 @@ export const minLength =
   (length: number, messageKey = "validation.minLength"): ValidationRule<string> =>
   (value) =>
     value.length >= length ? null : messageKey;
+
+export const maxLength =
+  (length: number, messageKey = "validation.maxLength"): ValidationRule<string> =>
+  (value) =>
+    value.length <= length ? null : messageKey;
 
 export const email = (messageKey = "validation.invalidEmail") =>
   pattern(EMAIL_REGEX, messageKey);

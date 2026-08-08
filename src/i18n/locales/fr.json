@@ -39,13 +39,15 @@
       "name": "Nom"
     },
     "errors": {
-      "generic": "Une erreur s'est produite. Veuillez réessayer."
+      "generic": "Une erreur s'est produite. Veuillez réessayer.",
+      "invalidCredentials": "E-mail ou mot de passe invalide."
     }
   },
   "validation": {
     "required": "Ce champ est obligatoire",
     "invalidEmail": "Veuillez saisir une adresse e-mail valide",
     "passwordWeak": "Le mot de passe doit contenir au moins 8 caractères, avec une majuscule, une minuscule, un chiffre et un caractère spécial (@$!%*?&)",
-    "minLength": "Ce champ est trop court"
+    "minLength": "Ce champ est trop court",
+    "maxLength": "Ce champ est trop long"
   }
 }

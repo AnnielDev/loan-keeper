@@ -19,6 +19,10 @@ import { ApiError } from "@/services/api";
 import { useAuthStore } from "@/store/auth";
 import {
   email as emailRule,
+  MAX_EMAIL_LENGTH,
+  MAX_NAME_LENGTH,
+  MAX_PASSWORD_LENGTH,
+  maxLength,
   required,
   strongPassword,
 } from "@/utils/validation";
@@ -33,15 +37,18 @@ export default function SignUp() {
 
   const nameField = useFormField<string>(
     "",
-    useMemo(() => [required()], []),
+    useMemo(() => [required(), maxLength(MAX_NAME_LENGTH)], []),
   );
   const emailField = useFormField<string>(
     "",
-    useMemo(() => [required(), emailRule()], []),
+    useMemo(() => [required(), emailRule(), maxLength(MAX_EMAIL_LENGTH)], []),
   );
   const passwordField = useFormField<string>(
     "",
-    useMemo(() => [required(), strongPassword()], []),
+    useMemo(
+      () => [required(), strongPassword(), maxLength(MAX_PASSWORD_LENGTH)],
+      [],
+    ),
   );
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -66,7 +73,6 @@ export default function SignUp() {
       });
       router.replace("/sign-in");
     } catch (err) {
-      console.log("SignUp error:", err);
       setError(
         err instanceof ApiError ? err.message : t("auth.errors.generic"),
       );
@@ -86,6 +92,7 @@ export default function SignUp() {
             onChangeText={nameField.setValue}
             onBlur={nameField.onBlur}
             autoComplete="name"
+            maxLength={MAX_NAME_LENGTH}
             placeholder="Juan Pérez"
             placeholderTextColor={colors.textSecondary}
           />
@@ -106,6 +113,7 @@ export default function SignUp() {
             autoCapitalize="none"
             autoComplete="email"
             keyboardType="email-address"
+            maxLength={MAX_EMAIL_LENGTH}
             placeholder="you@example.com"
             placeholderTextColor={colors.textSecondary}
           />
@@ -127,6 +135,7 @@ export default function SignUp() {
               secureTextEntry={!showPassword}
               autoCapitalize="none"
               autoComplete="password-new"
+              maxLength={MAX_PASSWORD_LENGTH}
               placeholder="••••••••"
               placeholderTextColor={colors.textSecondary}
             />

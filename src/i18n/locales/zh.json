@@ -39,13 +39,15 @@
       "name": "姓名"
     },
     "errors": {
-      "generic": "出错了，请重试。"
+      "generic": "出错了，请重试。",
+      "invalidCredentials": "电子邮箱或密码无效。"
     }
   },
   "validation": {
     "required": "此字段为必填项",
     "invalidEmail": "请输入有效的电子邮箱地址",
     "passwordWeak": "密码至少需要8个字符，并包含大写字母、小写字母、数字和特殊字符（@$!%*?&）",
-    "minLength": "此字段过短"
+    "minLength": "此字段过短",
+    "maxLength": "此字段过长"
   }
 }

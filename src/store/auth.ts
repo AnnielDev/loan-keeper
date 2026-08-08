@@ -1,9 +1,9 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
 import * as authService from "@/services/auth";
 import { setAuthAccessor } from "@/services/api";
+import { secureAuthStorage } from "@/store/secureAuthStorage";
 import type { SignInPayload, SignUpPayload, User } from "@/types/auth";
 
 type AuthState = {
@@ -62,7 +62,7 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "loan-keeper.auth",
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: secureAuthStorage,
       partialize: (state) => ({
         user: state.user,
         accessToken: state.accessToken,
