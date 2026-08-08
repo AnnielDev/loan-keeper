@@ -22,6 +22,9 @@
       "signOut": "साइन आउट करें"
     }
   },
+  "network": {
+    "offline": "इंटरनेट कनेक्शन नहीं है"
+  },
   "auth": {
     "signIn": {
       "title": "साइन इन करें",
@@ -40,7 +43,8 @@
     },
     "errors": {
       "generic": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।",
-      "invalidCredentials": "अमान्य ईमेल या पासवर्ड।"
+      "invalidCredentials": "अमान्य ईमेल या पासवर्ड।",
+      "signedOutOffline": "कनेक्शन खो जाने के कारण आपको साइन आउट कर दिया गया।"
     }
   },
   "validation": {

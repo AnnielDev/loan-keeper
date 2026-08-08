@@ -22,6 +22,9 @@
       "signOut": "退出登录"
     }
   },
+  "network": {
+    "offline": "无网络连接"
+  },
   "auth": {
     "signIn": {
       "title": "登录",
@@ -40,7 +43,8 @@
     },
     "errors": {
       "generic": "出错了，请重试。",
-      "invalidCredentials": "电子邮箱或密码无效。"
+      "invalidCredentials": "电子邮箱或密码无效。",
+      "signedOutOffline": "由于网络连接中断，您已被登出。"
     }
   },
   "validation": {

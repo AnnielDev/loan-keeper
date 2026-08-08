@@ -1,5 +1,5 @@
 import { Link } from "expo-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
@@ -17,6 +17,7 @@ import { useAppTheme } from "@/hooks/useAppTheme";
 import { useFormField } from "@/hooks/useFormField";
 import { ApiError } from "@/services/api";
 import { useAuthStore } from "@/store/auth";
+import { useNetworkStore } from "@/store/network";
 import {
   email as emailRule,
   MAX_EMAIL_LENGTH,
@@ -41,7 +42,19 @@ export default function SignIn() {
     useMemo(() => [required(), maxLength(MAX_PASSWORD_LENGTH)], []),
   );
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const signedOutOffline = useNetworkStore((state) => state.signedOutOffline);
+  const acknowledgeOfflineSignOut = useNetworkStore(
+    (state) => state.acknowledgeOfflineSignOut,
+  );
+  const [error, setError] = useState<string | null>(
+    signedOutOffline ? t("auth.errors.signedOutOffline") : null,
+  );
+
+  useEffect(() => {
+    if (signedOutOffline) {
+      acknowledgeOfflineSignOut();
+    }
+  }, [signedOutOffline, acknowledgeOfflineSignOut]);
 
   const translate = t as unknown as (key: string) => string;
 

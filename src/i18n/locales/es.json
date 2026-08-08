@@ -22,6 +22,9 @@
       "signOut": "Cerrar sesión"
     }
   },
+  "network": {
+    "offline": "Sin conexión a internet"
+  },
   "auth": {
     "signIn": {
       "title": "Iniciar sesión",
@@ -40,7 +43,8 @@
     },
     "errors": {
       "generic": "Algo salió mal. Inténtalo de nuevo.",
-      "invalidCredentials": "Correo electrónico o contraseña incorrectos."
+      "invalidCredentials": "Correo electrónico o contraseña incorrectos.",
+      "signedOutOffline": "Se cerró tu sesión porque se perdió la conexión."
     }
   },
   "validation": {

@@ -22,6 +22,9 @@
       "signOut": "Déconnexion"
     }
   },
+  "network": {
+    "offline": "Aucune connexion internet"
+  },
   "auth": {
     "signIn": {
       "title": "Connexion",
@@ -40,7 +43,8 @@
     },
     "errors": {
       "generic": "Une erreur s'est produite. Veuillez réessayer.",
-      "invalidCredentials": "E-mail ou mot de passe invalide."
+      "invalidCredentials": "E-mail ou mot de passe invalide.",
+      "signedOutOffline": "Vous avez été déconnecté car la connexion a été perdue."
     }
   },
   "validation": {

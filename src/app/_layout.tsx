@@ -7,8 +7,10 @@ import { useEffect } from "react";
 import { View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { OfflineBanner } from "@/components/general/OfflineBanner";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useAuthStore } from "@/store/auth";
+import "@/store/network";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -30,6 +32,7 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <View style={{ flex: 1, backgroundColor: colors.background }}>
         <StatusBar style={scheme === "dark" ? "light" : "dark"} />
+        <OfflineBanner />
         {isHydrated ? <RootNavigator /> : null}
       </View>
     </SafeAreaProvider>

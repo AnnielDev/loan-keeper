@@ -22,6 +22,9 @@
       "signOut": "Sign out"
     }
   },
+  "network": {
+    "offline": "No internet connection"
+  },
   "auth": {
     "signIn": {
       "title": "Sign in",
@@ -40,7 +43,8 @@
     },
     "errors": {
       "generic": "Something went wrong. Please try again.",
-      "invalidCredentials": "Invalid email or password."
+      "invalidCredentials": "Invalid email or password.",
+      "signedOutOffline": "You were signed out because your connection was lost."
     }
   },
   "validation": {

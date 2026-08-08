@@ -15,6 +15,8 @@ type AuthState = {
   signIn: (payload: SignInPayload) => Promise<void>;
   signUp: (payload: SignUpPayload) => Promise<void>;
   signOut: () => Promise<void>;
+  /** Clears the session locally only — used when we can't reach the API (e.g. offline). */
+  forceSignOut: () => void;
 };
 
 export const useAuthStore = create<AuthState>()(
@@ -58,6 +60,9 @@ export const useAuthStore = create<AuthState>()(
         } finally {
           set({ user: null, accessToken: null, refreshToken: null });
         }
+      },
+      forceSignOut: () => {
+        set({ user: null, accessToken: null, refreshToken: null });
       },
     }),
     {
