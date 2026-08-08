@@ -15,9 +15,14 @@ export function useFormField<T = string>(
     [value, rules],
   );
 
+  const handleChange = (next: T) => {
+    setTouched(true);
+    setValue(next);
+  };
+
   return {
     value,
-    setValue,
+    setValue: handleChange,
     isValid: validationKey === null,
     errorKey: touched ? validationKey : null,
     onBlur: () => setTouched(true),

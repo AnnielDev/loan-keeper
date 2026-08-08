@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -25,6 +25,7 @@ import {
 
 export default function SignUp() {
   const { t, i18n } = useTranslation();
+  const router = useRouter();
   const signUp = useAuthStore((state) => state.signUp);
   const isSubmitting = useAuthStore((state) => state.isSubmitting);
   const { colors } = useAppTheme();
@@ -63,6 +64,7 @@ export default function SignUp() {
         name: nameField.value.trim(),
         language: i18n.language,
       });
+      router.replace("/sign-in");
     } catch (err) {
       console.log("SignUp error:", err);
       setError(

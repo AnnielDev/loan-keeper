@@ -1,16 +1,30 @@
 import { apiFetch } from "@/services/api";
-import type { AuthResponse, SignInPayload, SignUpPayload } from "@/types/auth";
+import type {
+  ApiSuccess,
+  AuthResponse,
+  SignInPayload,
+  SignUpPayload,
+} from "@/types/auth";
 
 export function signIn(payload: SignInPayload) {
-  return apiFetch<AuthResponse>("/auth/signin", {
+  return apiFetch<ApiSuccess<AuthResponse>>("/auth/signin", {
     method: "POST",
     body: JSON.stringify(payload),
+    skipAuth: true,
   });
 }
 
 export function signUp(payload: SignUpPayload) {
-  return apiFetch<AuthResponse>("/auth/signup", {
+  return apiFetch<{ message?: string }>("/auth/signup", {
     method: "POST",
     body: JSON.stringify(payload),
+    skipAuth: true,
+  });
+}
+
+export function logout() {
+  return apiFetch<{ message?: string }>("/auth/logout", {
+    method: "POST",
+    skipRefresh: true,
   });
 }

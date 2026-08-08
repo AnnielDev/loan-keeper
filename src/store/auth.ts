@@ -3,6 +3,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import * as authService from "@/services/auth";
+import { setAuthAccessor } from "@/services/api";
 import type { SignInPayload, SignUpPayload, User } from "@/types/auth";
 
 type AuthState = {
@@ -13,7 +14,7 @@ type AuthState = {
   isSubmitting: boolean;
   signIn: (payload: SignInPayload) => Promise<void>;
   signUp: (payload: SignUpPayload) => Promise<void>;
-  signOut: () => void;
+  signOut: () => Promise<void>;
 };
 
 export const useAuthStore = create<AuthState>()(
@@ -27,7 +28,7 @@ export const useAuthStore = create<AuthState>()(
       signIn: async (payload) => {
         set({ isSubmitting: true });
         try {
-          const data = await authService.signIn(payload);
+          const { data } = await authService.signIn(payload);
           set({
             user: data.user,
             accessToken: data.accessToken,
@@ -42,19 +43,22 @@ export const useAuthStore = create<AuthState>()(
       signUp: async (payload) => {
         set({ isSubmitting: true });
         try {
-          const data = await authService.signUp(payload);
-          set({
-            user: data.user,
-            accessToken: data.accessToken,
-            refreshToken: data.refreshToken,
-            isSubmitting: false,
-          });
+          await authService.signUp(payload);
+          set({ isSubmitting: false });
         } catch (error) {
           set({ isSubmitting: false });
           throw error;
         }
       },
-      signOut: () => set({ user: null, accessToken: null, refreshToken: null }),
+      signOut: async () => {
+        try {
+          await authService.logout();
+        } catch {
+          // Best effort: the session is being dropped locally regardless.
+        } finally {
+          set({ user: null, accessToken: null, refreshToken: null });
+        }
+      },
     }),
     {
       name: "loan-keeper.auth",
@@ -70,3 +74,10 @@ export const useAuthStore = create<AuthState>()(
     },
   ),
 );
+
+setAuthAccessor({
+  getAccessToken: () => useAuthStore.getState().accessToken,
+  getRefreshToken: () => useAuthStore.getState().refreshToken,
+  setTokens: (accessToken, refreshToken) => useAuthStore.setState({ accessToken, refreshToken }),
+  clearAuth: () => useAuthStore.setState({ user: null, accessToken: null, refreshToken: null }),
+});

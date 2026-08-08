@@ -15,6 +15,11 @@ export type AuthResponse = {
   refreshToken: string;
 };
 
+export type ApiSuccess<T> = {
+  message?: string;
+  data: T;
+};
+
 export type SignInPayload = {
   email: string;
   password: string;
