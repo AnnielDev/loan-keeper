@@ -30,6 +30,11 @@ export const maxLength =
 export const email = (messageKey = "validation.invalidEmail") =>
   pattern(EMAIL_REGEX, messageKey);
 
+export const CODE_LENGTH = 6;
+
+export const code = (messageKey = "validation.invalidCode") =>
+  pattern(/^\d{6}$/, messageKey);
+
 export const strongPassword = (messageKey = "validation.passwordWeak") =>
   pattern(PASSWORD_REGEX, messageKey);
 

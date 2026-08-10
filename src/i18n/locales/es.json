@@ -29,23 +29,48 @@
     "signIn": {
       "title": "Iniciar sesión",
       "submit": "Iniciar sesión",
-      "switchToSignUp": "¿No tienes una cuenta? Regístrate"
+      "switchToSignUp": "¿No tienes una cuenta? Regístrate",
+      "forgotPassword": "¿Olvidaste tu contraseña?"
     },
     "signUp": {
       "title": "Crear cuenta",
       "submit": "Registrarse",
       "switchToSignIn": "¿Ya tienes una cuenta? Inicia sesión"
     },
+    "forgotPassword": {
+      "title": "Restablece tu contraseña",
+      "subtitle": "Ingresa tu correo y te enviaremos un código de 6 dígitos.",
+      "submit": "Enviar código",
+      "backToSignIn": "Volver a iniciar sesión"
+    },
+    "verifyCode": {
+      "title": "Ingresa el código",
+      "subtitle": "Enviamos un código de 6 dígitos a {{email}}",
+      "submit": "Verificar código",
+      "resend": "Reenviar código",
+      "resending": "Reenviando...",
+      "resendSuccess": "Se ha enviado un nuevo código.",
+      "changeEmail": "Usar otro correo"
+    },
+    "resetPassword": {
+      "title": "Crea una nueva contraseña",
+      "submit": "Actualizar contraseña"
+    },
     "fields": {
       "email": "Correo electrónico",
       "password": "Contraseña",
-      "name": "Nombre"
+      "name": "Nombre",
+      "code": "Código de 6 dígitos",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar nueva contraseña"
     },
     "errors": {
       "generic": "Algo salió mal. Inténtalo de nuevo.",
       "invalidCredentials": "Correo electrónico o contraseña incorrectos.",
       "signedOutOffline": "Se cerró tu sesión porque se perdió la conexión.",
-      "signedOutApiError": "Se cerró tu sesión porque no se pudo contactar al servidor."
+      "signedOutApiError": "Se cerró tu sesión porque no se pudo contactar al servidor.",
+      "invalidOrExpiredCode": "Ese código es inválido o expiró. Intenta de nuevo o solicita uno nuevo.",
+      "resetSessionExpired": "Tu sesión expiró. Por favor, comienza de nuevo."
     }
   },
   "validation": {
@@ -53,6 +78,8 @@
     "invalidEmail": "Introduce un correo electrónico válido",
     "passwordWeak": "La contraseña debe tener al menos 8 caracteres e incluir una mayúscula, una minúscula, un número y un carácter especial (@$!%*?&)",
     "minLength": "Este campo es muy corto",
-    "maxLength": "Este campo es demasiado largo"
+    "maxLength": "Este campo es demasiado largo",
+    "invalidCode": "Ingresa el código de 6 dígitos",
+    "passwordMismatch": "Las contraseñas no coinciden"
   }
 }

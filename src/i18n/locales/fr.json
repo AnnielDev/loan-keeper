@@ -29,23 +29,48 @@
     "signIn": {
       "title": "Connexion",
       "submit": "Se connecter",
-      "switchToSignUp": "Pas de compte ? Inscrivez-vous"
+      "switchToSignUp": "Pas de compte ? Inscrivez-vous",
+      "forgotPassword": "Mot de passe oublié ?"
     },
     "signUp": {
       "title": "Créer un compte",
       "submit": "S'inscrire",
       "switchToSignIn": "Déjà un compte ? Connectez-vous"
     },
+    "forgotPassword": {
+      "title": "Réinitialisez votre mot de passe",
+      "subtitle": "Saisissez votre e-mail et nous vous enverrons un code à 6 chiffres.",
+      "submit": "Envoyer le code",
+      "backToSignIn": "Retour à la connexion"
+    },
+    "verifyCode": {
+      "title": "Saisissez le code",
+      "subtitle": "Nous avons envoyé un code à 6 chiffres à {{email}}",
+      "submit": "Vérifier le code",
+      "resend": "Renvoyer le code",
+      "resending": "Envoi en cours...",
+      "resendSuccess": "Un nouveau code a été envoyé.",
+      "changeEmail": "Utiliser un autre e-mail"
+    },
+    "resetPassword": {
+      "title": "Créer un nouveau mot de passe",
+      "submit": "Mettre à jour le mot de passe"
+    },
     "fields": {
       "email": "E-mail",
       "password": "Mot de passe",
-      "name": "Nom"
+      "name": "Nom",
+      "code": "Code à 6 chiffres",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le nouveau mot de passe"
     },
     "errors": {
       "generic": "Une erreur s'est produite. Veuillez réessayer.",
       "invalidCredentials": "E-mail ou mot de passe invalide.",
       "signedOutOffline": "Vous avez été déconnecté car la connexion a été perdue.",
-      "signedOutApiError": "Vous avez été déconnecté car le serveur était injoignable."
+      "signedOutApiError": "Vous avez été déconnecté car le serveur était injoignable.",
+      "invalidOrExpiredCode": "Ce code est invalide ou a expiré. Réessayez ou demandez-en un nouveau.",
+      "resetSessionExpired": "Votre session a expiré. Veuillez recommencer."
     }
   },
   "validation": {
@@ -53,6 +78,8 @@
     "invalidEmail": "Veuillez saisir une adresse e-mail valide",
     "passwordWeak": "Le mot de passe doit contenir au moins 8 caractères, avec une majuscule, une minuscule, un chiffre et un caractère spécial (@$!%*?&)",
     "minLength": "Ce champ est trop court",
-    "maxLength": "Ce champ est trop long"
+    "maxLength": "Ce champ est trop long",
+    "invalidCode": "Saisissez le code à 6 chiffres",
+    "passwordMismatch": "Les mots de passe ne correspondent pas"
   }
 }

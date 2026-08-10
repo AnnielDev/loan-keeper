@@ -1,5 +1,5 @@
-import { Link } from "expo-router";
-import { useEffect, useMemo, useState } from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
@@ -15,109 +15,70 @@ import { Icon } from "@/components/general/Icon";
 import type { ThemeColors } from "@/constants/theme";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useFormField } from "@/hooks/useFormField";
-import { ApiError } from "@/services/api";
-import { useAuthStore } from "@/store/auth";
-import { useNetworkStore } from "@/store/network";
+import * as authService from "@/services/auth";
 import {
-  email as emailRule,
-  MAX_EMAIL_LENGTH,
   MAX_PASSWORD_LENGTH,
   maxLength,
   required,
+  strongPassword,
 } from "@/utils/validation";
 
-export default function SignIn() {
+export default function ResetPassword() {
   const { t } = useTranslation();
-  const signIn = useAuthStore((state) => state.signIn);
-  const isSubmitting = useAuthStore((state) => state.isSubmitting);
+  const router = useRouter();
+  const { email } = useLocalSearchParams<{ email: string }>();
   const { colors } = useAppTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
 
-  const emailField = useFormField<string>(
-    "",
-    useMemo(() => [required(), emailRule(), maxLength(MAX_EMAIL_LENGTH)], []),
-  );
   const passwordField = useFormField<string>(
+    "",
+    useMemo(
+      () => [required(), strongPassword(), maxLength(MAX_PASSWORD_LENGTH)],
+      [],
+    ),
+  );
+  const confirmField = useFormField<string>(
     "",
     useMemo(() => [required(), maxLength(MAX_PASSWORD_LENGTH)], []),
   );
   const [showPassword, setShowPassword] = useState(false);
-  const signedOutOffline = useNetworkStore((state) => state.signedOutOffline);
-  const acknowledgeOfflineSignOut = useNetworkStore(
-    (state) => state.acknowledgeOfflineSignOut,
-  );
-  const signedOutApiError = useNetworkStore((state) => state.signedOutApiError);
-  const acknowledgeApiErrorSignOut = useNetworkStore(
-    (state) => state.acknowledgeApiErrorSignOut,
-  );
-  const [error, setError] = useState<string | null>(
-    signedOutOffline
-      ? t("auth.errors.signedOutOffline")
-      : signedOutApiError
-        ? t("auth.errors.signedOutApiError")
-        : null,
-  );
-
-  useEffect(() => {
-    if (signedOutOffline) {
-      acknowledgeOfflineSignOut();
-    }
-    if (signedOutApiError) {
-      acknowledgeApiErrorSignOut();
-    }
-  }, [signedOutOffline, acknowledgeOfflineSignOut, signedOutApiError, acknowledgeApiErrorSignOut]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const translate = t as unknown as (key: string) => string;
 
   const canSubmit =
-    emailField.isValid && passwordField.isValid && !isSubmitting;
+    passwordField.isValid && confirmField.isValid && !isSubmitting;
 
   const handleSubmit = async () => {
     setError(null);
+
+    if (passwordField.value !== confirmField.value) {
+      setError(t("validation.passwordMismatch"));
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
-      await signIn({
-        email: emailField.value.trim(),
+      await authService.resetPassword({
+        email,
         password: passwordField.value,
       });
-    } catch (err) {
-      if (err instanceof ApiError && (err.status === 401 || err.status === 400)) {
-        // Avoid echoing backend messages that could distinguish "unknown
-        // email" from "wrong password" and enable account enumeration.
-        setError(t("auth.errors.invalidCredentials"));
-      } else {
-        setError(t("auth.errors.generic"));
-      }
+      router.replace("/sign-in");
+    } catch {
+      setError(t("auth.errors.resetSessionExpired"));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <SafeAreaView edges={["top"]} style={styles.container}>
       <View style={styles.form}>
-        <Text style={styles.title}>{t("auth.signIn.title")}</Text>
+        <Text style={styles.title}>{t("auth.resetPassword.title")}</Text>
 
         <View style={styles.field}>
-          <Text style={styles.label}>{t("auth.fields.email")}</Text>
-          <TextInput
-            style={styles.input}
-            value={emailField.value}
-            onChangeText={emailField.setValue}
-            onBlur={emailField.onBlur}
-            autoCapitalize="none"
-            autoComplete="email"
-            keyboardType="email-address"
-            maxLength={MAX_EMAIL_LENGTH}
-            placeholder="you@example.com"
-            placeholderTextColor={colors.textSecondary}
-          />
-          {emailField.errorKey ? (
-            <Text style={styles.fieldError}>
-              {translate(emailField.errorKey)}
-            </Text>
-          ) : null}
-        </View>
-
-        <View style={styles.field}>
-          <Text style={styles.label}>{t("auth.fields.password")}</Text>
+          <Text style={styles.label}>{t("auth.fields.newPassword")}</Text>
           <View style={styles.passwordWrapper}>
             <TextInput
               style={styles.passwordInput}
@@ -126,7 +87,7 @@ export default function SignIn() {
               onBlur={passwordField.onBlur}
               secureTextEntry={!showPassword}
               autoCapitalize="none"
-              autoComplete="password"
+              autoComplete="password-new"
               maxLength={MAX_PASSWORD_LENGTH}
               placeholder="••••••••"
               placeholderTextColor={colors.textSecondary}
@@ -150,13 +111,26 @@ export default function SignIn() {
           ) : null}
         </View>
 
-        <Link href="/forgot-password" asChild>
-          <TouchableOpacity>
-            <Text style={styles.forgotPasswordLink}>
-              {t("auth.signIn.forgotPassword")}
+        <View style={styles.field}>
+          <Text style={styles.label}>{t("auth.fields.confirmPassword")}</Text>
+          <TextInput
+            style={styles.input}
+            value={confirmField.value}
+            onChangeText={confirmField.setValue}
+            onBlur={confirmField.onBlur}
+            secureTextEntry={!showPassword}
+            autoCapitalize="none"
+            autoComplete="password-new"
+            maxLength={MAX_PASSWORD_LENGTH}
+            placeholder="••••••••"
+            placeholderTextColor={colors.textSecondary}
+          />
+          {confirmField.errorKey ? (
+            <Text style={styles.fieldError}>
+              {translate(confirmField.errorKey)}
             </Text>
-          </TouchableOpacity>
-        </Link>
+          ) : null}
+        </View>
 
         {error ? <Text style={styles.error}>{error}</Text> : null}
 
@@ -168,15 +142,11 @@ export default function SignIn() {
           {isSubmitting ? (
             <ActivityIndicator color={colors.onPrimary} />
           ) : (
-            <Text style={styles.buttonLabel}>{t("auth.signIn.submit")}</Text>
+            <Text style={styles.buttonLabel}>
+              {t("auth.resetPassword.submit")}
+            </Text>
           )}
         </TouchableOpacity>
-
-        <Link href="/sign-up" asChild>
-          <TouchableOpacity>
-            <Text style={styles.link}>{t("auth.signIn.switchToSignUp")}</Text>
-          </TouchableOpacity>
-        </Link>
       </View>
     </SafeAreaView>
   );
@@ -238,11 +208,6 @@ const createStyles = (colors: ThemeColors) =>
       color: colors.danger,
       fontSize: 12,
     },
-    forgotPasswordLink: {
-      color: colors.primary,
-      fontSize: 13,
-      alignSelf: "flex-end",
-    },
     button: {
       backgroundColor: colors.primary,
       borderRadius: 8,
@@ -258,11 +223,5 @@ const createStyles = (colors: ThemeColors) =>
       color: colors.onPrimary,
       fontSize: 16,
       fontWeight: "600",
-    },
-    link: {
-      color: colors.primary,
-      fontSize: 14,
-      textAlign: "center",
-      marginTop: 12,
     },
   });

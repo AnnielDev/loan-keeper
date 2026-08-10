@@ -31,3 +31,17 @@ export type SignUpPayload = {
   name: string;
   language?: string;
 };
+
+export type ForgotPasswordPayload = {
+  email: string;
+};
+
+export type VerifyResetCodePayload = {
+  email: string;
+  code: string;
+};
+
+export type ResetPasswordPayload = {
+  email: string;
+  password: string;
+};

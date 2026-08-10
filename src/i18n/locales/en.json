@@ -29,23 +29,48 @@
     "signIn": {
       "title": "Sign in",
       "submit": "Sign in",
-      "switchToSignUp": "Don't have an account? Sign up"
+      "switchToSignUp": "Don't have an account? Sign up",
+      "forgotPassword": "Forgot password?"
     },
     "signUp": {
       "title": "Create account",
       "submit": "Sign up",
       "switchToSignIn": "Already have an account? Sign in"
     },
+    "forgotPassword": {
+      "title": "Reset your password",
+      "subtitle": "Enter your email and we'll send you a 6-digit code.",
+      "submit": "Send code",
+      "backToSignIn": "Back to sign in"
+    },
+    "verifyCode": {
+      "title": "Enter the code",
+      "subtitle": "We sent a 6-digit code to {{email}}",
+      "submit": "Verify code",
+      "resend": "Resend code",
+      "resending": "Resending...",
+      "resendSuccess": "A new code has been sent.",
+      "changeEmail": "Use a different email"
+    },
+    "resetPassword": {
+      "title": "Create new password",
+      "submit": "Update password"
+    },
     "fields": {
       "email": "Email",
       "password": "Password",
-      "name": "Name"
+      "name": "Name",
+      "code": "6-digit code",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password"
     },
     "errors": {
       "generic": "Something went wrong. Please try again.",
       "invalidCredentials": "Invalid email or password.",
       "signedOutOffline": "You were signed out because your connection was lost.",
-      "signedOutApiError": "You were signed out because the server could not be reached."
+      "signedOutApiError": "You were signed out because the server could not be reached.",
+      "invalidOrExpiredCode": "That code is invalid or has expired. Try again or request a new one.",
+      "resetSessionExpired": "Your session expired. Please start again."
     }
   },
   "validation": {
@@ -53,6 +78,8 @@
     "invalidEmail": "Please enter a valid email address",
     "passwordWeak": "Password must be at least 8 characters and include an uppercase letter, a lowercase letter, a number, and a special character (@$!%*?&)",
     "minLength": "This field is too short",
-    "maxLength": "This field is too long"
+    "maxLength": "This field is too long",
+    "invalidCode": "Enter the 6-digit code",
+    "passwordMismatch": "Passwords don't match"
   }
 }
