@@ -44,7 +44,8 @@
     "errors": {
       "generic": "Une erreur s'est produite. Veuillez réessayer.",
       "invalidCredentials": "E-mail ou mot de passe invalide.",
-      "signedOutOffline": "Vous avez été déconnecté car la connexion a été perdue."
+      "signedOutOffline": "Vous avez été déconnecté car la connexion a été perdue.",
+      "signedOutApiError": "Vous avez été déconnecté car le serveur était injoignable."
     }
   },
   "validation": {

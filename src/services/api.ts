@@ -22,6 +22,14 @@ export function setAuthAccessor(accessor: AuthAccessor) {
   authAccessor = accessor;
 }
 
+// Set by the network store, which tracks how long failures persist and
+// decides when to force a sign-out. Avoids an api <-> network import cycle.
+let apiFailureReporter: ((ok: boolean) => void) | null = null;
+
+export function setApiFailureReporter(reporter: (ok: boolean) => void) {
+  apiFailureReporter = reporter;
+}
+
 export class ApiError extends Error {
   status: number;
 
@@ -57,6 +65,9 @@ async function rawFetch<T>(path: string, options: RequestInit = {}): Promise<T> 
       signal: controller.signal,
     });
   } catch (error) {
+    // A thrown fetch means we couldn't reach the server at all (down, DNS,
+    // timeout) rather than a normal error response — count it as a failure.
+    apiFailureReporter?.(false);
     if (error instanceof Error && error.name === "AbortError") {
       throw new ApiError("Request timed out", 408);
     }
@@ -69,10 +80,14 @@ async function rawFetch<T>(path: string, options: RequestInit = {}): Promise<T> 
   const body = isJson ? await response.json() : undefined;
 
   if (!response.ok) {
+    // 5xx means the server itself is unhealthy; 4xx is a normal rejection
+    // (bad credentials, validation, etc.) and proves the API is reachable.
+    apiFailureReporter?.(response.status >= 500);
     const message = body?.message ?? response.statusText;
     throw new ApiError(Array.isArray(message) ? message.join(", ") : message, response.status);
   }
 
+  apiFailureReporter?.(true);
   return body as T;
 }
 

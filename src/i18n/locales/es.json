@@ -44,7 +44,8 @@
     "errors": {
       "generic": "Algo salió mal. Inténtalo de nuevo.",
       "invalidCredentials": "Correo electrónico o contraseña incorrectos.",
-      "signedOutOffline": "Se cerró tu sesión porque se perdió la conexión."
+      "signedOutOffline": "Se cerró tu sesión porque se perdió la conexión.",
+      "signedOutApiError": "Se cerró tu sesión porque no se pudo contactar al servidor."
     }
   },
   "validation": {

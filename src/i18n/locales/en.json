@@ -44,7 +44,8 @@
     "errors": {
       "generic": "Something went wrong. Please try again.",
       "invalidCredentials": "Invalid email or password.",
-      "signedOutOffline": "You were signed out because your connection was lost."
+      "signedOutOffline": "You were signed out because your connection was lost.",
+      "signedOutApiError": "You were signed out because the server could not be reached."
     }
   },
   "validation": {

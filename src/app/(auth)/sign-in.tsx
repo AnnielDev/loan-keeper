@@ -46,15 +46,26 @@ export default function SignIn() {
   const acknowledgeOfflineSignOut = useNetworkStore(
     (state) => state.acknowledgeOfflineSignOut,
   );
+  const signedOutApiError = useNetworkStore((state) => state.signedOutApiError);
+  const acknowledgeApiErrorSignOut = useNetworkStore(
+    (state) => state.acknowledgeApiErrorSignOut,
+  );
   const [error, setError] = useState<string | null>(
-    signedOutOffline ? t("auth.errors.signedOutOffline") : null,
+    signedOutOffline
+      ? t("auth.errors.signedOutOffline")
+      : signedOutApiError
+        ? t("auth.errors.signedOutApiError")
+        : null,
   );
 
   useEffect(() => {
     if (signedOutOffline) {
       acknowledgeOfflineSignOut();
     }
-  }, [signedOutOffline, acknowledgeOfflineSignOut]);
+    if (signedOutApiError) {
+      acknowledgeApiErrorSignOut();
+    }
+  }, [signedOutOffline, acknowledgeOfflineSignOut, signedOutApiError, acknowledgeApiErrorSignOut]);
 
   const translate = t as unknown as (key: string) => string;
 
