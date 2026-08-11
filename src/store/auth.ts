@@ -17,6 +17,8 @@ type AuthState = {
   signOut: () => Promise<void>;
   /** Clears the session locally only — used when we can't reach the API (e.g. offline). */
   forceSignOut: () => void;
+  /** Merges a partial User update (e.g. after a settings PATCH) into the stored session. */
+  updateUser: (patch: Partial<User>) => void;
 };
 
 export const useAuthStore = create<AuthState>()(
@@ -63,6 +65,11 @@ export const useAuthStore = create<AuthState>()(
       },
       forceSignOut: () => {
         set({ user: null, accessToken: null, refreshToken: null });
+      },
+      updateUser: (patch) => {
+        set((state) => ({
+          user: state.user ? { ...state.user, ...patch } : state.user,
+        }));
       },
     }),
     {

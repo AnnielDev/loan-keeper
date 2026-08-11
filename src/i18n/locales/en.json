@@ -8,7 +8,7 @@
   },
   "settings": {
     "language": {
-      "title": "Language",
+      "title": "Languages",
       "system": "System"
     },
     "theme": {
@@ -21,6 +21,14 @@
       "title": "Account",
       "signOut": "Sign out"
     }
+  },
+  "locationGate": {
+    "title": "Enable your location",
+    "description": "We use your location to detect your country and time zone, so due dates and reminders always show up correctly for your region.",
+    "allow": "Allow location access",
+    "openSettings": "Open settings",
+    "denied": "Location permission was denied. We need it to keep going.",
+    "error": "Couldn't detect your location. Try again."
   },
   "network": {
     "offline": "No internet connection"

@@ -35,7 +35,13 @@
       ],
       "expo-localization",
       "expo-image",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Usamos tu ubicación solo para detectar tu país y zona horaria, y así mostrar fechas correctas."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

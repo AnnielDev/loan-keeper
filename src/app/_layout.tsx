@@ -10,6 +10,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { OfflineBanner } from "@/components/general/OfflineBanner";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useAuthStore } from "@/store/auth";
+import { useLocationAccessStore } from "@/store/location";
 import "@/store/network";
 
 SplashScreen.preventAutoHideAsync();
@@ -41,7 +42,22 @@ export default function RootLayout() {
 
 function RootNavigator() {
   const isAuthenticated = useAuthStore((state) => !!state.accessToken);
+  // Timezone is the field business logic actually depends on (due dates,
+  // overdue calculations) and is always set once permission is granted,
+  // unlike country which can occasionally fail to reverse-geocode — so it's
+  // the reliable signal for "the user has completed the location gate".
+  const hasLocation = useAuthStore((state) => !!state.user?.timezone);
+  // Re-checked whenever the app returns to the foreground, so revoking
+  // location (app permission or the device-wide toggle) after granting it
+  // once sends the user back to the location gate instead of staying in.
+  const isLocationAccessGranted = useLocationAccessStore((state) => state.isGranted);
   const { colors } = useAppTheme();
+
+  useEffect(() => {
+    useLocationAccessStore.getState().refresh();
+  }, []);
+
+  const canAccessApp = hasLocation && isLocationAccessGranted;
 
   return (
     <Stack
@@ -50,8 +66,12 @@ function RootNavigator() {
         contentStyle: { backgroundColor: colors.background },
       }}
     >
-      <Stack.Protected guard={isAuthenticated}>
+      <Stack.Protected guard={isAuthenticated && canAccessApp}>
         <Stack.Screen name="(tabs)" options={{ animation: "simple_push" }} />
+      </Stack.Protected>
+
+      <Stack.Protected guard={isAuthenticated && !canAccessApp}>
+        <Stack.Screen name="location-permission" options={{ animation: "fade" }} />
       </Stack.Protected>
 
       <Stack.Protected guard={!isAuthenticated}>

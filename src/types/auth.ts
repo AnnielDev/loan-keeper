@@ -4,6 +4,8 @@ export type User = {
   name: string;
   language: string;
   currency: string;
+  country?: string;
+  timezone?: string;
   lastLoginAt: string;
   createdAt: string;
   updatedAt: string;
@@ -30,6 +32,11 @@ export type SignUpPayload = {
   password: string;
   name: string;
   language?: string;
+};
+
+export type UpdateLocationPayload = {
+  country?: string;
+  timezone?: string;
 };
 
 export type ForgotPasswordPayload = {

@@ -22,6 +22,14 @@
       "signOut": "退出登录"
     }
   },
+  "locationGate": {
+    "title": "启用您的位置",
+    "description": "我们使用您的位置来检测您的国家和时区,以便到期日和提醒始终为您的地区正确显示。",
+    "allow": "允许访问位置",
+    "openSettings": "打开设置",
+    "denied": "位置权限被拒绝。我们需要它才能继续。",
+    "error": "无法检测您的位置,请重试。"
+  },
   "network": {
     "offline": "无网络连接"
   },

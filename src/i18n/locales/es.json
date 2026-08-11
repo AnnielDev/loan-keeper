@@ -22,6 +22,14 @@
       "signOut": "Cerrar sesión"
     }
   },
+  "locationGate": {
+    "title": "Activa tu ubicación",
+    "description": "Usamos tu ubicación para detectar tu país y zona horaria, así las fechas de vencimiento y los recordatorios siempre se muestran correctamente para tu región.",
+    "allow": "Permitir acceso a la ubicación",
+    "openSettings": "Abrir ajustes",
+    "denied": "Se denegó el permiso de ubicación. Lo necesitamos para continuar.",
+    "error": "No se pudo detectar tu ubicación. Intenta de nuevo."
+  },
   "network": {
     "offline": "Sin conexión a internet"
   },

@@ -22,6 +22,14 @@
       "signOut": "Déconnexion"
     }
   },
+  "locationGate": {
+    "title": "Activez votre position",
+    "description": "Nous utilisons votre position pour détecter votre pays et votre fuseau horaire, afin que les échéances et les rappels s'affichent toujours correctement pour votre région.",
+    "allow": "Autoriser l'accès à la position",
+    "openSettings": "Ouvrir les réglages",
+    "denied": "L'autorisation de localisation a été refusée. Nous en avons besoin pour continuer.",
+    "error": "Impossible de détecter votre position. Réessayez."
+  },
   "network": {
     "offline": "Aucune connexion internet"
   },
