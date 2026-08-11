@@ -15,7 +15,8 @@
       "title": "Apparence",
       "light": "Clair",
       "dark": "Sombre",
-      "system": "Système"
+      "system": "Système",
+      "toggle": "Basculer le mode sombre"
     },
     "account": {
       "title": "Compte",

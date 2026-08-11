@@ -15,7 +15,8 @@
       "title": "Appearance",
       "light": "Light",
       "dark": "Dark",
-      "system": "System"
+      "system": "System",
+      "toggle": "Toggle dark mode"
     },
     "account": {
       "title": "Account",

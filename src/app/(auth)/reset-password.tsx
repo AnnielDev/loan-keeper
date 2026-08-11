@@ -3,6 +3,9 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -74,8 +77,16 @@ export default function ResetPassword() {
 
   return (
     <SafeAreaView edges={["top"]} style={styles.container}>
-      <View style={styles.form}>
-        <Text style={styles.title}>{t("auth.resetPassword.title")}</Text>
+      <KeyboardAvoidingView
+        style={styles.keyboardAvoiding}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.form}>
+            <Text style={styles.title}>{t("auth.resetPassword.title")}</Text>
 
         <View style={styles.field}>
           <Text style={styles.label}>{t("auth.fields.newPassword")}</Text>
@@ -147,7 +158,9 @@ export default function ResetPassword() {
             </Text>
           )}
         </TouchableOpacity>
-      </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -156,8 +169,14 @@ const createStyles = (colors: ThemeColors) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: "center",
       backgroundColor: colors.background,
+    },
+    keyboardAvoiding: {
+      flex: 1,
+    },
+    scrollContent: {
+      flexGrow: 1,
+      justifyContent: "center",
     },
     form: {
       padding: 24,

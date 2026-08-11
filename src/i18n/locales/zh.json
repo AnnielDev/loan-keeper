@@ -15,7 +15,8 @@
       "title": "外观",
       "light": "浅色",
       "dark": "深色",
-      "system": "系统"
+      "system": "系统",
+      "toggle": "切换深色模式"
     },
     "account": {
       "title": "账户",

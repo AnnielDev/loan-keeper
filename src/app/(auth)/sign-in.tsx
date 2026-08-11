@@ -3,6 +3,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -12,6 +15,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Icon } from "@/components/general/Icon";
+import { ThemeToggle } from "@/components/general/ThemeToggle";
 import type { ThemeColors } from "@/constants/theme";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useFormField } from "@/hooks/useFormField";
@@ -92,8 +96,16 @@ export default function SignIn() {
 
   return (
     <SafeAreaView edges={["top"]} style={styles.container}>
-      <View style={styles.form}>
-        <Text style={styles.title}>{t("auth.signIn.title")}</Text>
+      <KeyboardAvoidingView
+        style={styles.keyboardAvoiding}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.form}>
+            <Text style={styles.title}>{t("auth.signIn.title")}</Text>
 
         <View style={styles.field}>
           <Text style={styles.label}>{t("auth.fields.email")}</Text>
@@ -177,7 +189,13 @@ export default function SignIn() {
             <Text style={styles.link}>{t("auth.signIn.switchToSignUp")}</Text>
           </TouchableOpacity>
         </Link>
-      </View>
+
+        <View style={styles.themeToggle}>
+          <ThemeToggle />
+        </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -186,8 +204,18 @@ const createStyles = (colors: ThemeColors) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: "center",
       backgroundColor: colors.background,
+    },
+    keyboardAvoiding: {
+      flex: 1,
+    },
+    scrollContent: {
+      flexGrow: 1,
+      justifyContent: "center",
+    },
+    themeToggle: {
+      alignItems: "center",
+      marginTop: 20,
     },
     form: {
       padding: 24,

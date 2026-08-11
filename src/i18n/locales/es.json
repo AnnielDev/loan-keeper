@@ -15,7 +15,8 @@
       "title": "Apariencia",
       "light": "Claro",
       "dark": "Oscuro",
-      "system": "Sistema"
+      "system": "Sistema",
+      "toggle": "Alternar modo oscuro"
     },
     "account": {
       "title": "Cuenta",
