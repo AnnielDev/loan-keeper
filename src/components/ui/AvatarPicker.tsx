@@ -1,5 +1,11 @@
 import { Image } from "expo-image";
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 import { Icon } from "@/components/general/Icon";
 import { useAppTheme } from "@/hooks/useAppTheme";
@@ -13,29 +19,45 @@ type AvatarPickerProps = {
 
 const SIZE = 96;
 
-export function AvatarPicker({ uri, label, isUploading, onPress }: AvatarPickerProps) {
+export function AvatarPicker({
+  uri,
+  label,
+  isUploading,
+  onPress,
+}: AvatarPickerProps) {
   const { colors } = useAppTheme();
 
   return (
-    <Pressable onPress={onPress} disabled={isUploading} style={styles.container}>
-      <View style={[styles.circle, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+    <Pressable
+      onPress={onPress}
+      disabled={isUploading}
+      style={styles.container}
+    >
+      <View
+        style={[
+          styles.circle,
+          { backgroundColor: colors.surface, borderColor: colors.border },
+        ]}
+      >
         {uri ? (
           <Image source={{ uri }} style={styles.image} contentFit="cover" />
         ) : (
-          <Icon family="Ionicons" name="camera-outline" size={28} color={colors.textSecondary} />
+          <Icon
+            family="Ionicons"
+            name="camera-outline"
+            size={28}
+            color={colors.textSecondary}
+          />
         )}
         {isUploading ? (
           <View style={styles.overlay}>
             <ActivityIndicator color="#FFFFFF" />
           </View>
         ) : null}
-        <View
-          style={[styles.badge, { backgroundColor: colors.primary, borderColor: colors.background }]}
-        >
-          <Icon family="Ionicons" name="add" size={14} color={colors.onPrimary} />
-        </View>
       </View>
-      <Text style={[styles.label, { color: colors.textSecondary }]}>{label}</Text>
+      <Text style={[styles.label, { color: colors.textSecondary }]}>
+        {label}
+      </Text>
     </Pressable>
   );
 }
