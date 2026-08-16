@@ -64,6 +64,72 @@
     },
     "retry": "重试"
   },
+  "customers": {
+    "eyebrow": "客户",
+    "title": "通讯录",
+    "searchPlaceholder": "按姓名或电话搜索...",
+    "filters": {
+      "all": "全部",
+      "active": "正常",
+      "overdue": "逾期"
+    },
+    "status": {
+      "active": "正常",
+      "overdue": "逾期"
+    },
+    "pendingBalance": "待收余额",
+    "empty": "未找到客户。",
+    "errors": {
+      "loadFailed": "无法加载客户列表，请重试。"
+    },
+    "retry": "重试"
+  },
+  "customerForm": {
+    "photo": {
+      "title": "头像照片",
+      "camera": "拍照",
+      "gallery": "从相册选择",
+      "cancel": "取消",
+      "upload": "上传"
+    },
+    "sections": {
+      "personal": "个人信息",
+      "address": "地址",
+      "financial": "财务信息",
+      "documents": "附加文件"
+    },
+    "optional": "可选",
+    "documentsDescription": "添加身份证件照片或其他支持文件。",
+    "documents": {
+      "scan": "扫描",
+      "gallery": "相册"
+    },
+    "fields": {
+      "fullName": "姓名",
+      "documentId": "身份证件号",
+      "phone": "手机号码",
+      "email": "电子邮箱",
+      "address": "家庭住址",
+      "city": "城市 / 区域",
+      "occupation": "职业 / 工作单位",
+      "monthlyIncome": "预计月收入"
+    },
+    "placeholders": {
+      "fullName": "例如：张伟",
+      "documentId": "身份证、护照等证件号",
+      "phone": "+86 000 0000 0000",
+      "email": "zhangwei@email.com",
+      "address": "街道、门牌号",
+      "city": "居住城市",
+      "occupation": "例如：企业职员",
+      "monthlyIncome": "0.00"
+    },
+    "submit": "保存客户",
+    "errors": {
+      "duplicateDocument": "该证件号码对应的客户已存在。",
+      "generic": "无法保存客户，请重试。"
+    }
+  },
   "auth": {
     "signIn": {
       "title": "登录",

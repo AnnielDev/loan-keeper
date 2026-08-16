@@ -30,6 +30,12 @@ export const maxLength =
 export const email = (messageKey = "validation.invalidEmail") =>
   pattern(EMAIL_REGEX, messageKey);
 
+/** Skips `rule` when the field is empty — for optional fields that still need format validation when filled in. */
+export const optional =
+  (rule: ValidationRule<string>): ValidationRule<string> =>
+  (value) =>
+    value.trim().length === 0 ? null : rule(value);
+
 export const CODE_LENGTH = 6;
 
 export const code = (messageKey = "validation.invalidCode") =>

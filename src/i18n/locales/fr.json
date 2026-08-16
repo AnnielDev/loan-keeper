@@ -66,6 +66,72 @@
     },
     "retry": "Réessayer"
   },
+  "customers": {
+    "eyebrow": "Répertoire des",
+    "title": "Clients",
+    "searchPlaceholder": "Rechercher par nom ou téléphone...",
+    "filters": {
+      "all": "Tous",
+      "active": "Actifs",
+      "overdue": "En retard"
+    },
+    "status": {
+      "active": "À jour",
+      "overdue": "En retard"
+    },
+    "pendingBalance": "Solde en attente",
+    "empty": "Aucun client trouvé.",
+    "errors": {
+      "loadFailed": "Impossible de charger le répertoire. Réessayez."
+    },
+    "retry": "Réessayer"
+  },
+  "customerForm": {
+    "photo": {
+      "title": "Photo de profil",
+      "camera": "Prendre une photo",
+      "gallery": "Choisir dans la galerie",
+      "cancel": "Annuler",
+      "upload": "AJOUTER"
+    },
+    "sections": {
+      "personal": "Informations personnelles",
+      "address": "Adresse",
+      "financial": "Informations financières",
+      "documents": "Documents joints"
+    },
+    "optional": "Facultatif",
+    "documentsDescription": "Ajoutez une photo de la pièce d'identité ou d'autres justificatifs.",
+    "documents": {
+      "scan": "Scanner",
+      "gallery": "Galerie"
+    },
+    "fields": {
+      "fullName": "Nom complet",
+      "documentId": "Pièce d'identité",
+      "phone": "Téléphone portable",
+      "email": "Adresse e-mail",
+      "address": "Adresse du domicile",
+      "city": "Ville / Secteur",
+      "occupation": "Profession / Employeur",
+      "monthlyIncome": "Revenu mensuel estimé"
+    },
+    "placeholders": {
+      "fullName": "Ex. Jean Dupont",
+      "documentId": "Carte d'identité, passeport...",
+      "phone": "+1 (555) 000-0000",
+      "email": "jean.dupont@email.com",
+      "address": "Rue, numéro, appartement",
+      "city": "Ville de résidence",
+      "occupation": "Ex. Employé de bureau",
+      "monthlyIncome": "0.00"
+    },
+    "submit": "Enregistrer le client",
+    "errors": {
+      "duplicateDocument": "Un client avec cette pièce d'identité existe déjà.",
+      "generic": "Impossible d'enregistrer le client. Réessayez."
+    }
+  },
   "auth": {
     "signIn": {
       "title": "Connexion",

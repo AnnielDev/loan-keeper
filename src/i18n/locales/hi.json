@@ -66,6 +66,72 @@
     },
     "retry": "पुनः प्रयास करें"
   },
+  "customers": {
+    "eyebrow": "निर्देशिका",
+    "title": "ग्राहक",
+    "searchPlaceholder": "नाम या मोबाइल से खोजें...",
+    "filters": {
+      "all": "सभी",
+      "active": "सक्रिय",
+      "overdue": "अतिदेय"
+    },
+    "status": {
+      "active": "अद्यतित",
+      "overdue": "अतिदेय"
+    },
+    "pendingBalance": "लंबित शेष राशि",
+    "empty": "कोई ग्राहक नहीं मिला।",
+    "errors": {
+      "loadFailed": "निर्देशिका लोड नहीं हो सकी। फिर से कोशिश करें।"
+    },
+    "retry": "पुनः प्रयास करें"
+  },
+  "customerForm": {
+    "photo": {
+      "title": "प्रोफ़ाइल फ़ोटो",
+      "camera": "फ़ोटो लें",
+      "gallery": "गैलरी से चुनें",
+      "cancel": "रद्द करें",
+      "upload": "अपलोड"
+    },
+    "sections": {
+      "personal": "व्यक्तिगत जानकारी",
+      "address": "पता",
+      "financial": "वित्तीय जानकारी",
+      "documents": "संलग्न दस्तावेज़"
+    },
+    "optional": "वैकल्पिक",
+    "documentsDescription": "पहचान दस्तावेज़ या अन्य सहायक फ़ाइलों की फ़ोटो जोड़ें।",
+    "documents": {
+      "scan": "स्कैन करें",
+      "gallery": "गैलरी"
+    },
+    "fields": {
+      "fullName": "पूरा नाम",
+      "documentId": "पहचान दस्तावेज़",
+      "phone": "मोबाइल फ़ोन",
+      "email": "ईमेल पता",
+      "address": "घर का पता",
+      "city": "शहर / क्षेत्र",
+      "occupation": "व्यवसाय / नियोक्ता",
+      "monthlyIncome": "अनुमानित मासिक आय"
+    },
+    "placeholders": {
+      "fullName": "उदा. राहुल शर्मा",
+      "documentId": "आधार, पैन या पासपोर्ट नंबर",
+      "phone": "+91 00000 00000",
+      "email": "rahul.sharma@email.com",
+      "address": "सड़क, नंबर, अपार्टमेंट",
+      "city": "निवास का शहर",
+      "occupation": "उदा. निजी कर्मचारी",
+      "monthlyIncome": "0.00"
+    },
+    "submit": "ग्राहक सहेजें",
+    "errors": {
+      "duplicateDocument": "उस दस्तावेज़ आईडी वाला ग्राहक पहले से मौजूद है।",
+      "generic": "ग्राहक सहेजा नहीं जा सका। फिर से कोशिश करें।"
+    }
+  },
   "auth": {
     "signIn": {
       "title": "साइन इन करें",

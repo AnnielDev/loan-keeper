@@ -66,6 +66,72 @@
     },
     "retry": "Retry"
   },
+  "customers": {
+    "eyebrow": "Directory of",
+    "title": "Customers",
+    "searchPlaceholder": "Search by name or phone...",
+    "filters": {
+      "all": "All",
+      "active": "Active",
+      "overdue": "Overdue"
+    },
+    "status": {
+      "active": "Current",
+      "overdue": "Overdue"
+    },
+    "pendingBalance": "Pending balance",
+    "empty": "No customers found.",
+    "errors": {
+      "loadFailed": "Couldn't load the directory. Try again."
+    },
+    "retry": "Retry"
+  },
+  "customerForm": {
+    "photo": {
+      "title": "Profile photo",
+      "camera": "Take photo",
+      "gallery": "Choose from gallery",
+      "cancel": "Cancel",
+      "upload": "UPLOAD"
+    },
+    "sections": {
+      "personal": "Personal Information",
+      "address": "Address",
+      "financial": "Financial Details",
+      "documents": "Attached Documents"
+    },
+    "optional": "Optional",
+    "documentsDescription": "Add a photo of the ID document or other supporting files.",
+    "documents": {
+      "scan": "Scan",
+      "gallery": "Gallery"
+    },
+    "fields": {
+      "fullName": "Full Name",
+      "documentId": "ID Document",
+      "phone": "Mobile Phone",
+      "email": "Email Address",
+      "address": "Home Address",
+      "city": "City / Area",
+      "occupation": "Occupation / Employer",
+      "monthlyIncome": "Estimated Monthly Income"
+    },
+    "placeholders": {
+      "fullName": "E.g. John Smith",
+      "documentId": "ID, passport or license number",
+      "phone": "+1 (555) 000-0000",
+      "email": "john.smith@email.com",
+      "address": "Street, number, unit",
+      "city": "City of residence",
+      "occupation": "E.g. Office employee",
+      "monthlyIncome": "0.00"
+    },
+    "submit": "Save Customer",
+    "errors": {
+      "duplicateDocument": "A customer with that document ID already exists.",
+      "generic": "Couldn't save the customer. Try again."
+    }
+  },
   "auth": {
     "signIn": {
       "title": "Sign in",

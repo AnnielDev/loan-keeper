@@ -68,6 +68,7 @@ function RootNavigator() {
     >
       <Stack.Protected guard={isAuthenticated && canAccessApp}>
         <Stack.Screen name="(tabs)" options={{ animation: "simple_push" }} />
+        <Stack.Screen name="customer-form" options={{ presentation: "modal" }} />
       </Stack.Protected>
 
       <Stack.Protected guard={isAuthenticated && !canAccessApp}>

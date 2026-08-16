@@ -66,6 +66,72 @@
     },
     "retry": "Reintentar"
   },
+  "customers": {
+    "eyebrow": "Directorio de",
+    "title": "Clientes",
+    "searchPlaceholder": "Buscar por nombre o celular...",
+    "filters": {
+      "all": "Todos",
+      "active": "Activos",
+      "overdue": "Morosos"
+    },
+    "status": {
+      "active": "Al día",
+      "overdue": "Moroso"
+    },
+    "pendingBalance": "Saldo pendiente",
+    "empty": "No se encontraron clientes.",
+    "errors": {
+      "loadFailed": "No se pudo cargar el directorio. Intenta de nuevo."
+    },
+    "retry": "Reintentar"
+  },
+  "customerForm": {
+    "photo": {
+      "title": "Foto de perfil",
+      "camera": "Tomar foto",
+      "gallery": "Elegir de galería",
+      "cancel": "Cancelar",
+      "upload": "SUBIR"
+    },
+    "sections": {
+      "personal": "Información Personal",
+      "address": "Dirección",
+      "financial": "Datos Financieros",
+      "documents": "Documentos Adjuntos"
+    },
+    "optional": "Opcional",
+    "documentsDescription": "Añade una foto del documento de identidad u otros soportes.",
+    "documents": {
+      "scan": "Escanear",
+      "gallery": "Galería"
+    },
+    "fields": {
+      "fullName": "Nombre Completo",
+      "documentId": "Documento de Identidad",
+      "phone": "Teléfono Móvil",
+      "email": "Correo Electrónico",
+      "address": "Dirección Residencial",
+      "city": "Ciudad / Sector",
+      "occupation": "Ocupación / Empresa",
+      "monthlyIncome": "Ingreso Mensual Estimado"
+    },
+    "placeholders": {
+      "fullName": "Ej. Juan Pérez",
+      "documentId": "DNI, Cédula o Pasaporte",
+      "phone": "+1 (555) 000-0000",
+      "email": "juan.perez@email.com",
+      "address": "Calle, Número, Depto",
+      "city": "Ciudad de Residencia",
+      "occupation": "Ej. Empleado Privado",
+      "monthlyIncome": "0.00"
+    },
+    "submit": "Guardar Cliente",
+    "errors": {
+      "duplicateDocument": "Ya existe un cliente con ese documento de identidad.",
+      "generic": "No se pudo guardar el cliente. Intenta de nuevo."
+    }
+  },
   "auth": {
     "signIn": {
       "title": "Iniciar sesión",

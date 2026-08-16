@@ -54,12 +54,17 @@ async function rawFetch<T>(path: string, options: RequestInit = {}): Promise<T> 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
+  // FormData bodies (file uploads) need the runtime to set its own
+  // multipart/form-data header with the boundary — a hardcoded
+  // application/json default would break the request.
+  const isFormData = options.body instanceof FormData;
+
   let response: Response;
   try {
     response = await fetch(`${API_URL}${path}`, {
       ...options,
       headers: {
-        "Content-Type": "application/json",
+        ...(isFormData ? {} : { "Content-Type": "application/json" }),
         ...options.headers,
       },
       signal: controller.signal,
