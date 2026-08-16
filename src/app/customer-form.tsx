@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
-  Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -20,6 +19,7 @@ import { AvatarPicker } from "@/components/ui/AvatarPicker";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { IconActionButton } from "@/components/ui/IconActionButton";
+import { PhotoSourceSheet } from "@/components/ui/PhotoSourceSheet";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { TextField } from "@/components/ui/TextField";
 import { useAppTheme } from "@/hooks/useAppTheme";
@@ -52,6 +52,7 @@ export default function CustomerFormScreen() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isPhotoSheetVisible, setIsPhotoSheetVisible] = useState(false);
 
   const translate = t as unknown as (key: string) => string;
 
@@ -64,11 +65,7 @@ export default function CustomerFormScreen() {
   };
 
   const handlePickAvatar = () => {
-    Alert.alert(t("customerForm.photo.title"), undefined, [
-      { text: t("customerForm.photo.camera"), onPress: () => pickAvatar("camera") },
-      { text: t("customerForm.photo.gallery"), onPress: () => pickAvatar("library") },
-      { text: t("customerForm.photo.cancel"), style: "cancel" },
-    ]);
+    setIsPhotoSheetVisible(true);
   };
 
   const handleAddDocument = async (source: ImageSource) => {
@@ -127,6 +124,17 @@ export default function CustomerFormScreen() {
             label={t("customerForm.photo.upload")}
             isUploading={avatarUpload.isUploading}
             onPress={handlePickAvatar}
+          />
+
+          <PhotoSourceSheet
+            visible={isPhotoSheetVisible}
+            onClose={() => setIsPhotoSheetVisible(false)}
+            title={t("customerForm.photo.title")}
+            cameraLabel={t("customerForm.photo.camera")}
+            galleryLabel={t("customerForm.photo.gallery")}
+            cancelLabel={t("customerForm.photo.cancel")}
+            onSelectCamera={() => pickAvatar("camera")}
+            onSelectGallery={() => pickAvatar("library")}
           />
 
           <Card style={styles.card}>

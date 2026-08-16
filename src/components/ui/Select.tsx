@@ -1,11 +1,10 @@
 import {
-  Modal,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+  BottomSheetModal,
+  BottomSheetScrollView,
+  type BottomSheetMethods,
+} from "@expo/ui/community/bottom-sheet";
+import { useEffect, useRef } from "react";
+import { Pressable, StyleSheet, Text } from "react-native";
 
 import { Icon } from "@/components/general/Icon";
 import { useAppTheme } from "@/hooks/useAppTheme";
@@ -34,6 +33,15 @@ export function Select<T extends string>({
 }: SelectProps<T>) {
   const { colors } = useAppTheme();
   const selected = options.find((option) => option.value === value);
+  const sheetRef = useRef<BottomSheetMethods>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      sheetRef.current?.present();
+    } else {
+      sheetRef.current?.dismiss();
+    }
+  }, [isOpen]);
 
   return (
     <>
@@ -55,60 +63,53 @@ export function Select<T extends string>({
         />
       </Pressable>
 
-      <Modal
-        visible={isOpen}
-        transparent
-        animationType="fade"
-        onRequestClose={onClose}
+      <BottomSheetModal
+        ref={sheetRef}
+        snapPoints={["60%"]}
+        enablePanDownToClose
+        onDismiss={onClose}
+        backgroundStyle={{ backgroundColor: colors.card }}
       >
-        <Pressable style={styles.backdrop} onPress={onClose}>
-          <Pressable
-            style={[
-              styles.sheet,
-              { backgroundColor: colors.card, borderColor: colors.border },
-            ]}
-            onPress={(event) => event.stopPropagation()}
-          >
-            <View style={[styles.handle, { backgroundColor: colors.border }]} />
-            <ScrollView bounces={false}>
-              {options.map((option) => {
-                const isActive = option.value === value;
-                return (
-                  <Pressable
-                    key={option.value}
-                    onPress={() => {
-                      onChange(option.value);
-                      onClose();
-                    }}
-                    style={[
-                      styles.option,
-                      isActive && { backgroundColor: colors.tabPillActive },
-                    ]}
-                  >
-                    <Text
-                      style={[
-                        styles.optionLabel,
-                        { color: isActive ? colors.primary : colors.text },
-                        isActive && styles.optionLabelActive,
-                      ]}
-                    >
-                      {option.label}
-                    </Text>
-                    {isActive && (
-                      <Icon
-                        family="Ionicons"
-                        name="checkmark"
-                        size={18}
-                        color={colors.primary}
-                      />
-                    )}
-                  </Pressable>
-                );
-              })}
-            </ScrollView>
-          </Pressable>
-        </Pressable>
-      </Modal>
+        <BottomSheetScrollView
+          bounces={false}
+          contentContainerStyle={styles.list}
+        >
+          {options.map((option) => {
+            const isActive = option.value === value;
+            return (
+              <Pressable
+                key={option.value}
+                onPress={() => {
+                  onChange(option.value);
+                  sheetRef.current?.dismiss();
+                }}
+                style={[
+                  styles.option,
+                  isActive && { backgroundColor: colors.tabPillActive },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.optionLabel,
+                    { color: isActive ? colors.primary : colors.text },
+                    isActive && styles.optionLabelActive,
+                  ]}
+                >
+                  {option.label}
+                </Text>
+                {isActive && (
+                  <Icon
+                    family="Ionicons"
+                    name="checkmark"
+                    size={18}
+                    color={colors.primary}
+                  />
+                )}
+              </Pressable>
+            );
+          })}
+        </BottomSheetScrollView>
+      </BottomSheetModal>
     </>
   );
 }
@@ -130,27 +131,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
   },
-  backdrop: {
-    flex: 1,
-    justifyContent: "flex-end",
-    backgroundColor: "rgba(0, 0, 0, 0.45)",
-  },
-  sheet: {
-    maxHeight: "60%",
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    borderWidth: 1,
-    borderBottomWidth: 0,
+  list: {
     paddingHorizontal: 12,
-    paddingBottom: 28,
-    paddingTop: 10,
-  },
-  handle: {
-    alignSelf: "center",
-    width: 36,
-    height: 4,
-    borderRadius: 2,
-    marginBottom: 12,
+    paddingBottom: 24,
+    paddingTop: 4,
   },
   option: {
     flexDirection: "row",
