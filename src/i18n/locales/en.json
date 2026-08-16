@@ -34,6 +34,38 @@
   "network": {
     "offline": "No internet connection"
   },
+  "home": {
+    "summary": {
+      "title": "Overview",
+      "greeting": "Hi, {{name}}!",
+      "subtitle_one": "You have {{count}} pending payment to review today",
+      "subtitle_other": "You have {{count}} pending payments to review today"
+    },
+    "stats": {
+      "totalLoaned": "Total loaned",
+      "collected": "Collected",
+      "pending": "Pending",
+      "customers": "Customers",
+      "active": "Active",
+      "overdue": "Overdue"
+    },
+    "chart": {
+      "title": "Monthly income"
+    },
+    "upcoming": {
+      "title": "Upcoming due dates",
+      "viewAll": "View all",
+      "empty": "No upcoming due dates.",
+      "dueToday": "Due today",
+      "overdue": "Overdue",
+      "dueInDays_one": "Due in {{count}} day",
+      "dueInDays_other": "Due in {{count}} days"
+    },
+    "errors": {
+      "loadFailed": "Couldn't load the summary. Try again."
+    },
+    "retry": "Retry"
+  },
   "auth": {
     "signIn": {
       "title": "Sign in",

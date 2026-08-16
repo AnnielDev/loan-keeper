@@ -34,6 +34,36 @@
   "network": {
     "offline": "无网络连接"
   },
+  "home": {
+    "summary": {
+      "title": "总览",
+      "greeting": "你好，{{name}}！",
+      "subtitle_other": "今天有 {{count}} 笔待处理付款"
+    },
+    "stats": {
+      "totalLoaned": "总放贷额",
+      "collected": "已收款",
+      "pending": "待收款",
+      "customers": "客户",
+      "active": "进行中",
+      "overdue": "已逾期"
+    },
+    "chart": {
+      "title": "月度收入"
+    },
+    "upcoming": {
+      "title": "即将到期",
+      "viewAll": "查看全部",
+      "empty": "暂无即将到期的付款。",
+      "dueToday": "今日到期",
+      "overdue": "已逾期",
+      "dueInDays_other": "{{count}} 天后到期"
+    },
+    "errors": {
+      "loadFailed": "无法加载数据，请重试。"
+    },
+    "retry": "重试"
+  },
   "auth": {
     "signIn": {
       "title": "登录",

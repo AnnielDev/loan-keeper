@@ -34,6 +34,38 @@
   "network": {
     "offline": "इंटरनेट कनेक्शन नहीं है"
   },
+  "home": {
+    "summary": {
+      "title": "सामान्य सारांश",
+      "greeting": "नमस्ते, {{name}}!",
+      "subtitle_one": "आज आपके पास समीक्षा के लिए {{count}} लंबित भुगतान है",
+      "subtitle_other": "आज आपके पास समीक्षा के लिए {{count}} लंबित भुगतान हैं"
+    },
+    "stats": {
+      "totalLoaned": "कुल दिया गया ऋण",
+      "collected": "वसूला गया",
+      "pending": "लंबित",
+      "customers": "ग्राहक",
+      "active": "सक्रिय",
+      "overdue": "अतिदेय"
+    },
+    "chart": {
+      "title": "मासिक आय"
+    },
+    "upcoming": {
+      "title": "आगामी नियत तिथियां",
+      "viewAll": "सभी देखें",
+      "empty": "कोई आगामी नियत तिथि नहीं है।",
+      "dueToday": "आज देय है",
+      "overdue": "अतिदेय",
+      "dueInDays_one": "{{count}} दिन में देय है",
+      "dueInDays_other": "{{count}} दिनों में देय है"
+    },
+    "errors": {
+      "loadFailed": "सारांश लोड नहीं हो सका। फिर से कोशिश करें।"
+    },
+    "retry": "पुनः प्रयास करें"
+  },
   "auth": {
     "signIn": {
       "title": "साइन इन करें",

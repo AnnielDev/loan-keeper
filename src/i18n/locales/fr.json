@@ -34,6 +34,38 @@
   "network": {
     "offline": "Aucune connexion internet"
   },
+  "home": {
+    "summary": {
+      "title": "Résumé général",
+      "greeting": "Bonjour, {{name}} !",
+      "subtitle_one": "Vous avez {{count}} paiement en attente à examiner aujourd'hui",
+      "subtitle_other": "Vous avez {{count}} paiements en attente à examiner aujourd'hui"
+    },
+    "stats": {
+      "totalLoaned": "Total prêté",
+      "collected": "Encaissé",
+      "pending": "En attente",
+      "customers": "Clients",
+      "active": "Actifs",
+      "overdue": "En retard"
+    },
+    "chart": {
+      "title": "Revenus mensuels"
+    },
+    "upcoming": {
+      "title": "Prochaines échéances",
+      "viewAll": "Voir tout",
+      "empty": "Aucune échéance à venir.",
+      "dueToday": "Échéance aujourd'hui",
+      "overdue": "En retard",
+      "dueInDays_one": "Échéance dans {{count}} jour",
+      "dueInDays_other": "Échéance dans {{count}} jours"
+    },
+    "errors": {
+      "loadFailed": "Impossible de charger le résumé. Réessayez."
+    },
+    "retry": "Réessayer"
+  },
   "auth": {
     "signIn": {
       "title": "Connexion",

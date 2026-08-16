@@ -34,6 +34,38 @@
   "network": {
     "offline": "Sin conexión a internet"
   },
+  "home": {
+    "summary": {
+      "title": "Resumen general",
+      "greeting": "¡Hola, {{name}}!",
+      "subtitle_one": "Hoy tienes {{count}} pago pendiente por revisar",
+      "subtitle_other": "Hoy tienes {{count}} pagos pendientes por revisar"
+    },
+    "stats": {
+      "totalLoaned": "Total prestado",
+      "collected": "Cobrado",
+      "pending": "Pendiente",
+      "customers": "Clientes",
+      "active": "Activos",
+      "overdue": "Vencidos"
+    },
+    "chart": {
+      "title": "Ingresos mensuales"
+    },
+    "upcoming": {
+      "title": "Próximos vencimientos",
+      "viewAll": "Ver todos",
+      "empty": "No tienes vencimientos próximos.",
+      "dueToday": "Vence hoy",
+      "overdue": "Vencido",
+      "dueInDays_one": "Vence en {{count}} día",
+      "dueInDays_other": "Vence en {{count}} días"
+    },
+    "errors": {
+      "loadFailed": "No se pudo cargar el resumen. Intenta de nuevo."
+    },
+    "retry": "Reintentar"
+  },
   "auth": {
     "signIn": {
       "title": "Iniciar sesión",
