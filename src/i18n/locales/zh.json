@@ -9,13 +9,22 @@
   "settings": {
     "language": {
       "title": "语言",
-      "system": "系统"
+      "errors": {
+        "loadFailed": "无法加载语言列表，请重试。"
+      },
+      "retry": "重试"
+    },
+    "currency": {
+      "title": "货币",
+      "errors": {
+        "loadFailed": "无法加载货币列表，请重试。"
+      },
+      "retry": "重试"
     },
     "theme": {
       "title": "外观",
       "light": "浅色",
       "dark": "深色",
-      "system": "系统",
       "toggle": "切换深色模式"
     },
     "account": {

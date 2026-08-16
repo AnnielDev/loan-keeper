@@ -9,13 +9,22 @@
   "settings": {
     "language": {
       "title": "Languages",
-      "system": "System"
+      "errors": {
+        "loadFailed": "Couldn't load languages. Try again."
+      },
+      "retry": "Retry"
+    },
+    "currency": {
+      "title": "Currency",
+      "errors": {
+        "loadFailed": "Couldn't load currencies. Try again."
+      },
+      "retry": "Retry"
     },
     "theme": {
       "title": "Appearance",
       "light": "Light",
       "dark": "Dark",
-      "system": "System",
       "toggle": "Toggle dark mode"
     },
     "account": {

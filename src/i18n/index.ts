@@ -45,13 +45,7 @@ AsyncStorage.getItem(LANGUAGE_STORAGE_KEY).then((storedLanguage) => {
   }
 });
 
-export async function setAppLanguage(language: SupportedLanguage | "system") {
-  if (language === "system") {
-    await AsyncStorage.removeItem(LANGUAGE_STORAGE_KEY);
-    await i18n.changeLanguage(getDeviceLanguage());
-    return;
-  }
-
+export async function setAppLanguage(language: string) {
   await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, language);
   await i18n.changeLanguage(language);
 }

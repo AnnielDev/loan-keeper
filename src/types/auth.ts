@@ -39,6 +39,24 @@ export type UpdateLocationPayload = {
   timezone?: string;
 };
 
+export type Language = {
+  code: string;
+  name: string;
+};
+
+export type UpdateLanguagePayload = {
+  language: string;
+};
+
+export type Currency = {
+  code: string;
+  symbol: string;
+};
+
+export type UpdateCurrencyPayload = {
+  currency: string;
+};
+
 export type ForgotPasswordPayload = {
   email: string;
 };

@@ -9,13 +9,22 @@
   "settings": {
     "language": {
       "title": "Langue",
-      "system": "Système"
+      "errors": {
+        "loadFailed": "Impossible de charger les langues. Réessayez."
+      },
+      "retry": "Réessayer"
+    },
+    "currency": {
+      "title": "Devise",
+      "errors": {
+        "loadFailed": "Impossible de charger les devises. Réessayez."
+      },
+      "retry": "Réessayer"
     },
     "theme": {
       "title": "Apparence",
       "light": "Clair",
       "dark": "Sombre",
-      "system": "Système",
       "toggle": "Basculer le mode sombre"
     },
     "account": {
