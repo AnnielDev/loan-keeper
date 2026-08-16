@@ -27,6 +27,9 @@
       "dark": "Sombre",
       "toggle": "Basculer le mode sombre"
     },
+    "balance": {
+      "title": "Solde"
+    },
     "account": {
       "title": "Compte",
       "signOut": "Déconnexion"
@@ -54,6 +57,7 @@
       "totalLoaned": "Total prêté",
       "collected": "Encaissé",
       "pending": "En attente",
+      "balance": "Solde",
       "customers": "Clients",
       "active": "Actifs",
       "overdue": "En retard"
@@ -176,6 +180,8 @@
       "email": "E-mail",
       "password": "Mot de passe",
       "name": "Nom",
+      "balance": "Solde initial",
+      "currency": "Devise",
       "code": "Code à 6 chiffres",
       "newPassword": "Nouveau mot de passe",
       "confirmPassword": "Confirmer le nouveau mot de passe"

@@ -27,6 +27,9 @@
       "dark": "深色",
       "toggle": "切换深色模式"
     },
+    "balance": {
+      "title": "余额"
+    },
     "account": {
       "title": "账户",
       "signOut": "退出登录"
@@ -53,6 +56,7 @@
       "totalLoaned": "总放贷额",
       "collected": "已收款",
       "pending": "待收款",
+      "balance": "余额",
       "customers": "客户",
       "active": "进行中",
       "overdue": "已逾期"
@@ -174,6 +178,8 @@
       "email": "电子邮箱",
       "password": "密码",
       "name": "姓名",
+      "balance": "初始余额",
+      "currency": "货币",
       "code": "6位数验证码",
       "newPassword": "新密码",
       "confirmPassword": "确认新密码"

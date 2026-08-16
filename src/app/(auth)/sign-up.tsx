@@ -16,10 +16,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Icon } from "@/components/general/Icon";
 import { ThemeToggle } from "@/components/general/ThemeToggle";
+import { Select } from "@/components/ui/Select";
 import type { ThemeColors } from "@/constants/theme";
+import { useApiResource } from "@/hooks/useApiResource";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useFormField } from "@/hooks/useFormField";
 import { ApiError } from "@/services/api";
+import { getCurrencies } from "@/services/settings";
 import { useAuthStore } from "@/store/auth";
 import {
   email as emailRule,
@@ -30,6 +33,31 @@ import {
   required,
   strongPassword,
 } from "@/utils/validation";
+
+// ATM-style cash entry: every digit typed shifts in from the right as cents,
+// so the field always renders a fully-formed amount (grouped, 2 decimals)
+// without the user ever typing a decimal point.
+function digitsAndSign(text: string): { isNegative: boolean; digits: string } {
+  return { isNegative: text.includes("-"), digits: text.replace(/[^0-9]/g, "") };
+}
+
+function formatMoneyInput(text: string, locale: string): string {
+  const { isNegative, digits } = digitsAndSign(text);
+  if (digits.length === 0) return isNegative ? "-" : "";
+  const amount = parseInt(digits, 10) / 100;
+  const formatted = new Intl.NumberFormat(locale, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(amount);
+  return isNegative ? `-${formatted}` : formatted;
+}
+
+function parseMoneyInput(text: string): number {
+  const { isNegative, digits } = digitsAndSign(text);
+  if (digits.length === 0) return 0;
+  const amount = parseInt(digits, 10) / 100;
+  return isNegative ? -amount : amount;
+}
 
 export default function SignUp() {
   const { t, i18n } = useTranslation();
@@ -54,8 +82,29 @@ export default function SignUp() {
       [],
     ),
   );
+  const balanceField = useFormField<string>(
+    "",
+    useMemo(() => [required()], []),
+  );
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const {
+    data: currenciesResponse,
+    isLoading: isLoadingCurrencies,
+    error: currenciesError,
+    refetch: refetchCurrencies,
+  } = useApiResource(getCurrencies);
+  const currencies = currenciesResponse?.data ?? [];
+  const [selectedCurrency, setSelectedCurrency] = useState<string | null>(
+    null,
+  );
+  const [isCurrencyPickerOpen, setIsCurrencyPickerOpen] = useState(false);
+  const currencyValue =
+    selectedCurrency &&
+    currencies.some((currency) => currency.code === selectedCurrency)
+      ? selectedCurrency
+      : (currencies[0]?.code ?? null);
 
   const translate = t as unknown as (key: string) => string;
 
@@ -63,10 +112,14 @@ export default function SignUp() {
     nameField.isValid &&
     emailField.isValid &&
     passwordField.isValid &&
+    balanceField.isValid &&
+    !!currencyValue &&
     !isSubmitting;
 
   const handleSubmit = async () => {
     setError(null);
+
+    if (!currencyValue) return;
 
     try {
       await signUp({
@@ -74,6 +127,8 @@ export default function SignUp() {
         password: passwordField.value,
         name: nameField.value.trim(),
         language: i18n.language,
+        balance: parseMoneyInput(balanceField.value),
+        currency: currencyValue,
       });
       router.replace("/sign-in");
     } catch (err) {
@@ -168,6 +223,55 @@ export default function SignUp() {
               {translate(passwordField.errorKey)}
             </Text>
           ) : null}
+        </View>
+
+        <View style={styles.field}>
+          <Text style={styles.label}>{t("auth.fields.balance")}</Text>
+          <TextInput
+            style={styles.input}
+            value={balanceField.value}
+            onChangeText={(text) =>
+              balanceField.setValue(formatMoneyInput(text, i18n.language))
+            }
+            onBlur={balanceField.onBlur}
+            keyboardType={
+              Platform.OS === "ios" ? "numbers-and-punctuation" : "default"
+            }
+            placeholder="0.00"
+            placeholderTextColor={colors.textSecondary}
+          />
+          {balanceField.errorKey ? (
+            <Text style={styles.fieldError}>
+              {translate(balanceField.errorKey)}
+            </Text>
+          ) : null}
+        </View>
+
+        <View style={styles.field}>
+          <Text style={styles.label}>{t("auth.fields.currency")}</Text>
+          {isLoadingCurrencies && (
+            <ActivityIndicator color={colors.primary} />
+          )}
+          {currenciesError && !isLoadingCurrencies && (
+            <TouchableOpacity onPress={refetchCurrencies}>
+              <Text style={styles.error}>
+                {t("settings.currency.errors.loadFailed")}
+              </Text>
+            </TouchableOpacity>
+          )}
+          {!isLoadingCurrencies && !currenciesError && currencyValue && (
+            <Select
+              options={currencies.map((currency) => ({
+                label: `${currency.code}  ${currency.symbol}`,
+                value: currency.code,
+              }))}
+              value={currencyValue}
+              onChange={setSelectedCurrency}
+              isOpen={isCurrencyPickerOpen}
+              onOpen={() => setIsCurrencyPickerOpen(true)}
+              onClose={() => setIsCurrencyPickerOpen(false)}
+            />
+          )}
         </View>
 
         {error ? <Text style={styles.error}>{error}</Text> : null}

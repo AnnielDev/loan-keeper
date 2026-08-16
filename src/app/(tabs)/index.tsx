@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
@@ -26,9 +27,15 @@ export default function HomeTabScreen() {
   const { t, i18n } = useTranslation();
   const { colors } = useAppTheme();
   const user = useAuthStore((state) => state.user);
+  const updateUser = useAuthStore((state) => state.updateUser);
   const { data, isLoading, isRefreshing, error, refetch } = useDashboard();
 
   const currency = user?.currency ?? "USD";
+
+  useEffect(() => {
+    if (data) updateUser({ balance: data.balance });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.balance]);
 
   if (isLoading) {
     return (
@@ -87,39 +94,55 @@ export default function HomeTabScreen() {
           name={user?.name ?? ""}
           pendingToday={data.pendingToday}
         />
+        <View style={styles.row}>
+          <StatCard
+            layout="card"
+            tone={data.balance < 0 ? "danger" : "success"}
+            icon={
+              <Icon
+                family="MaterialCommunityIcons"
+                name="wallet-outline"
+                size={20}
+                color={colors.onPrimary}
+              />
+            }
+            label={t("home.stats.balance")}
+            value={formatCurrency(data.balance, currency, i18n.language)}
+          />
 
-        <StatCard
-          layout="card"
-          tone="primary"
-          icon={
-            <Icon
-              family="MaterialCommunityIcons"
-              name="hand-coin-outline"
-              size={20}
-              color={colors.onPrimary}
-            />
-          }
-          label={t("home.stats.totalLoaned")}
-          value={formatCurrency(
-            data.totalLoaned.amount,
-            currency,
-            i18n.language,
-          )}
-          trailing={
-            <Badge
-              tone={isGrowthPositive ? "success" : "danger"}
-              label={`${isGrowthPositive ? "+" : ""}${growth}%`}
-              icon={
-                <Icon
-                  family="Ionicons"
-                  name={isGrowthPositive ? "trending-up" : "trending-down"}
-                  size={14}
-                  color={isGrowthPositive ? colors.success : colors.danger}
-                />
-              }
-            />
-          }
-        />
+          <StatCard
+            layout="card"
+            tone="primary"
+            icon={
+              <Icon
+                family="MaterialCommunityIcons"
+                name="hand-coin-outline"
+                size={20}
+                color={colors.onPrimary}
+              />
+            }
+            label={t("home.stats.totalLoaned")}
+            value={formatCurrency(
+              data.totalLoaned.amount,
+              currency,
+              i18n.language,
+            )}
+            trailing={
+              <Badge
+                tone={isGrowthPositive ? "success" : "danger"}
+                label={`${isGrowthPositive ? "+" : ""}${growth}%`}
+                icon={
+                  <Icon
+                    family="Ionicons"
+                    name={isGrowthPositive ? "trending-up" : "trending-down"}
+                    size={14}
+                    color={isGrowthPositive ? colors.success : colors.danger}
+                  />
+                }
+              />
+            }
+          />
+        </View>
 
         <View style={styles.row}>
           <StatCard

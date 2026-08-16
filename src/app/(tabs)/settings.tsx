@@ -23,6 +23,7 @@ import {
   updateLanguage,
 } from "@/services/settings";
 import { useAuthStore } from "@/store/auth";
+import { formatCurrency } from "@/utils/format";
 
 const appearanceOptions: { scheme: ColorScheme; icon: "sunny" | "moon" }[] = [
   { scheme: "light", icon: "sunny" },
@@ -54,6 +55,7 @@ export default function SettingsTabScreen() {
   } = useApiResource(getCurrencies);
   const currencies = currenciesResponse?.data ?? [];
   const currentCurrency = useAuthStore((state) => state.user?.currency);
+  const balance = useAuthStore((state) => state.user?.balance);
 
   const handleSelectLanguage = async (code: string) => {
     if (code === i18n.language) return;
@@ -221,6 +223,22 @@ export default function SettingsTabScreen() {
           </View>
         </View>
 
+        {balance !== undefined && currentCurrency && (
+          <View style={styles.balanceRow}>
+            <Text style={styles.balanceLabel}>
+              {t("settings.balance.title")}
+            </Text>
+            <Text
+              style={[
+                styles.balanceValue,
+                balance < 0 && { color: colors.danger },
+              ]}
+            >
+              {formatCurrency(balance, currentCurrency, i18n.language)}
+            </Text>
+          </View>
+        )}
+
         <Text style={styles.sectionTitle}>{t("settings.account.title")}</Text>
         <Pressable onPress={signOut} style={styles.signOutButton}>
           <View style={styles.signOutIconWrap}>
@@ -255,6 +273,25 @@ const createStyles = (colors: ThemeColors) =>
       fontWeight: "600",
       color: colors.textSecondary,
       marginTop: 8,
+    },
+    balanceRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingVertical: 14,
+      paddingHorizontal: 16,
+      borderRadius: 16,
+      backgroundColor: colors.card,
+    },
+    balanceLabel: {
+      fontSize: 14,
+      fontWeight: "600",
+      color: colors.textSecondary,
+    },
+    balanceValue: {
+      fontSize: 16,
+      fontWeight: "700",
+      color: colors.text,
     },
     appearanceRow: {
       flexDirection: "row",

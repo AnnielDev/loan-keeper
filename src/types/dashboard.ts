@@ -17,6 +17,7 @@ export type UpcomingDueDate = {
 
 export type DashboardResponse = {
   pendingToday: number;
+  balance: number;
   totalLoaned: {
     amount: number;
     growthPercentage: number;

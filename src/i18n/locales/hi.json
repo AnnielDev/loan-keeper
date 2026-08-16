@@ -27,6 +27,9 @@
       "dark": "गहरा",
       "toggle": "डार्क मोड टॉगल करें"
     },
+    "balance": {
+      "title": "बैलेंस"
+    },
     "account": {
       "title": "खाता",
       "signOut": "साइन आउट करें"
@@ -54,6 +57,7 @@
       "totalLoaned": "कुल दिया गया ऋण",
       "collected": "वसूला गया",
       "pending": "लंबित",
+      "balance": "बैलेंस",
       "customers": "ग्राहक",
       "active": "सक्रिय",
       "overdue": "अतिदेय"
@@ -176,6 +180,8 @@
       "email": "ईमेल",
       "password": "पासवर्ड",
       "name": "नाम",
+      "balance": "प्रारंभिक बैलेंस",
+      "currency": "मुद्रा",
       "code": "6 अंकों का कोड",
       "newPassword": "नया पासवर्ड",
       "confirmPassword": "नए पासवर्ड की पुष्टि करें"

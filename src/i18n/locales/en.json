@@ -27,6 +27,9 @@
       "dark": "Dark",
       "toggle": "Toggle dark mode"
     },
+    "balance": {
+      "title": "Balance"
+    },
     "account": {
       "title": "Account",
       "signOut": "Sign out"
@@ -54,6 +57,7 @@
       "totalLoaned": "Total loaned",
       "collected": "Collected",
       "pending": "Pending",
+      "balance": "Balance",
       "customers": "Customers",
       "active": "Active",
       "overdue": "Overdue"
@@ -176,6 +180,8 @@
       "email": "Email",
       "password": "Password",
       "name": "Name",
+      "balance": "Initial balance",
+      "currency": "Currency",
       "code": "6-digit code",
       "newPassword": "New password",
       "confirmPassword": "Confirm new password"

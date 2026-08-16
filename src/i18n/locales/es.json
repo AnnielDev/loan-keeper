@@ -27,6 +27,9 @@
       "dark": "Oscuro",
       "toggle": "Alternar modo oscuro"
     },
+    "balance": {
+      "title": "Saldo"
+    },
     "account": {
       "title": "Cuenta",
       "signOut": "Cerrar sesión"
@@ -54,6 +57,7 @@
       "totalLoaned": "Total prestado",
       "collected": "Cobrado",
       "pending": "Pendiente",
+      "balance": "Saldo",
       "customers": "Clientes",
       "active": "Activos",
       "overdue": "Vencidos"
@@ -176,6 +180,8 @@
       "email": "Correo electrónico",
       "password": "Contraseña",
       "name": "Nombre",
+      "balance": "Saldo inicial",
+      "currency": "Divisa",
       "code": "Código de 6 dígitos",
       "newPassword": "Nueva contraseña",
       "confirmPassword": "Confirmar nueva contraseña"
