@@ -21,7 +21,7 @@ import { StatCard } from "@/components/ui/StatCard";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useDashboard } from "@/hooks/useDashboard";
 import { useAuthStore } from "@/store/auth";
-import { formatCurrency } from "@/utils/format";
+import { formatCurrencyCompact } from "@/utils/format";
 
 export default function HomeTabScreen() {
   const { t, i18n } = useTranslation();
@@ -107,7 +107,7 @@ export default function HomeTabScreen() {
               />
             }
             label={t("home.stats.balance")}
-            value={formatCurrency(data.balance, currency, i18n.language)}
+            value={formatCurrencyCompact(data.balance, currency, i18n.language)}
           />
 
           <StatCard
@@ -122,7 +122,7 @@ export default function HomeTabScreen() {
               />
             }
             label={t("home.stats.totalLoaned")}
-            value={formatCurrency(
+            value={formatCurrencyCompact(
               data.totalLoaned.amount,
               currency,
               i18n.language,
@@ -158,7 +158,7 @@ export default function HomeTabScreen() {
               />
             }
             label={t("home.stats.collected")}
-            value={formatCurrency(
+            value={formatCurrencyCompact(
               data.collected.amount,
               currency,
               i18n.language,
@@ -177,7 +177,7 @@ export default function HomeTabScreen() {
               />
             }
             label={t("home.stats.pending")}
-            value={formatCurrency(data.pending.amount, currency, i18n.language)}
+            value={formatCurrencyCompact(data.pending.amount, currency, i18n.language)}
           />
         </View>
 
