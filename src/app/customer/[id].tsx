@@ -19,6 +19,7 @@ import { CustomerContactCard } from "@/components/customers/CustomerContactCard"
 import { CustomerProfileHeader } from "@/components/customers/CustomerProfileHeader";
 import { LoanCompactRow } from "@/components/loans/LoanCompactRow";
 import { LoanDetailCard } from "@/components/loans/LoanDetailCard";
+import { CircleIconButton } from "@/components/ui/CircleIconButton";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SecondaryButton } from "@/components/ui/SecondaryButton";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -102,12 +103,10 @@ export default function CustomerDetailScreen() {
         <Pressable onPress={() => router.back()} hitSlop={8}>
           <Icon family="Ionicons" name="chevron-back" size={26} color={colors.text} />
         </Pressable>
-        <Pressable
+        <CircleIconButton
+          icon={<Icon family="Ionicons" name="create-outline" size={20} color={colors.primary} />}
           onPress={() => router.push({ pathname: "/customer-form", params: { id: data._id } })}
-          hitSlop={8}
-        >
-          <Icon family="Ionicons" name="pencil-outline" size={22} color={colors.text} />
-        </Pressable>
+        />
       </View>
 
       <ScrollView
