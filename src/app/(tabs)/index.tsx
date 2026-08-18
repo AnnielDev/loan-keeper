@@ -43,7 +43,7 @@ export default function HomeTabScreen() {
         edges={["top"]}
         style={[styles.center, { backgroundColor: colors.background }]}
       >
-        <ActivityIndicator color={colors.primary} />
+        <ActivityIndicator size="large" color={colors.primary} />
       </SafeAreaView>
     );
   }

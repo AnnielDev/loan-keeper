@@ -171,7 +171,7 @@ export default function LoanFormScreen() {
           />
 
           {isLoadingCustomers ? (
-            <ActivityIndicator color={colors.primary} style={styles.customersSpinner} />
+            <ActivityIndicator size="large" color={colors.primary} style={styles.customersSpinner} />
           ) : customersError ? (
             <Text style={[styles.emptyText, { color: colors.danger }]}>
               {t("loanForm.errors.customersLoadFailed")}

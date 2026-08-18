@@ -38,7 +38,7 @@ export default function CustomersTabScreen() {
   if (isLoading) {
     return (
       <SafeAreaView edges={["top"]} style={[styles.center, { backgroundColor: colors.background }]}>
-        <ActivityIndicator color={colors.primary} />
+        <ActivityIndicator size="large" color={colors.primary} />
       </SafeAreaView>
     );
   }

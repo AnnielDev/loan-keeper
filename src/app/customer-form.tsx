@@ -156,7 +156,7 @@ export default function CustomerFormScreen() {
 
       {isLoadingCustomer ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator color={colors.primary} />
+          <ActivityIndicator size="large" color={colors.primary} />
         </View>
       ) : (
       <KeyboardAvoidingView

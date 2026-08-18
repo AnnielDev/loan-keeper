@@ -138,6 +138,7 @@ export default function SettingsTabScreen() {
           <View style={styles.selectColumn}>
             {isLoadingLanguages && (
               <ActivityIndicator
+                size="large"
                 color={colors.primary}
                 style={styles.languageLoading}
               />
@@ -179,6 +180,7 @@ export default function SettingsTabScreen() {
           <View style={styles.selectColumn}>
             {isLoadingCurrencies && (
               <ActivityIndicator
+                size="large"
                 color={colors.primary}
                 style={styles.languageLoading}
               />

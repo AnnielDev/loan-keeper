@@ -226,7 +226,7 @@ export default function SignUp() {
         <View style={styles.field}>
           <Text style={styles.label}>{t("auth.fields.currency")}</Text>
           {isLoadingCurrencies && (
-            <ActivityIndicator color={colors.primary} />
+            <ActivityIndicator size="large" color={colors.primary} />
           )}
           {currenciesError && !isLoadingCurrencies && (
             <TouchableOpacity onPress={refetchCurrencies}>
