@@ -24,6 +24,7 @@ import { useFormField } from "@/hooks/useFormField";
 import { ApiError } from "@/services/api";
 import { getCurrencies } from "@/services/settings";
 import { useAuthStore } from "@/store/auth";
+import { formatMoneyInput, parseMoneyInput } from "@/utils/moneyInput";
 import {
   email as emailRule,
   MAX_EMAIL_LENGTH,
@@ -33,31 +34,6 @@ import {
   required,
   strongPassword,
 } from "@/utils/validation";
-
-// ATM-style cash entry: every digit typed shifts in from the right as cents,
-// so the field always renders a fully-formed amount (grouped, 2 decimals)
-// without the user ever typing a decimal point.
-function digitsAndSign(text: string): { isNegative: boolean; digits: string } {
-  return { isNegative: text.includes("-"), digits: text.replace(/[^0-9]/g, "") };
-}
-
-function formatMoneyInput(text: string, locale: string): string {
-  const { isNegative, digits } = digitsAndSign(text);
-  if (digits.length === 0) return isNegative ? "-" : "";
-  const amount = parseInt(digits, 10) / 100;
-  const formatted = new Intl.NumberFormat(locale, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-  return isNegative ? `-${formatted}` : formatted;
-}
-
-function parseMoneyInput(text: string): number {
-  const { isNegative, digits } = digitsAndSign(text);
-  if (digits.length === 0) return 0;
-  const amount = parseInt(digits, 10) / 100;
-  return isNegative ? -amount : amount;
-}
 
 export default function SignUp() {
   const { t, i18n } = useTranslation();

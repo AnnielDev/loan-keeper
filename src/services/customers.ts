@@ -3,8 +3,10 @@ import type { ApiSuccess } from "@/types/auth";
 import type {
   CreateCustomerPayload,
   Customer,
+  CustomerDetail,
   CustomerStatusFilter,
   CustomerSummary,
+  UpdateCustomerPayload,
 } from "@/types/customer";
 
 export function getCustomers(params: { search?: string; status?: CustomerStatusFilter }) {
@@ -19,6 +21,21 @@ export function getCustomers(params: { search?: string; status?: CustomerStatusF
 export function createCustomer(payload: CreateCustomerPayload) {
   return apiFetch<ApiSuccess<Customer>>("/customers", {
     method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export function getCustomerDetail(id: string) {
+  return apiFetch<CustomerDetail>(`/customers/${id}/detail`);
+}
+
+export function getCustomer(id: string) {
+  return apiFetch<Customer>(`/customers/${id}`);
+}
+
+export function updateCustomer(id: string, payload: UpdateCustomerPayload) {
+  return apiFetch<ApiSuccess<Customer>>(`/customers/${id}`, {
+    method: "PATCH",
     body: JSON.stringify(payload),
   });
 }

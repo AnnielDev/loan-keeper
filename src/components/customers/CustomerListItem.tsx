@@ -1,5 +1,6 @@
+import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
@@ -22,35 +23,37 @@ export function CustomerListItem({ customer }: CustomerListItemProps) {
   const statusColor = isOverdue ? colors.danger : colors.success;
 
   return (
-    <Card style={styles.card}>
-      <View style={styles.topRow}>
-        <Avatar uri={customer.avatarUrl} name={customer.fullName} size={48} />
-        <View style={styles.info}>
-          <Text style={[styles.name, { color: colors.text }]} numberOfLines={2}>
-            {customer.fullName}
-          </Text>
-          {customer.phone ? (
-            <Text style={[styles.phone, { color: colors.textSecondary }]}>{customer.phone}</Text>
-          ) : null}
+    <Pressable onPress={() => router.push(`/customer/${customer._id}`)}>
+      <Card style={styles.card}>
+        <View style={styles.topRow}>
+          <Avatar uri={customer.avatarUrl} name={customer.fullName} size={48} />
+          <View style={styles.info}>
+            <Text style={[styles.name, { color: colors.text }]} numberOfLines={2}>
+              {customer.fullName}
+            </Text>
+            {customer.phone ? (
+              <Text style={[styles.phone, { color: colors.textSecondary }]}>{customer.phone}</Text>
+            ) : null}
+          </View>
+          <Badge
+            tone={isOverdue ? "danger" : "success"}
+            label={t(isOverdue ? "customers.status.overdue" : "customers.status.active")}
+            icon={<View style={[styles.dot, { backgroundColor: statusColor }]} />}
+          />
         </View>
-        <Badge
-          tone={isOverdue ? "danger" : "success"}
-          label={t(isOverdue ? "customers.status.overdue" : "customers.status.active")}
-          icon={<View style={[styles.dot, { backgroundColor: statusColor }]} />}
-        />
-      </View>
 
-      <View style={[styles.divider, { backgroundColor: colors.border }]} />
+        <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
-      <View>
-        <Text style={[styles.balanceLabel, { color: colors.textSecondary }]}>
-          {t("customers.pendingBalance").toUpperCase()}
-        </Text>
-        <Text style={[styles.balanceAmount, { color: isOverdue ? colors.danger : colors.text }]}>
-          {formatCurrency(customer.pendingBalance, currency, i18n.language)}
-        </Text>
-      </View>
-    </Card>
+        <View>
+          <Text style={[styles.balanceLabel, { color: colors.textSecondary }]}>
+            {t("customers.pendingBalance").toUpperCase()}
+          </Text>
+          <Text style={[styles.balanceAmount, { color: isOverdue ? colors.danger : colors.text }]}>
+            {formatCurrency(customer.pendingBalance, currency, i18n.language)}
+          </Text>
+        </View>
+      </Card>
+    </Pressable>
   );
 }
 

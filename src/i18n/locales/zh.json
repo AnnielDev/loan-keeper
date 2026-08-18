@@ -97,6 +97,117 @@
     },
     "retry": "重试"
   },
+  "loans": {
+    "eyebrow": "贷款组合",
+    "title": "贷款",
+    "searchPlaceholder": "按客户或编号搜索...",
+    "filters": {
+      "all": "全部",
+      "active": "正常",
+      "overdue": "逾期",
+      "paid": "已结清"
+    },
+    "status": {
+      "active": "正常",
+      "overdue": "逾期",
+      "paid": "已结清"
+    },
+    "type": {
+      "personal": "个人",
+      "micro_credito": "小额信贷"
+    },
+    "totalSuffix": "总计",
+    "progress": "进度",
+    "footer": {
+      "nextPayment": "下次还款：{{date}}",
+      "overdue": "逾期 {{count}} 天",
+      "paid": "已付款"
+    },
+    "empty": "未找到贷款。",
+    "errors": {
+      "loadFailed": "无法加载贷款，请重试。"
+    },
+    "retry": "重试"
+  },
+  "loanForm": {
+    "title": "新贷款",
+    "subtitle": "设置贷款条款",
+    "fields": {
+      "customer": "客户",
+      "principal": "金额",
+      "interestRate": "利率 (%)",
+      "interestType": "利息类型",
+      "frequency": "还款频率",
+      "installmentsCount": "分期数",
+      "startDate": "开始日期"
+    },
+    "placeholders": {
+      "principal": "$ 0.00",
+      "interestRate": "5.0",
+      "installmentsCount": "12"
+    },
+    "interestType": {
+      "simple": "单利",
+      "compound": "复利"
+    },
+    "frequency": {
+      "weekly": "每周",
+      "biweekly": "每两周",
+      "monthly": "每月"
+    },
+    "summary": {
+      "title": "预估摘要",
+      "installmentAmount": "每期金额",
+      "totalInterest": "总利息",
+      "totalAmount": "应付总额"
+    },
+    "viewSchedule": "查看详细还款计划",
+    "hideSchedule": "隐藏还款计划",
+    "schedule": {
+      "installmentNumber": "第 {{number}} 期"
+    },
+    "datePickerDone": "完成",
+    "noCustomers": "您还没有客户。请先添加一个客户以创建贷款。",
+    "addCustomer": "添加客户",
+    "submit": "确认贷款",
+    "errors": {
+      "generic": "无法保存贷款，请重试。",
+      "customersLoadFailed": "无法加载客户，请重试。"
+    }
+  },
+  "customerDetail": {
+    "idPrefix": "身份证号：",
+    "pendingBalance": "待还余额",
+    "risk": {
+      "label": "风险：",
+      "bajo": "低",
+      "medio": "中",
+      "alto": "高"
+    },
+    "totalLoaned": "总放款额",
+    "totalCollected": "总回收额",
+    "newLoan": "新建贷款",
+    "viewHistory": "查看历史",
+    "contact": {
+      "phone": "电话",
+      "address": "地址",
+      "customerSince": "客户自"
+    },
+    "loans": {
+      "title": "活跃贷款",
+      "viewAll": "查看全部",
+      "capital": "本金",
+      "paymentProgress": "还款进度（{{percent}}%）",
+      "nextPaymentShort": "下次 {{date}}",
+      "registerPayment": "登记还款",
+      "paymentError": "无法登记还款，请重试。",
+      "empty": "该客户没有活跃贷款。"
+    },
+    "errors": {
+      "loadFailed": "无法加载客户信息，请重试。"
+    },
+    "retry": "重试"
+  },
   "customerForm": {
     "photo": {
       "title": "头像照片",
@@ -138,6 +249,7 @@
       "monthlyIncome": "0.00"
     },
     "submit": "保存客户",
+    "submitEdit": "保存更改",
     "errors": {
       "duplicateDocument": "该证件号码对应的客户已存在。",
       "generic": "无法保存客户，请重试。"

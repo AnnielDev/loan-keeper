@@ -1,3 +1,5 @@
+import type { LoanStatus, LoanType } from "@/types/loan";
+
 export type CustomerStatus = "active" | "overdue";
 export type CustomerStatusFilter = "all" | "active" | "overdue";
 
@@ -23,9 +25,43 @@ export type CreateCustomerPayload = {
   documentUrls?: string[];
 };
 
+export type UpdateCustomerPayload = Partial<CreateCustomerPayload>;
+
+export type RiskLevel = "bajo" | "medio" | "alto";
+
 export type Customer = CreateCustomerPayload & {
   _id: string;
-  riskLevel: string;
+  riskLevel: RiskLevel;
   createdAt: string;
   updatedAt: string;
+};
+
+export type CustomerLoanSummary = {
+  _id: string;
+  code: string;
+  type: LoanType;
+  principal: number;
+  totalAmount: number;
+  paidAmount: number;
+  progressPercent: number;
+  status: LoanStatus;
+  nextPaymentDate: string | null;
+  daysOverdue: number | null;
+  nextInstallmentId: string | null;
+  nextInstallmentAmount: number | null;
+};
+
+export type CustomerDetail = {
+  _id: string;
+  fullName: string;
+  documentId: string;
+  phone: string | null;
+  address: string | null;
+  avatarUrl: string | null;
+  riskLevel: RiskLevel;
+  createdAt: string;
+  pendingBalance: number;
+  totalLoaned: number;
+  totalCollected: number;
+  loans: CustomerLoanSummary[];
 };

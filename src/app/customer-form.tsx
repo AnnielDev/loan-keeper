@@ -1,6 +1,6 @@
 import { Image } from "expo-image";
-import { router } from "expo-router";
-import { useMemo, useState } from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
@@ -26,12 +26,15 @@ import { useAppTheme } from "@/hooks/useAppTheme";
 import { useFormField } from "@/hooks/useFormField";
 import { type ImageSource, useImageUpload } from "@/hooks/useImageUpload";
 import { ApiError } from "@/services/api";
-import { createCustomer } from "@/services/customers";
+import { createCustomer, getCustomer, updateCustomer } from "@/services/customers";
+import { formatMoneyInput, moneyToInputText, parseMoneyInput } from "@/utils/moneyInput";
 import { MAX_NAME_LENGTH, email as emailRule, maxLength, optional, required } from "@/utils/validation";
 
 export default function CustomerFormScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { colors } = useAppTheme();
+  const { id } = useLocalSearchParams<{ id?: string }>();
+  const isEditing = !!id;
 
   const fullNameField = useFormField<string>(
     "",
@@ -50,6 +53,7 @@ export default function CustomerFormScreen() {
   const avatarUpload = useImageUpload();
   const documentUpload = useImageUpload();
 
+  const [isLoadingCustomer, setIsLoadingCustomer] = useState(isEditing);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isPhotoSheetVisible, setIsPhotoSheetVisible] = useState(false);
@@ -58,6 +62,37 @@ export default function CustomerFormScreen() {
 
   const canSubmit =
     fullNameField.isValid && documentIdField.isValid && emailField.isValid && !isSubmitting;
+
+  useEffect(() => {
+    if (!id) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const customer = await getCustomer(id);
+        if (cancelled) return;
+        fullNameField.setValue(customer.fullName);
+        documentIdField.setValue(customer.documentId);
+        phoneField.setValue(customer.phone ?? "");
+        emailField.setValue(customer.email ?? "");
+        addressField.setValue(customer.address ?? "");
+        cityField.setValue(customer.city ?? "");
+        occupationField.setValue(customer.occupation ?? "");
+        setMonthlyIncome(
+          customer.monthlyIncome ? moneyToInputText(customer.monthlyIncome, i18n.language) : "",
+        );
+        setAvatarUrl(customer.avatarUrl ?? null);
+        setDocumentUrls(customer.documentUrls ?? []);
+      } catch {
+        if (!cancelled) setSubmitError(t("customerForm.errors.generic"));
+      } finally {
+        if (!cancelled) setIsLoadingCustomer(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const pickAvatar = async (source: ImageSource) => {
     const url = await avatarUpload.pickAndUpload(source);
@@ -81,8 +116,8 @@ export default function CustomerFormScreen() {
     setSubmitError(null);
     setIsSubmitting(true);
     try {
-      const income = Number(monthlyIncome.replace(/[^0-9.]/g, ""));
-      await createCustomer({
+      const income = parseMoneyInput(monthlyIncome);
+      const payload = {
         fullName: fullNameField.value.trim(),
         documentId: documentIdField.value.trim(),
         phone: phoneField.value.trim() || undefined,
@@ -90,10 +125,15 @@ export default function CustomerFormScreen() {
         address: addressField.value.trim() || undefined,
         city: cityField.value.trim() || undefined,
         occupation: occupationField.value.trim() || undefined,
-        monthlyIncome: Number.isFinite(income) && income > 0 ? income : undefined,
+        monthlyIncome: income > 0 ? income : undefined,
         avatarUrl: avatarUrl ?? undefined,
         documentUrls: documentUrls.length > 0 ? documentUrls : undefined,
-      });
+      };
+      if (id) {
+        await updateCustomer(id, payload);
+      } else {
+        await createCustomer(payload);
+      }
       router.back();
     } catch (err) {
       if (err instanceof ApiError && err.status === 409) {
@@ -114,6 +154,11 @@ export default function CustomerFormScreen() {
         </Pressable>
       </View>
 
+      {isLoadingCustomer ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator color={colors.primary} />
+        </View>
+      ) : (
       <KeyboardAvoidingView
         style={styles.flex}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -218,7 +263,7 @@ export default function CustomerFormScreen() {
               label={t("customerForm.fields.monthlyIncome")}
               icon={<Icon family="Ionicons" name="cash-outline" size={18} color={colors.textSecondary} />}
               value={monthlyIncome}
-              onChangeText={setMonthlyIncome}
+              onChangeText={(text) => setMonthlyIncome(formatMoneyInput(text, i18n.language))}
               placeholder={t("customerForm.placeholders.monthlyIncome")}
               keyboardType="decimal-pad"
             />
@@ -270,7 +315,7 @@ export default function CustomerFormScreen() {
           ) : null}
 
           <PrimaryButton
-            label={t("customerForm.submit")}
+            label={t(isEditing ? "customerForm.submitEdit" : "customerForm.submit")}
             icon={<Icon family="Ionicons" name="checkmark-circle-outline" size={20} color={colors.onPrimary} />}
             onPress={handleSubmit}
             isLoading={isSubmitting}
@@ -278,11 +323,17 @@ export default function CustomerFormScreen() {
           />
         </ScrollView>
       </KeyboardAvoidingView>
+      )}
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   flex: {
     flex: 1,
   },

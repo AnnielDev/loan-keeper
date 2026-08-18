@@ -99,6 +99,118 @@
     },
     "retry": "Retry"
   },
+  "loans": {
+    "eyebrow": "Portfolio of",
+    "title": "Loans",
+    "searchPlaceholder": "Search by customer or ID...",
+    "filters": {
+      "all": "All",
+      "active": "Active",
+      "overdue": "Overdue",
+      "paid": "Paid"
+    },
+    "status": {
+      "active": "Current",
+      "overdue": "Overdue",
+      "paid": "Finished"
+    },
+    "type": {
+      "personal": "Personal",
+      "micro_credito": "Micro-credit"
+    },
+    "totalSuffix": "total",
+    "progress": "Progress",
+    "footer": {
+      "nextPayment": "Next payment: {{date}}",
+      "overdue_one": "{{count}} day overdue",
+      "overdue_other": "{{count}} days overdue",
+      "paid": "Paid"
+    },
+    "empty": "No loans found.",
+    "errors": {
+      "loadFailed": "Couldn't load loans. Try again."
+    },
+    "retry": "Retry"
+  },
+  "loanForm": {
+    "title": "New Loan",
+    "subtitle": "Configure the credit terms",
+    "fields": {
+      "customer": "Customer",
+      "principal": "Amount",
+      "interestRate": "Interest (%)",
+      "interestType": "Interest Type",
+      "frequency": "Frequency",
+      "installmentsCount": "Installments",
+      "startDate": "Start Date"
+    },
+    "placeholders": {
+      "principal": "$ 0.00",
+      "interestRate": "5.0",
+      "installmentsCount": "12"
+    },
+    "interestType": {
+      "simple": "Simple",
+      "compound": "Compound"
+    },
+    "frequency": {
+      "weekly": "Weekly",
+      "biweekly": "Biweekly",
+      "monthly": "Monthly"
+    },
+    "summary": {
+      "title": "Estimated Summary",
+      "installmentAmount": "Amount per Installment",
+      "totalInterest": "Total Interest",
+      "totalAmount": "Total to Pay"
+    },
+    "viewSchedule": "View Detailed Schedule",
+    "hideSchedule": "Hide Schedule",
+    "schedule": {
+      "installmentNumber": "Installment {{number}}"
+    },
+    "datePickerDone": "Done",
+    "noCustomers": "You don't have any customers yet. Add one to create a loan.",
+    "addCustomer": "Add Customer",
+    "submit": "Confirm Loan",
+    "errors": {
+      "generic": "Couldn't save the loan. Try again.",
+      "customersLoadFailed": "Couldn't load customers. Try again."
+    }
+  },
+  "customerDetail": {
+    "idPrefix": "ID:",
+    "pendingBalance": "Pending Balance",
+    "risk": {
+      "label": "Risk:",
+      "bajo": "Low",
+      "medio": "Medium",
+      "alto": "High"
+    },
+    "totalLoaned": "Total Loaned",
+    "totalCollected": "Total Collected",
+    "newLoan": "New Loan",
+    "viewHistory": "View History",
+    "contact": {
+      "phone": "Phone",
+      "address": "Address",
+      "customerSince": "Customer since"
+    },
+    "loans": {
+      "title": "Active Loans",
+      "viewAll": "View all",
+      "capital": "Capital",
+      "paymentProgress": "Payment progress ({{percent}}%)",
+      "nextPaymentShort": "Next {{date}}",
+      "registerPayment": "Register Payment",
+      "paymentError": "Couldn't register the payment. Try again.",
+      "empty": "This customer has no active loans."
+    },
+    "errors": {
+      "loadFailed": "Couldn't load the customer's information. Try again."
+    },
+    "retry": "Retry"
+  },
   "customerForm": {
     "photo": {
       "title": "Profile photo",
@@ -140,6 +252,7 @@
       "monthlyIncome": "0.00"
     },
     "submit": "Save Customer",
+    "submitEdit": "Save Changes",
     "errors": {
       "duplicateDocument": "A customer with that document ID already exists.",
       "generic": "Couldn't save the customer. Try again."

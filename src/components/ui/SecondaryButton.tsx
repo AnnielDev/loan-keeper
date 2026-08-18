@@ -3,42 +3,30 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-nati
 
 import { useAppTheme } from "@/hooks/useAppTheme";
 
-export type PrimaryButtonTone = "primary" | "success";
-
-type PrimaryButtonProps = {
+type SecondaryButtonProps = {
   label: string;
   onPress: () => void;
   icon?: ReactNode;
-  tone?: PrimaryButtonTone;
   isLoading?: boolean;
   disabled?: boolean;
 };
 
-export function PrimaryButton({
-  label,
-  onPress,
-  icon,
-  tone = "primary",
-  isLoading,
-  disabled,
-}: PrimaryButtonProps) {
+export function SecondaryButton({ label, onPress, icon, isLoading, disabled }: SecondaryButtonProps) {
   const { colors } = useAppTheme();
   const isDisabled = disabled || isLoading;
-  const backgroundColor = tone === "success" ? colors.successSurface : colors.primary;
-  const foregroundColor = tone === "success" ? colors.success : colors.onPrimary;
 
   return (
     <Pressable
       onPress={onPress}
       disabled={isDisabled}
-      style={[styles.button, { backgroundColor }, isDisabled && styles.disabled]}
+      style={[styles.button, { backgroundColor: colors.surface }, isDisabled && styles.disabled]}
     >
       {isLoading ? (
-        <ActivityIndicator color={foregroundColor} />
+        <ActivityIndicator color={colors.text} />
       ) : (
         <View style={styles.content}>
           {icon}
-          <Text style={[styles.label, { color: foregroundColor }]}>{label}</Text>
+          <Text style={[styles.label, { color: colors.text }]}>{label}</Text>
         </View>
       )}
     </Pressable>

@@ -99,6 +99,118 @@
     },
     "retry": "Réessayer"
   },
+  "loans": {
+    "eyebrow": "Portefeuille de",
+    "title": "Prêts",
+    "searchPlaceholder": "Rechercher par client ou ID...",
+    "filters": {
+      "all": "Tous",
+      "active": "Actifs",
+      "overdue": "En retard",
+      "paid": "Payés"
+    },
+    "status": {
+      "active": "À jour",
+      "overdue": "En retard",
+      "paid": "Terminé"
+    },
+    "type": {
+      "personal": "Personnel",
+      "micro_credito": "Micro-crédit"
+    },
+    "totalSuffix": "total",
+    "progress": "Progression",
+    "footer": {
+      "nextPayment": "Prochain paiement : {{date}}",
+      "overdue_one": "En retard de {{count}} jour",
+      "overdue_other": "En retard de {{count}} jours",
+      "paid": "Payé"
+    },
+    "empty": "Aucun prêt trouvé.",
+    "errors": {
+      "loadFailed": "Impossible de charger les prêts. Réessayez."
+    },
+    "retry": "Réessayer"
+  },
+  "loanForm": {
+    "title": "Nouveau Prêt",
+    "subtitle": "Configurez les conditions du crédit",
+    "fields": {
+      "customer": "Client",
+      "principal": "Montant",
+      "interestRate": "Intérêt (%)",
+      "interestType": "Type d'intérêt",
+      "frequency": "Fréquence",
+      "installmentsCount": "Échéances",
+      "startDate": "Date de début"
+    },
+    "placeholders": {
+      "principal": "$ 0.00",
+      "interestRate": "5.0",
+      "installmentsCount": "12"
+    },
+    "interestType": {
+      "simple": "Simple",
+      "compound": "Composé"
+    },
+    "frequency": {
+      "weekly": "Hebdomadaire",
+      "biweekly": "Bimensuel",
+      "monthly": "Mensuel"
+    },
+    "summary": {
+      "title": "Résumé Estimé",
+      "installmentAmount": "Montant par Échéance",
+      "totalInterest": "Intérêt Total",
+      "totalAmount": "Total à Payer"
+    },
+    "viewSchedule": "Voir l'Échéancier Détaillé",
+    "hideSchedule": "Masquer l'Échéancier",
+    "schedule": {
+      "installmentNumber": "Échéance {{number}}"
+    },
+    "datePickerDone": "Terminé",
+    "noCustomers": "Vous n'avez encore aucun client. Ajoutez-en un pour créer un prêt.",
+    "addCustomer": "Ajouter un Client",
+    "submit": "Confirmer le Prêt",
+    "errors": {
+      "generic": "Impossible d'enregistrer le prêt. Réessayez.",
+      "customersLoadFailed": "Impossible de charger les clients. Réessayez."
+    }
+  },
+  "customerDetail": {
+    "idPrefix": "ID :",
+    "pendingBalance": "Solde en Attente",
+    "risk": {
+      "label": "Risque :",
+      "bajo": "Faible",
+      "medio": "Moyen",
+      "alto": "Élevé"
+    },
+    "totalLoaned": "Total Prêté",
+    "totalCollected": "Total Encaissé",
+    "newLoan": "Nouveau Prêt",
+    "viewHistory": "Voir l'Historique",
+    "contact": {
+      "phone": "Téléphone",
+      "address": "Adresse",
+      "customerSince": "Client depuis"
+    },
+    "loans": {
+      "title": "Prêts Actifs",
+      "viewAll": "Voir tout",
+      "capital": "Capital",
+      "paymentProgress": "Progression du paiement ({{percent}}%)",
+      "nextPaymentShort": "Prochain {{date}}",
+      "registerPayment": "Enregistrer le Paiement",
+      "paymentError": "Impossible d'enregistrer le paiement. Réessayez.",
+      "empty": "Ce client n'a aucun prêt actif."
+    },
+    "errors": {
+      "loadFailed": "Impossible de charger les informations du client. Réessayez."
+    },
+    "retry": "Réessayer"
+  },
   "customerForm": {
     "photo": {
       "title": "Photo de profil",
@@ -140,6 +252,7 @@
       "monthlyIncome": "0.00"
     },
     "submit": "Enregistrer le client",
+    "submitEdit": "Enregistrer les Modifications",
     "errors": {
       "duplicateDocument": "Un client avec cette pièce d'identité existe déjà.",
       "generic": "Impossible d'enregistrer le client. Réessayez."

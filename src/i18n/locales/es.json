@@ -99,6 +99,118 @@
     },
     "retry": "Reintentar"
   },
+  "loans": {
+    "eyebrow": "Cartera de",
+    "title": "Préstamos",
+    "searchPlaceholder": "Buscar por cliente o ID...",
+    "filters": {
+      "all": "Todos",
+      "active": "Activos",
+      "overdue": "Vencidos",
+      "paid": "Pagados"
+    },
+    "status": {
+      "active": "Al Día",
+      "overdue": "Vencido",
+      "paid": "Finalizado"
+    },
+    "type": {
+      "personal": "Personal",
+      "micro_credito": "Micro-crédito"
+    },
+    "totalSuffix": "total",
+    "progress": "Progreso",
+    "footer": {
+      "nextPayment": "Próx. pago: {{date}}",
+      "overdue_one": "Atrasado {{count}} día",
+      "overdue_other": "Atrasado {{count}} días",
+      "paid": "Pagado"
+    },
+    "empty": "No se encontraron préstamos.",
+    "errors": {
+      "loadFailed": "No se pudieron cargar los préstamos. Intenta de nuevo."
+    },
+    "retry": "Reintentar"
+  },
+  "loanForm": {
+    "title": "Nuevo Préstamo",
+    "subtitle": "Configure los términos del crédito",
+    "fields": {
+      "customer": "Cliente",
+      "principal": "Monto",
+      "interestRate": "Interés (%)",
+      "interestType": "Tipo Interés",
+      "frequency": "Frecuencia",
+      "installmentsCount": "Cuotas",
+      "startDate": "Fecha Inicio"
+    },
+    "placeholders": {
+      "principal": "$ 0.00",
+      "interestRate": "5.0",
+      "installmentsCount": "12"
+    },
+    "interestType": {
+      "simple": "Simple",
+      "compound": "Compuesto"
+    },
+    "frequency": {
+      "weekly": "Semanal",
+      "biweekly": "Quincenal",
+      "monthly": "Mensual"
+    },
+    "summary": {
+      "title": "Resumen Estimado",
+      "installmentAmount": "Monto por Cuota",
+      "totalInterest": "Total Interés",
+      "totalAmount": "Total a Pagar"
+    },
+    "viewSchedule": "Ver Cronograma Detallado",
+    "hideSchedule": "Ocultar Cronograma",
+    "schedule": {
+      "installmentNumber": "Cuota {{number}}"
+    },
+    "datePickerDone": "Listo",
+    "noCustomers": "Aún no tienes clientes registrados. Agrega uno para crear un préstamo.",
+    "addCustomer": "Agregar Cliente",
+    "submit": "Confirmar Préstamo",
+    "errors": {
+      "generic": "No se pudo guardar el préstamo. Intenta de nuevo.",
+      "customersLoadFailed": "No se pudieron cargar los clientes. Intenta de nuevo."
+    }
+  },
+  "customerDetail": {
+    "idPrefix": "ID:",
+    "pendingBalance": "Saldo Pendiente",
+    "risk": {
+      "label": "Riesgo:",
+      "bajo": "Bajo",
+      "medio": "Medio",
+      "alto": "Alto"
+    },
+    "totalLoaned": "Total Prestado",
+    "totalCollected": "Total Cobrado",
+    "newLoan": "Nuevo Préstamo",
+    "viewHistory": "Ver Historial",
+    "contact": {
+      "phone": "Teléfono",
+      "address": "Dirección",
+      "customerSince": "Cliente desde"
+    },
+    "loans": {
+      "title": "Préstamos Activos",
+      "viewAll": "Ver todos",
+      "capital": "Capital",
+      "paymentProgress": "Progreso de pago ({{percent}}%)",
+      "nextPaymentShort": "Próx. {{date}}",
+      "registerPayment": "Registrar Pago",
+      "paymentError": "No se pudo registrar el pago. Intenta de nuevo.",
+      "empty": "Este cliente no tiene préstamos activos."
+    },
+    "errors": {
+      "loadFailed": "No se pudo cargar la información del cliente. Intenta de nuevo."
+    },
+    "retry": "Reintentar"
+  },
   "customerForm": {
     "photo": {
       "title": "Foto de perfil",
@@ -140,6 +252,7 @@
       "monthlyIncome": "0.00"
     },
     "submit": "Guardar Cliente",
+    "submitEdit": "Guardar Cambios",
     "errors": {
       "duplicateDocument": "Ya existe un cliente con ese documento de identidad.",
       "generic": "No se pudo guardar el cliente. Intenta de nuevo."
