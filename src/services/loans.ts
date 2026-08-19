@@ -29,6 +29,10 @@ export function createLoan(payload: CreateLoanPayload) {
   });
 }
 
+export function deleteLoan(id: string) {
+  return apiFetch<{ message?: string }>(`/loans/${id}`, { method: "DELETE" });
+}
+
 export function payInstallment(loanId: string, installmentId: string, payload: PayInstallmentPayload) {
   return apiFetch<ApiSuccess<Loan>>(`/loans/${loanId}/installments/${installmentId}/pay`, {
     method: "PATCH",

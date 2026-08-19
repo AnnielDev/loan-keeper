@@ -24,7 +24,7 @@ import { useAppTheme } from "@/hooks/useAppTheme";
 import { useLoanDetail } from "@/hooks/useLoanDetail";
 import { payInstallment } from "@/services/loans";
 import type { PaymentMethod } from "@/types/loan";
-import { formatNumericDate } from "@/utils/format";
+import { formatNumericDate, toLocalDateString } from "@/utils/format";
 import { formatMoneyInput, parseMoneyInput, moneyToInputText } from "@/utils/moneyInput";
 
 export default function LoanPaymentFormScreen() {
@@ -75,7 +75,7 @@ export default function LoanPaymentFormScreen() {
         referenceNumber: referenceNumber.trim() || undefined,
         receiptUrl: receiptUrl ?? undefined,
         notes: notes.trim() || undefined,
-        paymentDate: paymentDate.toISOString(),
+        paymentDate: toLocalDateString(paymentDate),
       });
       router.back();
     } catch {

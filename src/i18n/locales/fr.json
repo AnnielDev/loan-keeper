@@ -97,7 +97,16 @@
     "errors": {
       "loadFailed": "Impossible de charger le répertoire. Réessayez."
     },
-    "retry": "Réessayer"
+    "retry": "Réessayer",
+    "delete": {
+      "action": "Supprimer",
+      "confirmTitle": "Supprimer le client ?",
+      "confirmMessage": "Cette action supprimera définitivement le client et ne peut pas être annulée.",
+      "cancel": "Annuler",
+      "confirm": "Supprimer",
+      "errorTitle": "Impossible de supprimer",
+      "errorMessage": "Un problème est survenu. Réessayez."
+    }
   },
   "loans": {
     "eyebrow": "Portefeuille de",
@@ -130,7 +139,16 @@
     "errors": {
       "loadFailed": "Impossible de charger les prêts. Réessayez."
     },
-    "retry": "Réessayer"
+    "retry": "Réessayer",
+    "delete": {
+      "action": "Supprimer",
+      "confirmTitle": "Supprimer le prêt ?",
+      "confirmMessage": "Cette action supprimera définitivement le prêt et ne peut pas être annulée.",
+      "cancel": "Annuler",
+      "confirm": "Supprimer",
+      "errorTitle": "Impossible de supprimer",
+      "errorMessage": "Un problème est survenu. Réessayez."
+    }
   },
   "loanForm": {
     "title": "Nouveau Prêt",

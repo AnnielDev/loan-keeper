@@ -52,3 +52,11 @@ export function formatLongDate(isoDate: string, locale: string): string {
     year: "numeric",
   }).format(new Date(isoDate));
 }
+
+/** Serializes a Date's local calendar day as "YYYY-MM-DD", ignoring time-of-day
+ * and timezone — use this (not `Date#toISOString()`) when sending a date-only
+ * value to the API, since `toISOString()` converts to UTC and can shift the
+ * calendar day by one in timezones behind UTC. */
+export function toLocalDateString(date: Date): string {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}

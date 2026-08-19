@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
+  Alert,
   FlatList,
   Pressable,
   RefreshControl,
@@ -18,9 +19,12 @@ import { FloatingActionButton } from "@/components/ui/FloatingActionButton";
 import { ScreenHeader } from "@/components/ui/ScreenHeader";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
+import { SwipeToDelete } from "@/components/ui/SwipeToDelete";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useLoans } from "@/hooks/useLoans";
-import type { LoanStatusFilter } from "@/types/loan";
+import { ApiError } from "@/services/api";
+import { deleteLoan } from "@/services/loans";
+import type { LoanStatusFilter, LoanSummary } from "@/types/loan";
 
 export default function LoansTabScreen() {
   const { t } = useTranslation();
@@ -35,6 +39,27 @@ export default function LoansTabScreen() {
     { label: t("loans.filters.overdue"), value: "overdue" },
     { label: t("loans.filters.paid"), value: "paid" },
   ];
+
+  const handleDelete = (loan: LoanSummary) => {
+    Alert.alert(t("loans.delete.confirmTitle"), t("loans.delete.confirmMessage"), [
+      { text: t("loans.delete.cancel"), style: "cancel" },
+      {
+        text: t("loans.delete.confirm"),
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await deleteLoan(loan._id);
+            refetch();
+          } catch (err) {
+            Alert.alert(
+              t("loans.delete.errorTitle"),
+              err instanceof ApiError ? err.message : t("loans.delete.errorMessage"),
+            );
+          }
+        },
+      },
+    ]);
+  };
 
   if (isLoading) {
     return (
@@ -63,7 +88,9 @@ export default function LoansTabScreen() {
         data={data ?? []}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
-          <LoanListItem loan={item} onPress={() => router.push(`/loan/${item._id}`)} />
+          <SwipeToDelete onDelete={() => handleDelete(item)} actionLabel={t("loans.delete.action")}>
+            <LoanListItem loan={item} onPress={() => router.push(`/loan/${item._id}`)} />
+          </SwipeToDelete>
         )}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}

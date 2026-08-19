@@ -97,7 +97,16 @@
     "errors": {
       "loadFailed": "Couldn't load the directory. Try again."
     },
-    "retry": "Retry"
+    "retry": "Retry",
+    "delete": {
+      "action": "Delete",
+      "confirmTitle": "Delete customer?",
+      "confirmMessage": "This will permanently delete the customer and can't be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "errorTitle": "Couldn't delete",
+      "errorMessage": "Something went wrong. Try again."
+    }
   },
   "loans": {
     "eyebrow": "Portfolio of",
@@ -130,7 +139,16 @@
     "errors": {
       "loadFailed": "Couldn't load loans. Try again."
     },
-    "retry": "Retry"
+    "retry": "Retry",
+    "delete": {
+      "action": "Delete",
+      "confirmTitle": "Delete loan?",
+      "confirmMessage": "This will permanently delete the loan and can't be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "errorTitle": "Couldn't delete",
+      "errorMessage": "Something went wrong. Try again."
+    }
   },
   "loanForm": {
     "title": "New Loan",

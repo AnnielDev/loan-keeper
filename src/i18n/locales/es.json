@@ -97,7 +97,16 @@
     "errors": {
       "loadFailed": "No se pudo cargar el directorio. Intenta de nuevo."
     },
-    "retry": "Reintentar"
+    "retry": "Reintentar",
+    "delete": {
+      "action": "Eliminar",
+      "confirmTitle": "¿Eliminar cliente?",
+      "confirmMessage": "Esto eliminará al cliente de forma permanente y no se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar",
+      "errorTitle": "No se pudo eliminar",
+      "errorMessage": "Algo salió mal. Intenta de nuevo."
+    }
   },
   "loans": {
     "eyebrow": "Cartera de",
@@ -130,7 +139,16 @@
     "errors": {
       "loadFailed": "No se pudieron cargar los préstamos. Intenta de nuevo."
     },
-    "retry": "Reintentar"
+    "retry": "Reintentar",
+    "delete": {
+      "action": "Eliminar",
+      "confirmTitle": "¿Eliminar préstamo?",
+      "confirmMessage": "Esto eliminará el préstamo de forma permanente y no se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar",
+      "errorTitle": "No se pudo eliminar",
+      "errorMessage": "Algo salió mal. Intenta de nuevo."
+    }
   },
   "loanForm": {
     "title": "Nuevo Préstamo",

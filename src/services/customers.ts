@@ -39,3 +39,7 @@ export function updateCustomer(id: string, payload: UpdateCustomerPayload) {
     body: JSON.stringify(payload),
   });
 }
+
+export function deleteCustomer(id: string) {
+  return apiFetch<{ message?: string }>(`/customers/${id}`, { method: "DELETE" });
+}

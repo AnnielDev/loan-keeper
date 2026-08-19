@@ -95,7 +95,16 @@
     "errors": {
       "loadFailed": "无法加载客户列表，请重试。"
     },
-    "retry": "重试"
+    "retry": "重试",
+    "delete": {
+      "action": "删除",
+      "confirmTitle": "删除客户？",
+      "confirmMessage": "此操作将永久删除该客户，且无法撤销。",
+      "cancel": "取消",
+      "confirm": "删除",
+      "errorTitle": "无法删除",
+      "errorMessage": "出了点问题，请重试。"
+    }
   },
   "loans": {
     "eyebrow": "贷款组合",
@@ -127,7 +136,16 @@
     "errors": {
       "loadFailed": "无法加载贷款，请重试。"
     },
-    "retry": "重试"
+    "retry": "重试",
+    "delete": {
+      "action": "删除",
+      "confirmTitle": "删除贷款？",
+      "confirmMessage": "此操作将永久删除该贷款，且无法撤销。",
+      "cancel": "取消",
+      "confirm": "删除",
+      "errorTitle": "无法删除",
+      "errorMessage": "出了点问题，请重试。"
+    }
   },
   "loanForm": {
     "title": "新贷款",

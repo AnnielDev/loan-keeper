@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
+  Alert,
   FlatList,
   Pressable,
   RefreshControl,
@@ -18,9 +19,12 @@ import { FloatingActionButton } from "@/components/ui/FloatingActionButton";
 import { ScreenHeader } from "@/components/ui/ScreenHeader";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
+import { SwipeToDelete } from "@/components/ui/SwipeToDelete";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useCustomers } from "@/hooks/useCustomers";
-import type { CustomerStatusFilter } from "@/types/customer";
+import { ApiError } from "@/services/api";
+import { deleteCustomer } from "@/services/customers";
+import type { CustomerStatusFilter, CustomerSummary } from "@/types/customer";
 
 export default function CustomersTabScreen() {
   const { t } = useTranslation();
@@ -34,6 +38,27 @@ export default function CustomersTabScreen() {
     { label: t("customers.filters.active"), value: "active" },
     { label: t("customers.filters.overdue"), value: "overdue" },
   ];
+
+  const handleDelete = (customer: CustomerSummary) => {
+    Alert.alert(t("customers.delete.confirmTitle"), t("customers.delete.confirmMessage"), [
+      { text: t("customers.delete.cancel"), style: "cancel" },
+      {
+        text: t("customers.delete.confirm"),
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await deleteCustomer(customer._id);
+            refetch();
+          } catch (err) {
+            Alert.alert(
+              t("customers.delete.errorTitle"),
+              err instanceof ApiError ? err.message : t("customers.delete.errorMessage"),
+            );
+          }
+        },
+      },
+    ]);
+  };
 
   if (isLoading) {
     return (
@@ -61,7 +86,11 @@ export default function CustomersTabScreen() {
       <FlatList
         data={data ?? []}
         keyExtractor={(item) => item._id}
-        renderItem={({ item }) => <CustomerListItem customer={item} />}
+        renderItem={({ item }) => (
+          <SwipeToDelete onDelete={() => handleDelete(item)} actionLabel={t("customers.delete.action")}>
+            <CustomerListItem customer={item} />
+          </SwipeToDelete>
+        )}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
         refreshControl={

@@ -5,6 +5,7 @@ import { StatusBar } from "expo-status-bar";
 import * as SystemUI from "expo-system-ui";
 import { useEffect } from "react";
 import { View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { OfflineBanner } from "@/components/general/OfflineBanner";
@@ -30,13 +31,15 @@ export default function RootLayout() {
   }, [colors.background]);
 
   return (
-    <SafeAreaProvider>
-      <View style={{ flex: 1, backgroundColor: colors.background }}>
-        <StatusBar style={scheme === "dark" ? "light" : "dark"} />
-        <OfflineBanner />
-        {isHydrated ? <RootNavigator /> : null}
-      </View>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <View style={{ flex: 1, backgroundColor: colors.background }}>
+          <StatusBar style={scheme === "dark" ? "light" : "dark"} />
+          <OfflineBanner />
+          {isHydrated ? <RootNavigator /> : null}
+        </View>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
 

@@ -28,7 +28,7 @@ import { getCustomers } from "@/services/customers";
 import { createLoan } from "@/services/loans";
 import type { CustomerSummary } from "@/types/customer";
 import type { InterestType, PaymentFrequency } from "@/types/loan";
-import { formatNumericDate } from "@/utils/format";
+import { formatNumericDate, toLocalDateString } from "@/utils/format";
 import { calculateLoan } from "@/utils/loanCalculator";
 import { formatMoneyInput, parseMoneyInput } from "@/utils/moneyInput";
 
@@ -144,7 +144,7 @@ export default function LoanFormScreen() {
         interestType,
         frequency,
         installmentsCount: parsedInstallmentsCount,
-        startDate: startDate.toISOString(),
+        startDate: toLocalDateString(startDate),
       });
       router.back();
     } catch {
