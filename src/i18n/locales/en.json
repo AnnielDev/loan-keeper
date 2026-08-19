@@ -230,6 +230,32 @@
     },
     "retry": "Retry"
   },
+  "customerHistory": {
+    "searchPlaceholder": "Search by ID...",
+    "filters": {
+      "all": "All",
+      "active": "Active",
+      "paid": "Finished",
+      "overdue": "Overdue"
+    },
+    "stats": {
+      "totalLoans": "Total Loans",
+      "activeLoans": "Active"
+    },
+    "totalVolume": "Total Volume",
+    "totalPaidToDate": "Total Paid to Date",
+    "sectionTitle": "Detailed History",
+    "issued": "Issued",
+    "percentPaid": "{{percent}}% Paid",
+    "status": {
+      "active": "Active",
+      "overdue": "Overdue",
+      "paid": "Finished"
+    },
+    "showMore_one": "View {{count}} previous loan",
+    "showMore_other": "View {{count}} previous loans",
+    "empty": "This customer has no loan history."
+  },
   "customerForm": {
     "photo": {
       "title": "Profile photo",

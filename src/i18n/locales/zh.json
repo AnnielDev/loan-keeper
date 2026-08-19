@@ -227,6 +227,31 @@
     },
     "retry": "重试"
   },
+  "customerHistory": {
+    "searchPlaceholder": "按编号搜索...",
+    "filters": {
+      "all": "全部",
+      "active": "进行中",
+      "paid": "已完成",
+      "overdue": "逾期"
+    },
+    "stats": {
+      "totalLoans": "贷款总数",
+      "activeLoans": "进行中"
+    },
+    "totalVolume": "总金额",
+    "totalPaidToDate": "累计已还金额",
+    "sectionTitle": "详细记录",
+    "issued": "发放日期",
+    "percentPaid": "已还 {{percent}}%",
+    "status": {
+      "active": "进行中",
+      "overdue": "逾期",
+      "paid": "已完成"
+    },
+    "showMore": "查看 {{count}} 笔更早的贷款",
+    "empty": "该客户没有贷款记录。"
+  },
   "customerForm": {
     "photo": {
       "title": "头像照片",

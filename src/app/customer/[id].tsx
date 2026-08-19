@@ -132,7 +132,7 @@ export default function CustomerDetailScreen() {
             <SecondaryButton
               label={t("customerDetail.viewHistory")}
               icon={<Icon family="Ionicons" name="document-text-outline" size={20} color={colors.text} />}
-              onPress={() => {}}
+              onPress={() => router.push({ pathname: "/customer-history", params: { customerId: data._id } })}
             />
           </View>
         </View>

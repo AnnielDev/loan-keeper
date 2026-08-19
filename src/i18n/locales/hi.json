@@ -230,6 +230,32 @@
     },
     "retry": "पुनः प्रयास करें"
   },
+  "customerHistory": {
+    "searchPlaceholder": "आईडी से खोजें...",
+    "filters": {
+      "all": "सभी",
+      "active": "सक्रिय",
+      "paid": "समाप्त",
+      "overdue": "बकाया"
+    },
+    "stats": {
+      "totalLoans": "कुल ऋण",
+      "activeLoans": "सक्रिय"
+    },
+    "totalVolume": "कुल राशि",
+    "totalPaidToDate": "अब तक भुगतान की गई राशि",
+    "sectionTitle": "विस्तृत इतिहास",
+    "issued": "जारी",
+    "percentPaid": "{{percent}}% भुगतान",
+    "status": {
+      "active": "सक्रिय",
+      "overdue": "बकाया",
+      "paid": "समाप्त"
+    },
+    "showMore_one": "{{count}} पिछला ऋण देखें",
+    "showMore_other": "{{count}} पिछले ऋण देखें",
+    "empty": "इस ग्राहक का कोई ऋण इतिहास नहीं है।"
+  },
   "customerForm": {
     "photo": {
       "title": "प्रोफ़ाइल फ़ोटो",

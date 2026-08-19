@@ -230,6 +230,32 @@
     },
     "retry": "Reintentar"
   },
+  "customerHistory": {
+    "searchPlaceholder": "Buscar por ID...",
+    "filters": {
+      "all": "Todos",
+      "active": "Activos",
+      "paid": "Finalizados",
+      "overdue": "Vencidos"
+    },
+    "stats": {
+      "totalLoans": "Total Préstamos",
+      "activeLoans": "Activos"
+    },
+    "totalVolume": "Volumen Total",
+    "totalPaidToDate": "Total Pagado a la Fecha",
+    "sectionTitle": "Historial Detallado",
+    "issued": "Emitido",
+    "percentPaid": "{{percent}}% Pagado",
+    "status": {
+      "active": "Activo",
+      "overdue": "Atrasado",
+      "paid": "Finalizado"
+    },
+    "showMore_one": "Ver {{count}} préstamo anterior",
+    "showMore_other": "Ver {{count}} préstamos anteriores",
+    "empty": "Este cliente no tiene préstamos en su historial."
+  },
   "customerForm": {
     "photo": {
       "title": "Foto de perfil",

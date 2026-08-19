@@ -73,6 +73,14 @@ export function formatNumericDate(date: Date, locale: string): string {
   }).format(date);
 }
 
+export function formatMediumDate(isoDate: string, locale: string): string {
+  return new Intl.DateTimeFormat(locale, {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(new Date(isoDate));
+}
+
 export function formatLongDate(isoDate: string, locale: string): string {
   return new Intl.DateTimeFormat(locale, {
     day: "numeric",

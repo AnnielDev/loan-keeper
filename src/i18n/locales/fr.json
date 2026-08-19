@@ -230,6 +230,32 @@
     },
     "retry": "Réessayer"
   },
+  "customerHistory": {
+    "searchPlaceholder": "Rechercher par ID...",
+    "filters": {
+      "all": "Tous",
+      "active": "Actifs",
+      "paid": "Terminés",
+      "overdue": "En retard"
+    },
+    "stats": {
+      "totalLoans": "Total des prêts",
+      "activeLoans": "Actifs"
+    },
+    "totalVolume": "Volume total",
+    "totalPaidToDate": "Total payé à ce jour",
+    "sectionTitle": "Historique détaillé",
+    "issued": "Émis",
+    "percentPaid": "{{percent}}% payé",
+    "status": {
+      "active": "Actif",
+      "overdue": "En retard",
+      "paid": "Terminé"
+    },
+    "showMore_one": "Voir {{count}} prêt précédent",
+    "showMore_other": "Voir {{count}} prêts précédents",
+    "empty": "Ce client n'a aucun historique de prêt."
+  },
   "customerForm": {
     "photo": {
       "title": "Photo de profil",
