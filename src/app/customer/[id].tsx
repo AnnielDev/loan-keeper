@@ -1,16 +1,6 @@
 import { router, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  ActivityIndicator,
-  Linking,
-  Pressable,
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, Linking, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Icon } from "@/components/general/Icon";
@@ -26,7 +16,6 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StatCard } from "@/components/ui/StatCard";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useCustomerDetail } from "@/hooks/useCustomerDetail";
-import { payInstallment } from "@/services/loans";
 import type { CustomerLoanSummary } from "@/types/customer";
 import { useAuthStore } from "@/store/auth";
 import { formatCurrency } from "@/utils/format";
@@ -44,21 +33,12 @@ export default function CustomerDetailScreen() {
   const currency = useAuthStore((state) => state.user?.currency ?? "USD");
   const { data, isLoading, isRefreshing, error, refetch } = useCustomerDetail(id);
 
-  const [payingLoanId, setPayingLoanId] = useState<string | null>(null);
-  const [paymentError, setPaymentError] = useState<string | null>(null);
-
-  const handleRegisterPayment = async (loan: CustomerLoanSummary) => {
+  const handleRegisterPayment = (loan: CustomerLoanSummary) => {
     if (!loan.nextInstallmentId) return;
-    setPaymentError(null);
-    setPayingLoanId(loan._id);
-    try {
-      await payInstallment(loan._id, loan.nextInstallmentId, loan.nextInstallmentAmount ?? undefined);
-      await refetch();
-    } catch {
-      setPaymentError(t("customerDetail.loans.paymentError"));
-    } finally {
-      setPayingLoanId(null);
-    }
+    router.push({
+      pathname: "/loan-payment-form",
+      params: { loanId: loan._id, installmentId: loan.nextInstallmentId },
+    });
   };
 
   const handleMessage = () => {
@@ -170,10 +150,6 @@ export default function CustomerDetailScreen() {
           action={{ label: t("customerDetail.loans.viewAll"), onPress: () => router.push("/loans") }}
         />
 
-        {paymentError ? (
-          <Text style={[styles.paymentError, { color: colors.danger }]}>{paymentError}</Text>
-        ) : null}
-
         {activeLoans.length === 0 ? (
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
             {t("customerDetail.loans.empty")}
@@ -183,12 +159,16 @@ export default function CustomerDetailScreen() {
             {featuredLoan ? (
               <LoanDetailCard
                 loan={featuredLoan}
+                onPress={() => router.push(`/loan/${featuredLoan._id}`)}
                 onRegisterPayment={() => handleRegisterPayment(featuredLoan)}
-                isRegisteringPayment={payingLoanId === featuredLoan._id}
               />
             ) : null}
             {restLoans.map((loan) => (
-              <LoanCompactRow key={loan._id} loan={loan} />
+              <LoanCompactRow
+                key={loan._id}
+                loan={loan}
+                onPress={() => router.push(`/loan/${loan._id}`)}
+              />
             ))}
           </>
         )}
@@ -236,10 +216,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "center",
     marginTop: 8,
-  },
-  paymentError: {
-    fontSize: 13,
-    textAlign: "center",
   },
   errorText: {
     fontSize: 14,

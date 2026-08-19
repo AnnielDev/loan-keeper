@@ -62,7 +62,9 @@ export default function LoansTabScreen() {
       <FlatList
         data={data ?? []}
         keyExtractor={(item) => item._id}
-        renderItem={({ item }) => <LoanListItem loan={item} />}
+        renderItem={({ item }) => (
+          <LoanListItem loan={item} onPress={() => router.push(`/loan/${item._id}`)} />
+        )}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
         refreshControl={

@@ -70,7 +70,9 @@ function RootNavigator() {
         <Stack.Screen name="(tabs)" options={{ animation: "simple_push" }} />
         <Stack.Screen name="customer-form" options={{ presentation: "modal" }} />
         <Stack.Screen name="loan-form" options={{ presentation: "modal" }} />
+        <Stack.Screen name="loan-payment-form" options={{ presentation: "modal" }} />
         <Stack.Screen name="customer/[id]" />
+        <Stack.Screen name="loan/[id]" />
       </Stack.Protected>
 
       <Stack.Protected guard={isAuthenticated && !canAccessApp}>

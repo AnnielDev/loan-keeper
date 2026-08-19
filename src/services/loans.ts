@@ -1,6 +1,13 @@
 import { apiFetch } from "@/services/api";
 import type { ApiSuccess } from "@/types/auth";
-import type { CreateLoanPayload, Loan, LoanStatusFilter, LoanSummary } from "@/types/loan";
+import type {
+  CreateLoanPayload,
+  Loan,
+  LoanDetail,
+  LoanStatusFilter,
+  LoanSummary,
+  PayInstallmentPayload,
+} from "@/types/loan";
 
 export function getLoans(params: { search?: string; status?: LoanStatusFilter }) {
   const query = new URLSearchParams();
@@ -11,6 +18,10 @@ export function getLoans(params: { search?: string; status?: LoanStatusFilter })
   return apiFetch<LoanSummary[]>(`/loans${qs ? `?${qs}` : ""}`);
 }
 
+export function getLoan(id: string) {
+  return apiFetch<LoanDetail>(`/loans/${id}`);
+}
+
 export function createLoan(payload: CreateLoanPayload) {
   return apiFetch<ApiSuccess<Loan>>("/loans", {
     method: "POST",
@@ -18,9 +29,9 @@ export function createLoan(payload: CreateLoanPayload) {
   });
 }
 
-export function payInstallment(loanId: string, installmentId: string, amount?: number) {
+export function payInstallment(loanId: string, installmentId: string, payload: PayInstallmentPayload) {
   return apiFetch<ApiSuccess<Loan>>(`/loans/${loanId}/installments/${installmentId}/pay`, {
     method: "PATCH",
-    body: JSON.stringify(amount !== undefined ? { amount } : {}),
+    body: JSON.stringify(payload),
   });
 }

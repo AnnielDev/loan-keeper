@@ -3,7 +3,7 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-nati
 
 import { useAppTheme } from "@/hooks/useAppTheme";
 
-export type PrimaryButtonTone = "primary" | "success";
+export type PrimaryButtonTone = "primary" | "success" | "danger";
 
 type PrimaryButtonProps = {
   label: string;
@@ -24,7 +24,8 @@ export function PrimaryButton({
 }: PrimaryButtonProps) {
   const { colors } = useAppTheme();
   const isDisabled = disabled || isLoading;
-  const backgroundColor = tone === "success" ? colors.successSurface : colors.primary;
+  const backgroundColor =
+    tone === "success" ? colors.successSurface : tone === "danger" ? colors.danger : colors.primary;
   const foregroundColor = tone === "success" ? colors.success : colors.onPrimary;
 
   return (

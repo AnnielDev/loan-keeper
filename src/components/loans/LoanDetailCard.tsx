@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Icon } from "@/components/general/Icon";
 import { Badge } from "@/components/ui/Badge";
@@ -13,8 +13,8 @@ import { formatCurrency, formatShortDate } from "@/utils/format";
 
 type LoanDetailCardProps = {
   loan: CustomerLoanSummary;
+  onPress: () => void;
   onRegisterPayment: () => void;
-  isRegisteringPayment?: boolean;
 };
 
 const PROGRESS_TONE: Record<CustomerLoanSummary["status"], ProgressBarTone> = {
@@ -23,7 +23,7 @@ const PROGRESS_TONE: Record<CustomerLoanSummary["status"], ProgressBarTone> = {
   paid: "success",
 };
 
-export function LoanDetailCard({ loan, onRegisterPayment, isRegisteringPayment }: LoanDetailCardProps) {
+export function LoanDetailCard({ loan, onPress, onRegisterPayment }: LoanDetailCardProps) {
   const { t, i18n } = useTranslation();
   const { colors } = useAppTheme();
   const currency = useAuthStore((state) => state.user?.currency ?? "USD");
@@ -40,47 +40,48 @@ export function LoanDetailCard({ loan, onRegisterPayment, isRegisteringPayment }
         : null;
 
   return (
-    <Card style={styles.card}>
-      <View style={styles.topRow}>
-        <View style={styles.identity}>
-          <Badge tone="warning" label={t(`loans.type.${loan.type}`)} />
-          <Text style={[styles.code, { color: colors.textSecondary }]}>#{loan.code}</Text>
+    <Pressable onPress={onPress}>
+      <Card style={styles.card}>
+        <View style={styles.topRow}>
+          <View style={styles.identity}>
+            <Badge tone="warning" label={t(`loans.type.${loan.type}`)} />
+            <Text style={[styles.code, { color: colors.textSecondary }]}>#{loan.code}</Text>
+          </View>
+          <View style={styles.statusColumn}>
+            <Text style={[styles.statusLabel, { color: statusColor }]}>{statusLabel}</Text>
+            {secondaryLabel ? (
+              <Text style={[styles.secondaryLabel, { color: colors.textSecondary }]}>{secondaryLabel}</Text>
+            ) : null}
+          </View>
         </View>
-        <View style={styles.statusColumn}>
-          <Text style={[styles.statusLabel, { color: statusColor }]}>{statusLabel}</Text>
-          {secondaryLabel ? (
-            <Text style={[styles.secondaryLabel, { color: colors.textSecondary }]}>{secondaryLabel}</Text>
-          ) : null}
+
+        <Text style={[styles.capital, { color: colors.text }]}>
+          {t("customerDetail.loans.capital")}: {formatCurrency(loan.principal, currency, i18n.language)}
+        </Text>
+
+        <View style={styles.progressSection}>
+          <View style={styles.progressHeader}>
+            <Text style={[styles.progressLabel, { color: colors.textSecondary }]}>
+              {t("customerDetail.loans.paymentProgress", { percent: loan.progressPercent })}
+            </Text>
+            <Text style={[styles.progressValue, { color: colors.text }]}>
+              {formatCurrency(loan.paidAmount, currency, i18n.language)} /{" "}
+              {formatCurrency(loan.totalAmount, currency, i18n.language)}
+            </Text>
+          </View>
+          <ProgressBar progress={loan.progressPercent} tone={PROGRESS_TONE[loan.status]} />
         </View>
-      </View>
 
-      <Text style={[styles.capital, { color: colors.text }]}>
-        {t("customerDetail.loans.capital")}: {formatCurrency(loan.principal, currency, i18n.language)}
-      </Text>
-
-      <View style={styles.progressSection}>
-        <View style={styles.progressHeader}>
-          <Text style={[styles.progressLabel, { color: colors.textSecondary }]}>
-            {t("customerDetail.loans.paymentProgress", { percent: loan.progressPercent })}
-          </Text>
-          <Text style={[styles.progressValue, { color: colors.text }]}>
-            {formatCurrency(loan.paidAmount, currency, i18n.language)} /{" "}
-            {formatCurrency(loan.totalAmount, currency, i18n.language)}
-          </Text>
-        </View>
-        <ProgressBar progress={loan.progressPercent} tone={PROGRESS_TONE[loan.status]} />
-      </View>
-
-      {loan.status !== "paid" && loan.nextInstallmentId ? (
-        <PrimaryButton
-          tone="success"
-          label={t("customerDetail.loans.registerPayment")}
-          icon={<Icon family="Ionicons" name="card-outline" size={18} color={colors.success} />}
-          onPress={onRegisterPayment}
-          isLoading={isRegisteringPayment}
-        />
-      ) : null}
-    </Card>
+        {loan.status !== "paid" && loan.nextInstallmentId ? (
+          <PrimaryButton
+            tone="success"
+            label={t("customerDetail.loans.registerPayment")}
+            icon={<Icon family="Ionicons" name="card-outline" size={18} color={colors.success} />}
+            onPress={onRegisterPayment}
+          />
+        ) : null}
+      </Card>
+    </Pressable>
   );
 }
 

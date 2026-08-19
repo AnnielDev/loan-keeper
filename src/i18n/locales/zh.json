@@ -200,7 +200,6 @@
       "paymentProgress": "还款进度（{{percent}}%）",
       "nextPaymentShort": "下次 {{date}}",
       "registerPayment": "登记还款",
-      "paymentError": "无法登记还款，请重试。",
       "empty": "该客户没有活跃贷款。"
     },
     "errors": {
@@ -253,6 +252,95 @@
     "errors": {
       "duplicateDocument": "该证件号码对应的客户已存在。",
       "generic": "无法保存客户，请重试。"
+    }
+  },
+  "schedule": {
+    "eyebrow": "付款",
+    "title": "日程",
+    "legend": {
+      "overdue": "逾期",
+      "upcoming": "即将到期",
+      "completed": "已完成"
+    },
+    "agenda": {
+      "heading": "{{date}} 日程",
+      "empty": "这一天没有待付款项。"
+    },
+    "status": {
+      "overdue": "逾期",
+      "today": "今日到期",
+      "upcoming": "即将到期",
+      "completed": "已完成"
+    },
+    "amountDue": "应付金额",
+    "actions": {
+      "collect": "收款",
+      "register": "登记"
+    },
+    "errors": {
+      "loadFailed": "无法加载日程。请重试。"
+    },
+    "retry": "重试"
+  },
+  "loanDetail": {
+    "title": "贷款 #{{code}}",
+    "status": {
+      "active": "进行中",
+      "overdue": "逾期",
+      "paid": "已还清"
+    },
+    "fields": {
+      "principal": "申请金额",
+      "interestRate": "月利率",
+      "totalAmount": "应还总额",
+      "remainingBalance": "剩余余额"
+    },
+    "progress": "还款进度",
+    "scheduleTitle": "还款计划",
+    "installmentLabel": "第 {{index}}/{{total}} 期",
+    "installmentStatus": {
+      "paid": "已还款",
+      "overdue": "已逾期",
+      "pending": "待还款"
+    },
+    "actions": {
+      "collect": "收取本期",
+      "advance": "提前还款"
+    },
+    "registerPayment": "登记还款",
+    "errors": {
+      "loadFailed": "无法加载贷款信息。请重试。"
+    },
+    "retry": "重试"
+  },
+  "paymentForm": {
+    "title": "登记还款",
+    "loanLabel": "贷款",
+    "nextInstallmentLabel": "下一期到期还款",
+    "sectionTitle": "付款详情",
+    "fields": {
+      "amount": "还款金额",
+      "date": "还款日期",
+      "method": "付款方式",
+      "reference": "参考编号",
+      "receipt": "凭证（可选）",
+      "notes": "备注"
+    },
+    "placeholders": {
+      "reference": "例如 9028340",
+      "notes": "添加关于此次还款的备注..."
+    },
+    "receiptCta": "添加照片",
+    "methods": {
+      "cash": "现金",
+      "bank_transfer": "银行转账",
+      "card": "银行卡",
+      "other": "其他"
+    },
+    "submit": "确认还款",
+    "cancel": "取消",
+    "errors": {
+      "generic": "无法登记还款。请重试。"
     }
   },
   "auth": {

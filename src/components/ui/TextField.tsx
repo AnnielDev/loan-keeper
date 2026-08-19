@@ -5,7 +5,7 @@ import { useAppTheme } from "@/hooks/useAppTheme";
 
 type TextFieldProps = {
   label: string;
-  icon: ReactNode;
+  icon?: ReactNode;
   value: string;
   onChangeText: (text: string) => void;
   placeholder?: string;
@@ -13,6 +13,7 @@ type TextFieldProps = {
   autoCapitalize?: TextInputProps["autoCapitalize"];
   errorMessage?: string | null;
   onBlur?: () => void;
+  multiline?: boolean;
 };
 
 export function TextField({
@@ -25,6 +26,7 @@ export function TextField({
   autoCapitalize,
   errorMessage,
   onBlur,
+  multiline,
 }: TextFieldProps) {
   const { colors } = useAppTheme();
 
@@ -35,12 +37,13 @@ export function TextField({
         style={[
           styles.inputWrapper,
           { backgroundColor: colors.surface },
+          multiline && styles.inputWrapperMultiline,
           errorMessage ? { borderWidth: 1, borderColor: colors.danger } : null,
         ]}
       >
         {icon}
         <TextInput
-          style={[styles.input, { color: colors.text }]}
+          style={[styles.input, { color: colors.text }, multiline && styles.inputMultiline]}
           value={value}
           onChangeText={onChangeText}
           onBlur={onBlur}
@@ -48,6 +51,9 @@ export function TextField({
           placeholderTextColor={colors.textSecondary}
           keyboardType={keyboardType}
           autoCapitalize={autoCapitalize}
+          multiline={multiline}
+          numberOfLines={multiline ? 3 : undefined}
+          textAlignVertical={multiline ? "top" : undefined}
         />
       </View>
       {errorMessage ? (
@@ -73,10 +79,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
+  inputWrapperMultiline: {
+    alignItems: "flex-start",
+  },
   input: {
     flex: 1,
     fontSize: 15,
     padding: 0,
+  },
+  inputMultiline: {
+    minHeight: 72,
   },
   error: {
     fontSize: 12,

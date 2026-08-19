@@ -203,7 +203,6 @@
       "paymentProgress": "Progression du paiement ({{percent}}%)",
       "nextPaymentShort": "Prochain {{date}}",
       "registerPayment": "Enregistrer le Paiement",
-      "paymentError": "Impossible d'enregistrer le paiement. Réessayez.",
       "empty": "Ce client n'a aucun prêt actif."
     },
     "errors": {
@@ -256,6 +255,95 @@
     "errors": {
       "duplicateDocument": "Un client avec cette pièce d'identité existe déjà.",
       "generic": "Impossible d'enregistrer le client. Réessayez."
+    }
+  },
+  "schedule": {
+    "eyebrow": "Calendrier des",
+    "title": "Paiements",
+    "legend": {
+      "overdue": "En retard",
+      "upcoming": "À venir",
+      "completed": "Terminé"
+    },
+    "agenda": {
+      "heading": "Agenda du {{date}}",
+      "empty": "Aucun paiement dû ce jour-là."
+    },
+    "status": {
+      "overdue": "En retard",
+      "today": "Échéance aujourd'hui",
+      "upcoming": "À venir",
+      "completed": "Terminé"
+    },
+    "amountDue": "Montant dû",
+    "actions": {
+      "collect": "Encaisser",
+      "register": "Enregistrer"
+    },
+    "errors": {
+      "loadFailed": "Impossible de charger l'agenda. Réessayez."
+    },
+    "retry": "Réessayer"
+  },
+  "loanDetail": {
+    "title": "Prêt #{{code}}",
+    "status": {
+      "active": "Actif",
+      "overdue": "En retard",
+      "paid": "Payé"
+    },
+    "fields": {
+      "principal": "Montant Demandé",
+      "interestRate": "Intérêt Mensuel",
+      "totalAmount": "Total à Payer",
+      "remainingBalance": "Solde Restant"
+    },
+    "progress": "Progression du paiement",
+    "scheduleTitle": "Calendrier des Paiements",
+    "installmentLabel": "Échéance {{index}}/{{total}}",
+    "installmentStatus": {
+      "paid": "Payée",
+      "overdue": "En retard",
+      "pending": "En attente"
+    },
+    "actions": {
+      "collect": "Encaisser l'Échéance",
+      "advance": "Payer à l'Avance"
+    },
+    "registerPayment": "Enregistrer le Paiement",
+    "errors": {
+      "loadFailed": "Impossible de charger le prêt. Réessayez."
+    },
+    "retry": "Réessayer"
+  },
+  "paymentForm": {
+    "title": "Enregistrer le Paiement",
+    "loanLabel": "Prêt",
+    "nextInstallmentLabel": "Prochaine échéance due",
+    "sectionTitle": "Détails du Paiement",
+    "fields": {
+      "amount": "Montant à payer",
+      "date": "Date de paiement",
+      "method": "Méthode de paiement",
+      "reference": "Numéro de Référence",
+      "receipt": "Justificatif (Facultatif)",
+      "notes": "Notes"
+    },
+    "placeholders": {
+      "reference": "Ex. 9028340",
+      "notes": "Ajouter un commentaire sur le paiement..."
+    },
+    "receiptCta": "Ajouter une Photo",
+    "methods": {
+      "cash": "Espèces",
+      "bank_transfer": "Virement Bancaire",
+      "card": "Carte",
+      "other": "Autre"
+    },
+    "submit": "Confirmer le Paiement",
+    "cancel": "Annuler",
+    "errors": {
+      "generic": "Impossible d'enregistrer le paiement. Réessayez."
     }
   },
   "auth": {

@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Icon } from "@/components/general/Icon";
 import { useAppTheme } from "@/hooks/useAppTheme";
@@ -9,9 +9,10 @@ import { formatCurrency, formatShortDate } from "@/utils/format";
 
 type LoanCompactRowProps = {
   loan: CustomerLoanSummary;
+  onPress: () => void;
 };
 
-export function LoanCompactRow({ loan }: LoanCompactRowProps) {
+export function LoanCompactRow({ loan, onPress }: LoanCompactRowProps) {
   const { t, i18n } = useTranslation();
   const { colors } = useAppTheme();
   const currency = useAuthStore((state) => state.user?.currency ?? "USD");
@@ -33,7 +34,7 @@ export function LoanCompactRow({ loan }: LoanCompactRowProps) {
   const pendingAmount = loan.totalAmount - loan.paidAmount;
 
   return (
-    <View style={styles.row}>
+    <Pressable onPress={onPress} style={styles.row}>
       <View style={[styles.iconBadge, { backgroundColor: iconBackground }]}>
         <Icon family="Ionicons" name={iconName} size={18} color={accentColor} />
       </View>
@@ -47,7 +48,7 @@ export function LoanCompactRow({ loan }: LoanCompactRowProps) {
         {formatCurrency(pendingAmount, currency, i18n.language)}
       </Text>
       <Icon family="Ionicons" name="chevron-forward" size={18} color={colors.textSecondary} />
-    </View>
+    </Pressable>
   );
 }
 

@@ -203,7 +203,6 @@
       "paymentProgress": "Payment progress ({{percent}}%)",
       "nextPaymentShort": "Next {{date}}",
       "registerPayment": "Register Payment",
-      "paymentError": "Couldn't register the payment. Try again.",
       "empty": "This customer has no active loans."
     },
     "errors": {
@@ -256,6 +255,95 @@
     "errors": {
       "duplicateDocument": "A customer with that document ID already exists.",
       "generic": "Couldn't save the customer. Try again."
+    }
+  },
+  "schedule": {
+    "eyebrow": "Payment",
+    "title": "Schedule",
+    "legend": {
+      "overdue": "Due",
+      "upcoming": "Upcoming",
+      "completed": "Completed"
+    },
+    "agenda": {
+      "heading": "{{date}} Agenda",
+      "empty": "No payments due on this day."
+    },
+    "status": {
+      "overdue": "Overdue",
+      "today": "Due today",
+      "upcoming": "Upcoming",
+      "completed": "Completed"
+    },
+    "amountDue": "Amount Due",
+    "actions": {
+      "collect": "Collect",
+      "register": "Register"
+    },
+    "errors": {
+      "loadFailed": "Couldn't load the schedule. Try again."
+    },
+    "retry": "Retry"
+  },
+  "loanDetail": {
+    "title": "Loan #{{code}}",
+    "status": {
+      "active": "Active",
+      "overdue": "Overdue",
+      "paid": "Paid"
+    },
+    "fields": {
+      "principal": "Amount Requested",
+      "interestRate": "Monthly Interest",
+      "totalAmount": "Total to Pay",
+      "remainingBalance": "Remaining Balance"
+    },
+    "progress": "Payment Progress",
+    "scheduleTitle": "Payment Schedule",
+    "installmentLabel": "Installment {{index}}/{{total}}",
+    "installmentStatus": {
+      "paid": "Paid",
+      "overdue": "Overdue",
+      "pending": "Pending"
+    },
+    "actions": {
+      "collect": "Collect Installment",
+      "advance": "Pay in Advance"
+    },
+    "registerPayment": "Register Payment",
+    "errors": {
+      "loadFailed": "Couldn't load the loan. Try again."
+    },
+    "retry": "Retry"
+  },
+  "paymentForm": {
+    "title": "Register Payment",
+    "loanLabel": "Loan",
+    "nextInstallmentLabel": "Next installment due",
+    "sectionTitle": "Payment Details",
+    "fields": {
+      "amount": "Amount to Pay",
+      "date": "Payment Date",
+      "method": "Payment Method",
+      "reference": "Reference Number",
+      "receipt": "Receipt (Optional)",
+      "notes": "Notes"
+    },
+    "placeholders": {
+      "reference": "E.g. 9028340",
+      "notes": "Add a comment about the payment..."
+    },
+    "receiptCta": "Add Photo",
+    "methods": {
+      "cash": "Cash",
+      "bank_transfer": "Bank Transfer",
+      "card": "Card",
+      "other": "Other"
+    },
+    "submit": "Confirm Payment",
+    "cancel": "Cancel",
+    "errors": {
+      "generic": "Couldn't register the payment. Try again."
     }
   },
   "auth": {

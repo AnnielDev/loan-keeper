@@ -1,7 +1,7 @@
 import type { Ionicons } from "@expo/vector-icons";
 import type { ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Icon } from "@/components/general/Icon";
 import { Badge, type BadgeTone } from "@/components/ui/Badge";
@@ -14,6 +14,7 @@ import { formatCurrency, formatShortDate } from "@/utils/format";
 
 type LoanListItemProps = {
   loan: LoanSummary;
+  onPress: () => void;
 };
 
 type StatusTone = Exclude<BadgeTone, "neutral">;
@@ -38,7 +39,7 @@ const STATUS_ICON: Record<LoanStatus, IoniconName> = {
   paid: "checkmark-circle",
 };
 
-export function LoanListItem({ loan }: LoanListItemProps) {
+export function LoanListItem({ loan, onPress }: LoanListItemProps) {
   const { t, i18n } = useTranslation();
   const { colors } = useAppTheme();
   const currency = useAuthStore((state) => state.user?.currency ?? "USD");
@@ -60,48 +61,50 @@ export function LoanListItem({ loan }: LoanListItemProps) {
           });
 
   return (
-    <Card style={styles.card}>
-      <View style={styles.topRow}>
-        <View style={styles.identity}>
-          <Text style={[styles.code, { color: colors.textSecondary }]}>#{loan.code}</Text>
-          <Text style={[styles.customerName, { color: colors.text }]} numberOfLines={1}>
-            {loan.customerName}
-          </Text>
+    <Pressable onPress={onPress}>
+      <Card style={styles.card}>
+        <View style={styles.topRow}>
+          <View style={styles.identity}>
+            <Text style={[styles.code, { color: colors.textSecondary }]}>#{loan.code}</Text>
+            <Text style={[styles.customerName, { color: colors.text }]} numberOfLines={1}>
+              {loan.customerName}
+            </Text>
+          </View>
+          <Badge
+            tone={statusTone}
+            label={t(`loans.status.${loan.status}`)}
+            icon={<Icon family="Ionicons" name={STATUS_ICON[loan.status]} size={12} color={statusColor} />}
+          />
         </View>
-        <Badge
-          tone={statusTone}
-          label={t(`loans.status.${loan.status}`)}
-          icon={<Icon family="Ionicons" name={STATUS_ICON[loan.status]} size={12} color={statusColor} />}
-        />
-      </View>
 
-      <Text style={styles.amountLine}>
-        <Text style={[styles.amount, { color: colors.text }]}>
-          {formatCurrency(loan.totalAmount, currency, i18n.language)}
+        <Text style={styles.amountLine}>
+          <Text style={[styles.amount, { color: colors.text }]}>
+            {formatCurrency(loan.totalAmount, currency, i18n.language)}
+          </Text>
+          <Text style={[styles.amountSuffix, { color: colors.textSecondary }]}> {t("loans.totalSuffix")}</Text>
         </Text>
-        <Text style={[styles.amountSuffix, { color: colors.textSecondary }]}> {t("loans.totalSuffix")}</Text>
-      </Text>
 
-      <View style={styles.progressSection}>
-        <View style={styles.progressHeader}>
-          <Text style={[styles.progressLabel, { color: colors.textSecondary }]}>
-            {t("loans.progress")}
-          </Text>
-          <Text style={[styles.progressValue, { color: colors.text }]}>{loan.progressPercent}%</Text>
+        <View style={styles.progressSection}>
+          <View style={styles.progressHeader}>
+            <Text style={[styles.progressLabel, { color: colors.textSecondary }]}>
+              {t("loans.progress")}
+            </Text>
+            <Text style={[styles.progressValue, { color: colors.text }]}>{loan.progressPercent}%</Text>
+          </View>
+          <ProgressBar progress={loan.progressPercent} tone={PROGRESS_TONE[loan.status]} />
         </View>
-        <ProgressBar progress={loan.progressPercent} tone={PROGRESS_TONE[loan.status]} />
-      </View>
 
-      <View style={[styles.divider, { backgroundColor: colors.border }]} />
+        <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
-      <View style={styles.footerRow}>
-        <View style={styles.footerLeft}>
-          <Icon family="Ionicons" name={footerIcon} size={16} color={footerColor} />
-          <Text style={[styles.footerLabel, { color: footerColor }]}>{footerLabel}</Text>
+        <View style={styles.footerRow}>
+          <View style={styles.footerLeft}>
+            <Icon family="Ionicons" name={footerIcon} size={16} color={footerColor} />
+            <Text style={[styles.footerLabel, { color: footerColor }]}>{footerLabel}</Text>
+          </View>
+          <Icon family="Ionicons" name="chevron-forward" size={18} color={colors.textSecondary} />
         </View>
-        <Icon family="Ionicons" name="chevron-forward" size={18} color={colors.textSecondary} />
-      </View>
-    </Card>
+      </Card>
+    </Pressable>
   );
 }
 

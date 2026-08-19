@@ -203,7 +203,6 @@
       "paymentProgress": "Progreso de pago ({{percent}}%)",
       "nextPaymentShort": "Próx. {{date}}",
       "registerPayment": "Registrar Pago",
-      "paymentError": "No se pudo registrar el pago. Intenta de nuevo.",
       "empty": "Este cliente no tiene préstamos activos."
     },
     "errors": {
@@ -256,6 +255,95 @@
     "errors": {
       "duplicateDocument": "Ya existe un cliente con ese documento de identidad.",
       "generic": "No se pudo guardar el cliente. Intenta de nuevo."
+    }
+  },
+  "schedule": {
+    "eyebrow": "Calendario de",
+    "title": "Pagos",
+    "legend": {
+      "overdue": "Vencido",
+      "upcoming": "Próximo",
+      "completed": "Completado"
+    },
+    "agenda": {
+      "heading": "Agenda del {{date}}",
+      "empty": "No hay pagos pendientes este día."
+    },
+    "status": {
+      "overdue": "Vencido",
+      "today": "Vence hoy",
+      "upcoming": "Próximo",
+      "completed": "Completado"
+    },
+    "amountDue": "Monto a Pagar",
+    "actions": {
+      "collect": "Cobrar",
+      "register": "Registrar"
+    },
+    "errors": {
+      "loadFailed": "No se pudo cargar la agenda. Inténtalo de nuevo."
+    },
+    "retry": "Reintentar"
+  },
+  "loanDetail": {
+    "title": "Préstamo #{{code}}",
+    "status": {
+      "active": "Activo",
+      "overdue": "Vencido",
+      "paid": "Pagado"
+    },
+    "fields": {
+      "principal": "Monto Solicitado",
+      "interestRate": "Interés Mensual",
+      "totalAmount": "Total a Pagar",
+      "remainingBalance": "Saldo Pendiente"
+    },
+    "progress": "Progreso del pago",
+    "scheduleTitle": "Cronograma de Pagos",
+    "installmentLabel": "Cuota {{index}}/{{total}}",
+    "installmentStatus": {
+      "paid": "Pagada",
+      "overdue": "Atrasada",
+      "pending": "Pendiente"
+    },
+    "actions": {
+      "collect": "Cobrar Cuota",
+      "advance": "Adelantar Pago"
+    },
+    "registerPayment": "Registrar Pago",
+    "errors": {
+      "loadFailed": "No se pudo cargar el préstamo. Inténtalo de nuevo."
+    },
+    "retry": "Reintentar"
+  },
+  "paymentForm": {
+    "title": "Registrar Pago",
+    "loanLabel": "Préstamo",
+    "nextInstallmentLabel": "Próxima cuota a vencer",
+    "sectionTitle": "Detalles del Pago",
+    "fields": {
+      "amount": "Monto a pagar",
+      "date": "Fecha de pago",
+      "method": "Método de pago",
+      "reference": "Número de Referencia",
+      "receipt": "Comprobante (Opcional)",
+      "notes": "Notas"
+    },
+    "placeholders": {
+      "reference": "Ej. 9028340",
+      "notes": "Añadir comentario sobre el pago..."
+    },
+    "receiptCta": "Agregar Foto",
+    "methods": {
+      "cash": "Efectivo",
+      "bank_transfer": "Transferencia Bancaria",
+      "card": "Tarjeta",
+      "other": "Otro"
+    },
+    "submit": "Confirmar Pago",
+    "cancel": "Cancelar",
+    "errors": {
+      "generic": "No se pudo registrar el pago. Inténtalo de nuevo."
     }
   },
   "auth": {
