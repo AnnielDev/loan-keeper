@@ -3,7 +3,7 @@ export type LoanStatusFilter = "all" | "active" | "overdue" | "paid";
 
 export type LoanType = "personal" | "micro_credito";
 export type InterestType = "simple" | "compound";
-export type PaymentFrequency = "weekly" | "biweekly" | "monthly";
+export type PaymentFrequency = "weekly" | "biweekly" | "monthly" | "every_2_months" | "every_3_months";
 export type PaymentMethod = "cash" | "bank_transfer" | "card" | "other";
 export type InstallmentStatus = "paid" | "overdue" | "pending";
 

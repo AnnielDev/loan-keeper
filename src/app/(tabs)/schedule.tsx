@@ -18,6 +18,7 @@ import { ScreenHeader } from "@/components/ui/ScreenHeader";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useScheduleEvents } from "@/hooks/useScheduleEvents";
 import type { ScheduleEvent } from "@/types/schedule";
+import { toLocalDateString } from "@/utils/format";
 
 const DOT_PRIORITY: Record<CalendarDotStatus, number> = {
   overdue: 0,
@@ -31,7 +32,7 @@ function todayIsoDate(): string {
 }
 
 function eventIsoDate(event: ScheduleEvent): string {
-  return event.dueDate.slice(0, 10);
+  return toLocalDateString(new Date(event.dueDate));
 }
 
 // A plain "YYYY-MM-DD" key must be parsed as a local date, not via `new

@@ -174,7 +174,9 @@
     "frequency": {
       "weekly": "Hebdomadaire",
       "biweekly": "Bimensuel",
-      "monthly": "Mensuel"
+      "monthly": "Mensuel",
+      "every_2_months": "Tous les 2 mois",
+      "every_3_months": "Tous les 3 mois"
     },
     "summary": {
       "title": "Résumé Estimé",

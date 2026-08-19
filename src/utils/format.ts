@@ -8,26 +8,54 @@ export function formatCurrency(amount: number, currency: string, locale: string)
 
 const COMPACT_CURRENCY_THRESHOLD = 1_000_000;
 
+/** Hermes' Intl.NumberFormat silently ignores `notation: "compact"` on some
+ * platforms (falls back to plain digits instead of throwing), so scaling is
+ * done manually here rather than relying on that option. */
+const COMPACT_SCALES: { value: number; suffix: string }[] = [
+  { value: 1_000_000_000_000, suffix: "T" },
+  { value: 1_000_000_000, suffix: "B" },
+  { value: 1_000_000, suffix: "M" },
+  { value: 1_000, suffix: "K" },
+];
+
+function pickCompactScale(amount: number): { value: number; suffix: string } | undefined {
+  const absAmount = Math.abs(amount);
+  return COMPACT_SCALES.find((scale) => absAmount >= scale.value);
+}
+
 /** Like formatCurrency, but switches to compact scale notation (1.20M, 3.40B, ...)
  * once the amount reaches one million, for space-constrained dashboard cards. */
 export function formatCurrencyCompact(amount: number, currency: string, locale: string): string {
   if (Math.abs(amount) < COMPACT_CURRENCY_THRESHOLD) {
     return formatCurrency(amount, currency, locale);
   }
-  return new Intl.NumberFormat(locale, {
+
+  const scale = pickCompactScale(amount);
+  if (!scale) {
+    return formatCurrency(amount, currency, locale);
+  }
+
+  const parts = new Intl.NumberFormat(locale, {
     style: "currency",
     currency,
-    notation: "compact",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(amount);
+  }).formatToParts(amount / scale.value);
+
+  const numericType = parts.some((part) => part.type === "fraction") ? "fraction" : "integer";
+  const suffixAfterIndex = parts.map((part) => part.type).lastIndexOf(numericType);
+
+  return parts.map((part, index) => (index === suffixAfterIndex ? part.value + scale.suffix : part.value)).join("");
 }
 
 export function formatCompactNumber(amount: number, locale: string): string {
-  return new Intl.NumberFormat(locale, {
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(amount);
+  const scale = pickCompactScale(amount);
+  if (!scale) {
+    return new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(amount);
+  }
+
+  const formatted = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(amount / scale.value);
+  return `${formatted}${scale.suffix}`;
 }
 
 export function formatShortDate(isoDate: string, locale: string): string {

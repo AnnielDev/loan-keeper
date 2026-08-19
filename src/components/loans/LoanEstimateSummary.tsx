@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/Card";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useAuthStore } from "@/store/auth";
 import type { LoanCalculation } from "@/utils/loanCalculator";
-import { formatCurrency } from "@/utils/format";
+import { formatCurrencyCompact } from "@/utils/format";
 
 type LoanEstimateSummaryProps = {
   calculation: LoanCalculation;
@@ -17,7 +17,7 @@ export function LoanEstimateSummary({ calculation }: LoanEstimateSummaryProps) {
   const { colors } = useAppTheme();
   const currency = useAuthStore((state) => state.user?.currency ?? "USD");
 
-  const format = (amount: number) => formatCurrency(amount, currency, i18n.language);
+  const format = (amount: number) => formatCurrencyCompact(amount, currency, i18n.language);
 
   return (
     <Card backgroundColor={colors.primary} style={styles.card}>

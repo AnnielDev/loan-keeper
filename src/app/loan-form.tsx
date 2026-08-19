@@ -105,6 +105,8 @@ export default function LoanFormScreen() {
     { label: t("loanForm.frequency.weekly"), value: "weekly" },
     { label: t("loanForm.frequency.biweekly"), value: "biweekly" },
     { label: t("loanForm.frequency.monthly"), value: "monthly" },
+    { label: t("loanForm.frequency.every_2_months"), value: "every_2_months" },
+    { label: t("loanForm.frequency.every_3_months"), value: "every_3_months" },
   ];
 
   const interestTypeOptions: { label: string; value: InterestType }[] = [

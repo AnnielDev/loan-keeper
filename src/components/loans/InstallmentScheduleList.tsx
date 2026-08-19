@@ -3,14 +3,16 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useAuthStore } from "@/store/auth";
-import type { LoanInstallmentPreview } from "@/utils/loanCalculator";
 import { formatCurrency, formatShortDate } from "@/utils/format";
+import type { LoanInstallmentPreview } from "@/utils/loanCalculator";
 
 type InstallmentScheduleListProps = {
   installments: LoanInstallmentPreview[];
 };
 
-export function InstallmentScheduleList({ installments }: InstallmentScheduleListProps) {
+export function InstallmentScheduleList({
+  installments,
+}: InstallmentScheduleListProps) {
   const { t, i18n } = useTranslation();
   const { colors } = useAppTheme();
   const currency = useAuthStore((state) => state.user?.currency ?? "USD");
@@ -22,10 +24,15 @@ export function InstallmentScheduleList({ installments }: InstallmentScheduleLis
           key={index}
           style={[
             styles.row,
-            index > 0 && { borderTopColor: colors.border, borderTopWidth: StyleSheet.hairlineWidth },
+            index > 0 && {
+              borderTopColor: colors.border,
+              borderTopWidth: StyleSheet.hairlineWidth,
+            },
           ]}
         >
-          <Text style={[styles.installmentNumber, { color: colors.textSecondary }]}>
+          <Text
+            style={[styles.installmentNumber, { color: colors.textSecondary }]}
+          >
             {t("loanForm.schedule.installmentNumber", { number: index + 1 })}
           </Text>
           <Text style={[styles.date, { color: colors.text }]}>
@@ -60,10 +67,5 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 13,
   },
-  amount: {
-    width: 90,
-    fontSize: 13,
-    fontWeight: "700",
-    textAlign: "right",
-  },
+  amount: { fontSize: 13, fontWeight: "700", textAlign: "right" },
 });

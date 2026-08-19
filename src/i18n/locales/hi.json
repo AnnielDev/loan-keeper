@@ -174,7 +174,9 @@
     "frequency": {
       "weekly": "साप्ताहिक",
       "biweekly": "पाक्षिक",
-      "monthly": "मासिक"
+      "monthly": "मासिक",
+      "every_2_months": "हर 2 महीने में",
+      "every_3_months": "हर 3 महीने में"
     },
     "summary": {
       "title": "अनुमानित सारांश",
