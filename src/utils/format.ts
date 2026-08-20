@@ -1,5 +1,13 @@
+/** Spanish's default grouping/decimal separators (100.000,00) read as a
+ * formatting bug to this app's Spanish-speaking users, who expect
+ * US-style grouping (100,000.00). Substituting "en-US" only for the "es"
+ * locale keeps every other supported language on its own native format. */
+function moneyNumberLocale(locale: string): string {
+  return locale.startsWith("es") ? "en-US" : locale;
+}
+
 export function formatCurrency(amount: number, currency: string, locale: string): string {
-  return new Intl.NumberFormat(locale, {
+  return new Intl.NumberFormat(moneyNumberLocale(locale), {
     style: "currency",
     currency,
     maximumFractionDigits: 2,
@@ -35,7 +43,7 @@ export function formatCurrencyCompact(amount: number, currency: string, locale: 
     return formatCurrency(amount, currency, locale);
   }
 
-  const parts = new Intl.NumberFormat(locale, {
+  const parts = new Intl.NumberFormat(moneyNumberLocale(locale), {
     style: "currency",
     currency,
     minimumFractionDigits: 2,
@@ -49,12 +57,13 @@ export function formatCurrencyCompact(amount: number, currency: string, locale: 
 }
 
 export function formatCompactNumber(amount: number, locale: string): string {
+  const numberLocale = moneyNumberLocale(locale);
   const scale = pickCompactScale(amount);
   if (!scale) {
-    return new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(amount);
+    return new Intl.NumberFormat(numberLocale, { maximumFractionDigits: 1 }).format(amount);
   }
 
-  const formatted = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(amount / scale.value);
+  const formatted = new Intl.NumberFormat(numberLocale, { maximumFractionDigits: 1 }).format(amount / scale.value);
   return `${formatted}${scale.suffix}`;
 }
 
@@ -79,7 +88,7 @@ function parseDateForDisplay(isoDate: string): Date {
  * conversion entirely, so the day shown never shifts with the viewer's
  * timezone. Don't use this for real instants (e.g. createdAt) — it discards
  * the time component on purpose. */
-function parseCalendarDateForDisplay(isoDate: string): Date {
+export function parseCalendarDateForDisplay(isoDate: string): Date {
   const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(isoDate);
   if (match) {
     const [, year, month, day] = match;
@@ -135,4 +144,12 @@ export function formatLongDate(isoDate: string, locale: string): string {
  * calendar day by one in timezones behind UTC. */
 export function toLocalDateString(date: Date): string {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}
+
+/** Today's local calendar date at midnight, with no time-of-day component,
+ * suitable for use as a `minimumDate`/`maximumDate` bound or for comparing
+ * against another calendar-day Date without time drift. */
+export function getStartOfToday(): Date {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
 }

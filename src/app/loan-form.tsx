@@ -28,7 +28,7 @@ import { getCustomers } from "@/services/customers";
 import { createLoan } from "@/services/loans";
 import type { CustomerSummary } from "@/types/customer";
 import type { InterestType, PaymentFrequency } from "@/types/loan";
-import { formatNumericDate, toLocalDateString } from "@/utils/format";
+import { formatNumericDate, getStartOfToday, toLocalDateString } from "@/utils/format";
 import { calculateLoan } from "@/utils/loanCalculator";
 import { formatMoneyInput, parseMoneyInput } from "@/utils/moneyInput";
 
@@ -56,6 +56,8 @@ export default function LoanFormScreen() {
   const [installmentsCount, setInstallmentsCount] = useState(DEFAULT_INSTALLMENTS_COUNT);
   const [startDate, setStartDate] = useState(() => new Date());
   const [showSchedule, setShowSchedule] = useState(false);
+
+  const minStartDate = getStartOfToday();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -132,7 +134,11 @@ export default function LoanFormScreen() {
   );
 
   const canSubmit =
-    !!customerId && parsedPrincipal > 0 && parsedInstallmentsCount > 0 && !isSubmitting;
+    !!customerId &&
+    parsedPrincipal > 0 &&
+    parsedInstallmentsCount > 0 &&
+    startDate.getTime() >= minStartDate.getTime() &&
+    !isSubmitting;
 
   const handleSubmit = async () => {
     setSubmitError(null);
@@ -270,6 +276,7 @@ export default function LoanFormScreen() {
                     value={startDate}
                     displayValue={formatNumericDate(startDate, i18n.language)}
                     onChange={setStartDate}
+                    minimumDate={minStartDate}
                     doneLabel={t("loanForm.datePickerDone")}
                   />
                 </View>

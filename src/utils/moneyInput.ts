@@ -7,11 +7,18 @@ function digitsAndSign(text: string): { isNegative: boolean; digits: string } {
   return { isNegative: text.includes("-"), digits: text.replace(/[^0-9]/g, "") };
 }
 
+/** Spanish's default grouping/decimal separators (100.000,00) read as a
+ * formatting bug to this app's Spanish-speaking users, who expect US-style
+ * grouping (100,000.00) — see the matching fix in utils/format.ts. */
+function moneyNumberLocale(locale: string): string {
+  return locale.startsWith("es") ? "en-US" : locale;
+}
+
 export function formatMoneyInput(text: string, locale: string): string {
   const { isNegative, digits } = digitsAndSign(text);
   if (digits.length === 0) return isNegative ? "-" : "";
   const amount = parseInt(digits, 10) / 100;
-  const formatted = new Intl.NumberFormat(locale, {
+  const formatted = new Intl.NumberFormat(moneyNumberLocale(locale), {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(amount);
