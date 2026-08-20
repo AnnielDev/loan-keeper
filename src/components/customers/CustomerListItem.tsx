@@ -28,17 +28,28 @@ export function CustomerListItem({ customer }: CustomerListItemProps) {
         <View style={styles.topRow}>
           <Avatar uri={customer.avatarUrl} name={customer.fullName} size={48} />
           <View style={styles.info}>
-            <Text style={[styles.name, { color: colors.text }]} numberOfLines={2}>
+            <Text
+              style={[styles.name, { color: colors.text }]}
+              numberOfLines={2}
+            >
               {customer.fullName}
             </Text>
             {customer.phone ? (
-              <Text style={[styles.phone, { color: colors.textSecondary }]}>{customer.phone}</Text>
+              <Text style={[styles.phone, { color: colors.textSecondary }]}>
+                {customer.phone}
+              </Text>
             ) : null}
           </View>
           <Badge
             tone={isOverdue ? "danger" : "success"}
-            label={t(isOverdue ? "customers.status.overdue" : "customers.status.active")}
-            icon={<View style={[styles.dot, { backgroundColor: statusColor }]} />}
+            label={t(
+              isOverdue
+                ? "customers.status.overdue"
+                : "customers.status.active",
+            )}
+            icon={
+              <View style={[styles.dot, { backgroundColor: statusColor }]} />
+            }
           />
         </View>
 
@@ -48,7 +59,12 @@ export function CustomerListItem({ customer }: CustomerListItemProps) {
           <Text style={[styles.balanceLabel, { color: colors.textSecondary }]}>
             {t("customers.pendingBalance").toUpperCase()}
           </Text>
-          <Text style={[styles.balanceAmount, { color: isOverdue ? colors.danger : colors.text }]}>
+          <Text
+            style={[
+              styles.balanceAmount,
+              { color: isOverdue ? colors.danger : colors.text },
+            ]}
+          >
             {formatCurrency(customer.pendingBalance, currency, i18n.language)}
           </Text>
         </View>

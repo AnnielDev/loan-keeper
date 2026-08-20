@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useAuthStore } from "@/store/auth";
-import { formatCurrency, formatShortDate } from "@/utils/format";
+import { formatCurrency, formatShortDateFromDate } from "@/utils/format";
 import type { LoanInstallmentPreview } from "@/utils/loanCalculator";
 
 type InstallmentScheduleListProps = {
@@ -36,7 +36,7 @@ export function InstallmentScheduleList({
             {t("loanForm.schedule.installmentNumber", { number: index + 1 })}
           </Text>
           <Text style={[styles.date, { color: colors.text }]}>
-            {formatShortDate(installment.dueDate.toISOString(), i18n.language)}
+            {formatShortDateFromDate(installment.dueDate, i18n.language)}
           </Text>
           <Text style={[styles.amount, { color: colors.text }]}>
             {formatCurrency(installment.amount, currency, i18n.language)}

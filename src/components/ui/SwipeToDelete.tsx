@@ -1,5 +1,6 @@
 import { type ReactNode, useRef } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { Pressable } from "react-native-gesture-handler";
 import Swipeable, { type SwipeableMethods } from "react-native-gesture-handler/ReanimatedSwipeable";
 import Animated, { interpolate, useAnimatedStyle, type SharedValue } from "react-native-reanimated";
 

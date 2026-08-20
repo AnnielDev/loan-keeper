@@ -18,7 +18,6 @@ import { ScreenHeader } from "@/components/ui/ScreenHeader";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useScheduleEvents } from "@/hooks/useScheduleEvents";
 import type { ScheduleEvent } from "@/types/schedule";
-import { toLocalDateString } from "@/utils/format";
 
 const DOT_PRIORITY: Record<CalendarDotStatus, number> = {
   overdue: 0,
@@ -31,8 +30,11 @@ function todayIsoDate(): string {
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 }
 
+// event.dueDate is already a "YYYY-MM-DD" key from the API — reading it
+// directly avoids routing it through `new Date()`, which parses date-only
+// strings as UTC midnight and rolls the day back in timezones behind UTC.
 function eventIsoDate(event: ScheduleEvent): string {
-  return toLocalDateString(new Date(event.dueDate));
+  return event.dueDate.slice(0, 10);
 }
 
 // A plain "YYYY-MM-DD" key must be parsed as a local date, not via `new

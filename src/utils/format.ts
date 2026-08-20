@@ -58,11 +58,51 @@ export function formatCompactNumber(amount: number, locale: string): string {
   return `${formatted}${scale.suffix}`;
 }
 
+/** Date-only strings ("YYYY-MM-DD") parse as UTC midnight per spec, which
+ * rolls the calendar day back by one once formatted in a timezone behind
+ * UTC. They carry no time-of-day, so they should be read as a local
+ * calendar date instead. Full timestamps (with a time component) represent
+ * a real instant and are parsed normally so they still convert to local
+ * time for display. */
+function parseDateForDisplay(isoDate: string): Date {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(isoDate)) {
+    const [year, month, day] = isoDate.split("-").map(Number);
+    return new Date(year, month - 1, day);
+  }
+  return new Date(isoDate);
+}
+
+/** Calendar-day fields (due dates, next payment dates, loan start dates) are
+ * persisted as midnight UTC ("...T00:00:00.000+00:00") even though they
+ * represent a day with no meaningful time-of-day. Reading only the leading
+ * "YYYY-MM-DD" and building a local date from it sidesteps the UTC-midnight
+ * conversion entirely, so the day shown never shifts with the viewer's
+ * timezone. Don't use this for real instants (e.g. createdAt) — it discards
+ * the time component on purpose. */
+function parseCalendarDateForDisplay(isoDate: string): Date {
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(isoDate);
+  if (match) {
+    const [, year, month, day] = match;
+    return new Date(Number(year), Number(month) - 1, Number(day));
+  }
+  return new Date(isoDate);
+}
+
 export function formatShortDate(isoDate: string, locale: string): string {
   return new Intl.DateTimeFormat(locale, {
     day: "2-digit",
     month: "short",
-  }).format(new Date(isoDate));
+  }).format(parseCalendarDateForDisplay(isoDate));
+}
+
+/** Like formatShortDate, but takes a Date object directly (e.g. an
+ * in-memory schedule preview computed locally) so there is no ISO
+ * string round-trip to misparse. */
+export function formatShortDateFromDate(date: Date, locale: string): string {
+  return new Intl.DateTimeFormat(locale, {
+    day: "2-digit",
+    month: "short",
+  }).format(date);
 }
 
 export function formatNumericDate(date: Date, locale: string): string {
@@ -78,7 +118,7 @@ export function formatMediumDate(isoDate: string, locale: string): string {
     day: "2-digit",
     month: "short",
     year: "numeric",
-  }).format(new Date(isoDate));
+  }).format(parseCalendarDateForDisplay(isoDate));
 }
 
 export function formatLongDate(isoDate: string, locale: string): string {
@@ -86,7 +126,7 @@ export function formatLongDate(isoDate: string, locale: string): string {
     day: "numeric",
     month: "long",
     year: "numeric",
-  }).format(new Date(isoDate));
+  }).format(parseDateForDisplay(isoDate));
 }
 
 /** Serializes a Date's local calendar day as "YYYY-MM-DD", ignoring time-of-day

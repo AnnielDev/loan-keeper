@@ -13,7 +13,10 @@ type CustomerBalanceCardProps = {
   riskLevel: RiskLevel;
 };
 
-export function CustomerBalanceCard({ pendingBalance, riskLevel }: CustomerBalanceCardProps) {
+export function CustomerBalanceCard({
+  pendingBalance,
+  riskLevel,
+}: CustomerBalanceCardProps) {
   const { t, i18n } = useTranslation();
   const { colors } = useAppTheme();
   const currency = useAuthStore((state) => state.user?.currency ?? "USD");
