@@ -1,4 +1,7 @@
 {
+  "common": {
+    "ok": "Aceptar"
+  },
   "tabs": {
     "home": "Inicio",
     "customers": "Clientes",

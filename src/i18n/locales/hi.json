@@ -1,4 +1,7 @@
 {
+  "common": {
+    "ok": "ठीक है"
+  },
   "tabs": {
     "home": "होम",
     "customers": "ग्राहक",

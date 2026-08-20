@@ -1,4 +1,7 @@
 {
+  "common": {
+    "ok": "D'accord"
+  },
   "tabs": {
     "home": "Accueil",
     "customers": "Clients",

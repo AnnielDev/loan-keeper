@@ -1,4 +1,7 @@
 {
+  "common": {
+    "ok": "OK"
+  },
   "tabs": {
     "home": "Home",
     "customers": "Customers",

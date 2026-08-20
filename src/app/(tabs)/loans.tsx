@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
-  Alert,
   FlatList,
   Pressable,
   RefreshControl,
@@ -24,6 +23,7 @@ import { useAppTheme } from "@/hooks/useAppTheme";
 import { useLoans } from "@/hooks/useLoans";
 import { ApiError } from "@/services/api";
 import { deleteLoan } from "@/services/loans";
+import { useApiAlertStore } from "@/store/apiAlert";
 import type { LoanStatusFilter, LoanSummary } from "@/types/loan";
 
 export default function LoansTabScreen() {
@@ -32,6 +32,7 @@ export default function LoansTabScreen() {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<LoanStatusFilter>("all");
   const { data, isLoading, isRefreshing, error, refetch } = useLoans(search, status);
+  const showApiAlert = useApiAlertStore((state) => state.showApiAlert);
 
   const filterOptions: { label: string; value: LoanStatusFilter }[] = [
     { label: t("loans.filters.all"), value: "all" },
@@ -45,7 +46,7 @@ export default function LoansTabScreen() {
       await deleteLoan(loan._id);
       refetch();
     } catch (err) {
-      Alert.alert(
+      showApiAlert(
         t("loans.delete.errorTitle"),
         err instanceof ApiError ? err.message : t("loans.delete.errorMessage"),
       );

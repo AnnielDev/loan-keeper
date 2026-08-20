@@ -1,4 +1,7 @@
 {
+  "common": {
+    "ok": "好的"
+  },
   "tabs": {
     "home": "首页",
     "customers": "客户",

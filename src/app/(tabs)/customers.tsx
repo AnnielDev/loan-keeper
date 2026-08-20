@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
-  Alert,
   FlatList,
   Pressable,
   RefreshControl,
@@ -24,6 +23,7 @@ import { useAppTheme } from "@/hooks/useAppTheme";
 import { useCustomers } from "@/hooks/useCustomers";
 import { ApiError } from "@/services/api";
 import { deleteCustomer } from "@/services/customers";
+import { useApiAlertStore } from "@/store/apiAlert";
 import type { CustomerStatusFilter, CustomerSummary } from "@/types/customer";
 
 export default function CustomersTabScreen() {
@@ -32,6 +32,7 @@ export default function CustomersTabScreen() {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<CustomerStatusFilter>("all");
   const { data, isLoading, isRefreshing, error, refetch } = useCustomers(search, status);
+  const showApiAlert = useApiAlertStore((state) => state.showApiAlert);
 
   const filterOptions: { label: string; value: CustomerStatusFilter }[] = [
     { label: t("customers.filters.all"), value: "all" },
@@ -44,7 +45,7 @@ export default function CustomersTabScreen() {
       await deleteCustomer(customer._id);
       refetch();
     } catch (err) {
-      Alert.alert(
+      showApiAlert(
         t("customers.delete.errorTitle"),
         err instanceof ApiError ? err.message : t("customers.delete.errorMessage"),
       );

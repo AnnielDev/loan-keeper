@@ -8,6 +8,7 @@ import { View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { ApiAlertModal } from "@/components/general/ApiAlertModal";
 import { OfflineBanner } from "@/components/general/OfflineBanner";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useAuthStore } from "@/store/auth";
@@ -37,6 +38,7 @@ export default function RootLayout() {
           <StatusBar style={scheme === "dark" ? "light" : "dark"} />
           <OfflineBanner />
           {isHydrated ? <RootNavigator /> : null}
+          <ApiAlertModal />
         </View>
       </SafeAreaProvider>
     </GestureHandlerRootView>
