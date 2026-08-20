@@ -23,12 +23,17 @@ const PROGRESS_TONE: Record<CustomerLoanSummary["status"], ProgressBarTone> = {
   paid: "success",
 };
 
-export function LoanDetailCard({ loan, onPress, onRegisterPayment }: LoanDetailCardProps) {
+export function LoanDetailCard({
+  loan,
+  onPress,
+  onRegisterPayment,
+}: LoanDetailCardProps) {
   const { t, i18n } = useTranslation();
   const { colors } = useAppTheme();
   const currency = useAuthStore((state) => state.user?.currency ?? "USD");
 
-  const statusColor = loan.status === "overdue" ? colors.danger : colors.success;
+  const statusColor =
+    loan.status === "overdue" ? colors.danger : colors.success;
   const statusLabel = t(`loans.status.${loan.status}`);
   const secondaryLabel =
     loan.status === "overdue"
@@ -45,38 +50,61 @@ export function LoanDetailCard({ loan, onPress, onRegisterPayment }: LoanDetailC
         <View style={styles.topRow}>
           <View style={styles.identity}>
             <Badge tone="warning" label={t(`loans.type.${loan.type}`)} />
-            <Text style={[styles.code, { color: colors.textSecondary }]}>#{loan.code}</Text>
+            <Text style={[styles.code, { color: colors.textSecondary }]}>
+              #{loan.code}
+            </Text>
           </View>
           <View style={styles.statusColumn}>
-            <Text style={[styles.statusLabel, { color: statusColor }]}>{statusLabel}</Text>
+            <Text style={[styles.statusLabel, { color: statusColor }]}>
+              {statusLabel}
+            </Text>
             {secondaryLabel ? (
-              <Text style={[styles.secondaryLabel, { color: colors.textSecondary }]}>{secondaryLabel}</Text>
+              <Text
+                style={[styles.secondaryLabel, { color: colors.textSecondary }]}
+              >
+                {secondaryLabel}
+              </Text>
             ) : null}
           </View>
         </View>
 
         <Text style={[styles.capital, { color: colors.text }]}>
-          {t("customerDetail.loans.capital")}: {formatCurrency(loan.principal, currency, i18n.language)}
+          {t("customerDetail.loans.capital")}:{" "}
+          {formatCurrency(loan.principal, currency, i18n.language)}
         </Text>
 
         <View style={styles.progressSection}>
           <View style={styles.progressHeader}>
-            <Text style={[styles.progressLabel, { color: colors.textSecondary }]}>
-              {t("customerDetail.loans.paymentProgress", { percent: loan.progressPercent })}
+            <Text
+              style={[styles.progressLabel, { color: colors.textSecondary }]}
+            >
+              {t("customerDetail.loans.paymentProgress", {
+                percent: loan.progressPercent,
+              })}
             </Text>
             <Text style={[styles.progressValue, { color: colors.text }]}>
               {formatCurrency(loan.paidAmount, currency, i18n.language)} /{" "}
               {formatCurrency(loan.totalAmount, currency, i18n.language)}
             </Text>
           </View>
-          <ProgressBar progress={loan.progressPercent} tone={PROGRESS_TONE[loan.status]} />
+          <ProgressBar
+            progress={loan.progressPercent}
+            tone={PROGRESS_TONE[loan.status]}
+          />
         </View>
 
         {loan.status !== "paid" && loan.nextInstallmentId ? (
           <PrimaryButton
             tone="success"
             label={t("customerDetail.loans.registerPayment")}
-            icon={<Icon family="Ionicons" name="card-outline" size={18} color={colors.success} />}
+            icon={
+              <Icon
+                family="Ionicons"
+                name="card-outline"
+                size={18}
+                color={colors.success}
+              />
+            }
             onPress={onRegisterPayment}
           />
         ) : null}
@@ -121,8 +149,13 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   progressHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    gap: 4,
+    borderWidth: 1,
+    padding: 4,
+    borderRadius: 6,
+    borderColor: "#F9FAFB",
+    alignItems: "center",
   },
   progressLabel: {
     fontSize: 13,

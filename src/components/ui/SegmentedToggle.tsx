@@ -32,9 +32,17 @@ export function SegmentedToggle<T extends string>({
           <Pressable
             key={option.value}
             onPress={() => onChange(option.value)}
-            style={[styles.segment, isActive && { backgroundColor: colors.card }]}
+            style={[
+              styles.segment,
+              isActive && { backgroundColor: colors.card },
+            ]}
           >
-            <Text style={[styles.label, { color: isActive ? colors.primary : colors.textSecondary }]}>
+            <Text
+              style={[
+                styles.label,
+                { color: isActive ? colors.primary : colors.textSecondary },
+              ]}
+            >
               {option.label}
             </Text>
           </Pressable>
@@ -58,7 +66,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   label: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "600",
   },
 });
