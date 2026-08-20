@@ -39,25 +39,16 @@ export default function CustomersTabScreen() {
     { label: t("customers.filters.overdue"), value: "overdue" },
   ];
 
-  const handleDelete = (customer: CustomerSummary) => {
-    Alert.alert(t("customers.delete.confirmTitle"), t("customers.delete.confirmMessage"), [
-      { text: t("customers.delete.cancel"), style: "cancel" },
-      {
-        text: t("customers.delete.confirm"),
-        style: "destructive",
-        onPress: async () => {
-          try {
-            await deleteCustomer(customer._id);
-            refetch();
-          } catch (err) {
-            Alert.alert(
-              t("customers.delete.errorTitle"),
-              err instanceof ApiError ? err.message : t("customers.delete.errorMessage"),
-            );
-          }
-        },
-      },
-    ]);
+  const handleDelete = async (customer: CustomerSummary) => {
+    try {
+      await deleteCustomer(customer._id);
+      refetch();
+    } catch (err) {
+      Alert.alert(
+        t("customers.delete.errorTitle"),
+        err instanceof ApiError ? err.message : t("customers.delete.errorMessage"),
+      );
+    }
   };
 
   if (isLoading) {
@@ -87,7 +78,14 @@ export default function CustomersTabScreen() {
         data={data ?? []}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
-          <SwipeToDelete onDelete={() => handleDelete(item)} actionLabel={t("customers.delete.action")}>
+          <SwipeToDelete
+            onDelete={() => handleDelete(item)}
+            actionLabel={t("customers.delete.action")}
+            confirmTitle={t("customers.delete.confirmTitle")}
+            confirmMessage={t("customers.delete.confirmMessage")}
+            cancelLabel={t("customers.delete.cancel")}
+            confirmLabel={t("customers.delete.confirm")}
+          >
             <CustomerListItem customer={item} />
           </SwipeToDelete>
         )}

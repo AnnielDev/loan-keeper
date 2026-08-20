@@ -40,25 +40,16 @@ export default function LoansTabScreen() {
     { label: t("loans.filters.paid"), value: "paid" },
   ];
 
-  const handleDelete = (loan: LoanSummary) => {
-    Alert.alert(t("loans.delete.confirmTitle"), t("loans.delete.confirmMessage"), [
-      { text: t("loans.delete.cancel"), style: "cancel" },
-      {
-        text: t("loans.delete.confirm"),
-        style: "destructive",
-        onPress: async () => {
-          try {
-            await deleteLoan(loan._id);
-            refetch();
-          } catch (err) {
-            Alert.alert(
-              t("loans.delete.errorTitle"),
-              err instanceof ApiError ? err.message : t("loans.delete.errorMessage"),
-            );
-          }
-        },
-      },
-    ]);
+  const handleDelete = async (loan: LoanSummary) => {
+    try {
+      await deleteLoan(loan._id);
+      refetch();
+    } catch (err) {
+      Alert.alert(
+        t("loans.delete.errorTitle"),
+        err instanceof ApiError ? err.message : t("loans.delete.errorMessage"),
+      );
+    }
   };
 
   if (isLoading) {
@@ -88,7 +79,14 @@ export default function LoansTabScreen() {
         data={data ?? []}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
-          <SwipeToDelete onDelete={() => handleDelete(item)} actionLabel={t("loans.delete.action")}>
+          <SwipeToDelete
+            onDelete={() => handleDelete(item)}
+            actionLabel={t("loans.delete.action")}
+            confirmTitle={t("loans.delete.confirmTitle")}
+            confirmMessage={t("loans.delete.confirmMessage")}
+            cancelLabel={t("loans.delete.cancel")}
+            confirmLabel={t("loans.delete.confirm")}
+          >
             <LoanListItem loan={item} onPress={() => router.push(`/loan/${item._id}`)} />
           </SwipeToDelete>
         )}
