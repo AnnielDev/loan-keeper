@@ -15,7 +15,7 @@ export function getCustomers(params: { search?: string; status?: CustomerStatusF
   if (params.status && params.status !== "all") query.set("status", params.status);
 
   const qs = query.toString();
-  return apiFetch<CustomerSummary[]>(`/customers${qs ? `?${qs}` : ""}`);
+  return apiFetch<CustomerSummary[]>(`/customers/mine${qs ? `?${qs}` : ""}`);
 }
 
 export function createCustomer(payload: CreateCustomerPayload) {
