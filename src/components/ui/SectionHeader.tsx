@@ -18,7 +18,9 @@ export function SectionHeader({ title, action }: SectionHeaderProps) {
       <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
       {action && (
         <Pressable onPress={action.onPress} hitSlop={8}>
-          <Text style={[styles.action, { color: colors.primary }]}>{action.label}</Text>
+          <Text style={[styles.action, { color: colors.primary }]}>
+            {action.label}
+          </Text>
         </Pressable>
       )}
     </View>
@@ -30,7 +32,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 12,
   },
   title: {
     fontSize: 17,

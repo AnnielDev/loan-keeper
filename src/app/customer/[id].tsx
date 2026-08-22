@@ -42,7 +42,9 @@ export default function CustomerDetailScreen() {
   };
 
   const handleMessage = () => {
-    if (data?.phone) Linking.openURL(`sms:${data.phone}`);
+    if (!data?.phone) return;
+    const digitsOnly = data.phone.replace(/\D/g, "");
+    Linking.openURL(`https://wa.me/${digitsOnly}`);
   };
 
   const handleOpenMap = () => {
