@@ -96,7 +96,10 @@ export default function LoanPaymentFormScreen() {
         notes: notes.trim() || undefined,
         paymentDate: toLocalDateString(paymentDate),
       });
-      router.back();
+      router.replace({
+        pathname: "/payment-detail",
+        params: { loanId, installmentId },
+      });
     } catch {
       setSubmitError(t("paymentForm.errors.generic"));
     } finally {

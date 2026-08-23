@@ -395,6 +395,33 @@
       "generic": "No se pudo registrar el pago. Inténtalo de nuevo."
     }
   },
+  "paymentDetail": {
+    "title": "Pago Completado",
+    "subtitle": "¡Gracias! Tu pago ha sido procesado con éxito.",
+    "amountLabel": "Monto Pagado",
+    "sectionTitle": "Información de Pago",
+    "fields": {
+      "date": "Fecha",
+      "method": "Método de Pago",
+      "reference": "Referencia"
+    },
+    "loanSummaryTitle": "Resumen de Préstamo",
+    "loanSummary": {
+      "type": {
+        "personal": "Préstamo Personal",
+        "micro_credito": "Micro-crédito"
+      },
+      "principal": "Capital",
+      "interest": "Interés"
+    },
+    "downloadReceipt": "Descargar Recibo",
+    "share": "Compartir",
+    "shareMessage": "Pago de {{amount}} para el préstamo #{{code}} confirmado.",
+    "noReference": "—",
+    "errors": {
+      "loadFailed": "No se pudo cargar el detalle del pago."
+    }
+  },
   "auth": {
     "signIn": {
       "title": "Iniciar sesión",

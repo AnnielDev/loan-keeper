@@ -7,6 +7,7 @@ import type {
   LoanStatusFilter,
   LoanSummary,
   PayInstallmentPayload,
+  PaymentDetail,
 } from "@/types/loan";
 
 export function getLoans(params: { search?: string; status?: LoanStatusFilter }) {
@@ -38,4 +39,8 @@ export function payInstallment(loanId: string, installmentId: string, payload: P
     method: "PATCH",
     body: JSON.stringify(payload),
   });
+}
+
+export function getPaymentDetail(loanId: string, installmentId: string) {
+  return apiFetch<PaymentDetail>(`/loans/${loanId}/installments/${installmentId}`);
 }

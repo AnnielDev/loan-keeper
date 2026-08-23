@@ -48,7 +48,8 @@
         {
           "locationWhenInUsePermission": "Usamos tu ubicación solo para detectar tu país y zona horaria, y así mostrar fechas correctas."
         }
-      ]
+      ],
+      "expo-sharing"
     ],
     "experiments": {
       "typedRoutes": true,

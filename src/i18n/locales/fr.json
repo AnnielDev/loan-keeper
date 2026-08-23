@@ -395,6 +395,33 @@
       "generic": "Impossible d'enregistrer le paiement. Réessayez."
     }
   },
+  "paymentDetail": {
+    "title": "Paiement Effectué",
+    "subtitle": "Merci ! Votre paiement a été traité avec succès.",
+    "amountLabel": "Montant Payé",
+    "sectionTitle": "Informations de Paiement",
+    "fields": {
+      "date": "Date",
+      "method": "Méthode de Paiement",
+      "reference": "Référence"
+    },
+    "loanSummaryTitle": "Résumé du Prêt",
+    "loanSummary": {
+      "type": {
+        "personal": "Prêt Personnel",
+        "micro_credito": "Microcrédit"
+      },
+      "principal": "Capital",
+      "interest": "Intérêt"
+    },
+    "downloadReceipt": "Télécharger le Reçu",
+    "share": "Partager",
+    "shareMessage": "Paiement de {{amount}} pour le prêt #{{code}} confirmé.",
+    "noReference": "—",
+    "errors": {
+      "loadFailed": "Impossible de charger les détails du paiement."
+    }
+  },
   "auth": {
     "signIn": {
       "title": "Connexion",

@@ -391,6 +391,33 @@
       "generic": "无法登记还款。请重试。"
     }
   },
+  "paymentDetail": {
+    "title": "付款已完成",
+    "subtitle": "谢谢！您的付款已成功处理。",
+    "amountLabel": "已付金额",
+    "sectionTitle": "付款信息",
+    "fields": {
+      "date": "日期",
+      "method": "付款方式",
+      "reference": "参考编号"
+    },
+    "loanSummaryTitle": "贷款摘要",
+    "loanSummary": {
+      "type": {
+        "personal": "个人贷款",
+        "micro_credito": "小额信贷"
+      },
+      "principal": "本金",
+      "interest": "利息"
+    },
+    "downloadReceipt": "下载收据",
+    "share": "分享",
+    "shareMessage": "贷款 #{{code}} 的 {{amount}} 付款已确认。",
+    "noReference": "—",
+    "errors": {
+      "loadFailed": "无法加载付款详情。"
+    }
+  },
   "auth": {
     "signIn": {
       "title": "登录",

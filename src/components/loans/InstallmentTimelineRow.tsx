@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -36,25 +37,35 @@ export function InstallmentTimelineRow({ installment, total, onAction }: Install
   const actionLabel =
     installment.status === "overdue" ? t("loanDetail.actions.collect") : t("loanDetail.actions.advance");
 
+  const rowContent: ReactNode = (
+    <>
+      <View style={[styles.bar, { backgroundColor: barColor }]} />
+      <View style={styles.info}>
+        <Text style={[styles.installmentLabel, { color: colors.text }]}>
+          {t("loanDetail.installmentLabel", { index: installment.index, total })}
+        </Text>
+        <Text style={[styles.date, { color: colors.textSecondary }]}>
+          {formatShortDate(installment.dueDate, i18n.language)}
+        </Text>
+      </View>
+      <View style={styles.amountColumn}>
+        <Text style={[styles.amount, { color: colors.text }]}>
+          {formatCurrency(installment.amount, currency, i18n.language)}
+        </Text>
+        <Badge tone={BADGE_TONE[installment.status]} label={t(`loanDetail.installmentStatus.${installment.status}`)} />
+      </View>
+    </>
+  );
+
   return (
     <Card style={styles.card}>
-      <View style={styles.row}>
-        <View style={[styles.bar, { backgroundColor: barColor }]} />
-        <View style={styles.info}>
-          <Text style={[styles.installmentLabel, { color: colors.text }]}>
-            {t("loanDetail.installmentLabel", { index: installment.index, total })}
-          </Text>
-          <Text style={[styles.date, { color: colors.textSecondary }]}>
-            {formatShortDate(installment.dueDate, i18n.language)}
-          </Text>
-        </View>
-        <View style={styles.amountColumn}>
-          <Text style={[styles.amount, { color: colors.text }]}>
-            {formatCurrency(installment.amount, currency, i18n.language)}
-          </Text>
-          <Badge tone={BADGE_TONE[installment.status]} label={t(`loanDetail.installmentStatus.${installment.status}`)} />
-        </View>
-      </View>
+      {installment.status === "paid" ? (
+        <Pressable style={styles.row} onPress={onAction}>
+          {rowContent}
+        </Pressable>
+      ) : (
+        <View style={styles.row}>{rowContent}</View>
+      )}
 
       {installment.status !== "paid" ? (
         <Pressable onPress={onAction} style={[styles.actionRow, { borderTopColor: colors.border }]}>

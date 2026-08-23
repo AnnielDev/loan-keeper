@@ -79,6 +79,7 @@ function RootNavigator() {
         <Stack.Screen name="customer/[id]" />
         <Stack.Screen name="customer-history" />
         <Stack.Screen name="loan/[id]" />
+        <Stack.Screen name="payment-detail" />
       </Stack.Protected>
 
       <Stack.Protected guard={isAuthenticated && !canAccessApp}>

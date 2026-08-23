@@ -395,6 +395,33 @@
       "generic": "Couldn't register the payment. Try again."
     }
   },
+  "paymentDetail": {
+    "title": "Payment Completed",
+    "subtitle": "Thank you! Your payment was processed successfully.",
+    "amountLabel": "Amount Paid",
+    "sectionTitle": "Payment Information",
+    "fields": {
+      "date": "Date",
+      "method": "Payment Method",
+      "reference": "Reference"
+    },
+    "loanSummaryTitle": "Loan Summary",
+    "loanSummary": {
+      "type": {
+        "personal": "Personal Loan",
+        "micro_credito": "Micro-credit Loan"
+      },
+      "principal": "Principal",
+      "interest": "Interest"
+    },
+    "downloadReceipt": "Download Receipt",
+    "share": "Share",
+    "shareMessage": "Payment of {{amount}} for loan #{{code}} confirmed.",
+    "noReference": "—",
+    "errors": {
+      "loadFailed": "Couldn't load payment details."
+    }
+  },
   "auth": {
     "signIn": {
       "title": "Sign in",

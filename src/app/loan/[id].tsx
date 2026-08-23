@@ -72,10 +72,15 @@ export default function LoanDetailScreen() {
               installment={installment}
               total={data.installments.length}
               onAction={() =>
-                router.push({
-                  pathname: "/loan-payment-form",
-                  params: { loanId: data._id, installmentId: installment._id },
-                })
+                installment.status === "paid"
+                  ? router.push({
+                      pathname: "/payment-detail",
+                      params: { loanId: data._id, installmentId: installment._id },
+                    })
+                  : router.push({
+                      pathname: "/loan-payment-form",
+                      params: { loanId: data._id, installmentId: installment._id },
+                    })
               }
             />
           ))}

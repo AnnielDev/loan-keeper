@@ -395,6 +395,33 @@
       "generic": "भुगतान दर्ज नहीं हो सका। पुनः प्रयास करें।"
     }
   },
+  "paymentDetail": {
+    "title": "भुगतान पूर्ण हुआ",
+    "subtitle": "धन्यवाद! आपका भुगतान सफलतापूर्वक संसाधित हो गया है।",
+    "amountLabel": "भुगतान की गई राशि",
+    "sectionTitle": "भुगतान की जानकारी",
+    "fields": {
+      "date": "तारीख",
+      "method": "भुगतान का तरीका",
+      "reference": "संदर्भ"
+    },
+    "loanSummaryTitle": "ऋण सारांश",
+    "loanSummary": {
+      "type": {
+        "personal": "व्यक्तिगत ऋण",
+        "micro_credito": "माइक्रो-क्रेडिट"
+      },
+      "principal": "मूलधन",
+      "interest": "ब्याज"
+    },
+    "downloadReceipt": "रसीद डाउनलोड करें",
+    "share": "साझा करें",
+    "shareMessage": "ऋण #{{code}} के लिए {{amount}} का भुगतान पुष्ट हुआ।",
+    "noReference": "—",
+    "errors": {
+      "loadFailed": "भुगतान विवरण लोड नहीं हो सका।"
+    }
+  },
   "auth": {
     "signIn": {
       "title": "साइन इन करें",
