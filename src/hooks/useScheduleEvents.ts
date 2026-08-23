@@ -58,8 +58,7 @@ export function useScheduleEvents(month: number, year: number): UseScheduleEvent
       if (hasLoadedRef.current) {
         runFetch(month, year, false);
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [runFetch]),
+    }, [runFetch, month, year]),
   );
 
   return {
