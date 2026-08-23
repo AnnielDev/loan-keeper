@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Icon } from "@/components/general/Icon";
 import { Avatar } from "@/components/ui/Avatar";
@@ -9,15 +9,23 @@ type CustomerProfileHeaderProps = {
   avatarUrl: string | null;
   fullName: string;
   documentId: string;
+  onAvatarPress?: () => void;
 };
 
-export function CustomerProfileHeader({ avatarUrl, fullName, documentId }: CustomerProfileHeaderProps) {
+export function CustomerProfileHeader({
+  avatarUrl,
+  fullName,
+  documentId,
+  onAvatarPress,
+}: CustomerProfileHeaderProps) {
   const { t } = useTranslation();
   const { colors } = useAppTheme();
 
   return (
     <View style={styles.row}>
-      <Avatar uri={avatarUrl} name={fullName} size={80} />
+      <Pressable onPress={onAvatarPress} disabled={!avatarUrl || !onAvatarPress}>
+        <Avatar uri={avatarUrl} name={fullName} size={80} />
+      </Pressable>
       <View style={styles.info}>
         <Text style={[styles.name, { color: colors.text }]} numberOfLines={2}>
           {fullName}

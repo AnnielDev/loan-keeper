@@ -157,6 +157,9 @@ export default function CustomerDetailScreen() {
           avatarUrl={data.avatarUrl}
           fullName={data.fullName}
           documentId={data.documentId}
+          onAvatarPress={
+            data.avatarUrl ? () => setPreviewUrl(data.avatarUrl) : undefined
+          }
         />
 
         <CustomerBalanceCard
