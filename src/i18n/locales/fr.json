@@ -228,6 +228,9 @@
       "registerPayment": "Enregistrer le Paiement",
       "empty": "Ce client n'a aucun prêt actif."
     },
+    "documents": {
+      "title": "Documents joints"
+    },
     "errors": {
       "loadFailed": "Impossible de charger les informations du client. Réessayez."
     },
@@ -414,6 +417,7 @@
       "principal": "Capital",
       "interest": "Intérêt"
     },
+    "receiptTitle": "Photo du Reçu",
     "downloadReceipt": "Télécharger le Reçu",
     "share": "Partager",
     "shareMessage": "Paiement de {{amount}} pour le prêt #{{code}} confirmé.",

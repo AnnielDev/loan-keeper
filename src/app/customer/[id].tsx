@@ -1,6 +1,8 @@
+import { Image } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, Linking, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Linking, Modal, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Icon } from "@/components/general/Icon";
@@ -32,6 +34,7 @@ export default function CustomerDetailScreen() {
   const { colors } = useAppTheme();
   const currency = useAuthStore((state) => state.user?.currency ?? "USD");
   const { data, isLoading, isRefreshing, error, refetch } = useCustomerDetail(id);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const handleRegisterPayment = (loan: CustomerLoanSummary) => {
     if (!loan.nextInstallmentId) return;
@@ -147,6 +150,19 @@ export default function CustomerDetailScreen() {
           onOpenMap={handleOpenMap}
         />
 
+        {data.documentUrls.length > 0 ? (
+          <View style={styles.documentsSection}>
+            <SectionHeader title={t("customerDetail.documents.title")} />
+            <View style={styles.documentsRow}>
+              {data.documentUrls.map((url) => (
+                <Pressable key={url} onPress={() => setPreviewUrl(url)}>
+                  <Image source={{ uri: url }} style={styles.documentThumb} contentFit="cover" />
+                </Pressable>
+              ))}
+            </View>
+          </View>
+        ) : null}
+
         <SectionHeader
           title={t("customerDetail.loans.title")}
           action={{ label: t("customerDetail.loans.viewAll"), onPress: () => router.push("/loans") }}
@@ -175,6 +191,19 @@ export default function CustomerDetailScreen() {
           </>
         )}
       </ScrollView>
+
+      <Modal
+        visible={previewUrl !== null}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setPreviewUrl(null)}
+      >
+        <Pressable style={styles.previewBackdrop} onPress={() => setPreviewUrl(null)}>
+          {previewUrl ? (
+            <Image source={{ uri: previewUrl }} style={styles.previewImage} contentFit="contain" />
+          ) : null}
+        </Pressable>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -231,5 +260,28 @@ const styles = StyleSheet.create({
   retryLabel: {
     fontSize: 14,
     fontWeight: "700",
+  },
+  documentsSection: {
+    gap: 12,
+  },
+  documentsRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
+  documentThumb: {
+    width: 56,
+    height: 56,
+    borderRadius: 10,
+  },
+  previewBackdrop: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.9)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  previewImage: {
+    width: "100%",
+    height: "80%",
   },
 });

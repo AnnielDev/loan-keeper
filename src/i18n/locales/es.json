@@ -228,6 +228,9 @@
       "registerPayment": "Registrar Pago",
       "empty": "Este cliente no tiene préstamos activos."
     },
+    "documents": {
+      "title": "Documentos Adjuntos"
+    },
     "errors": {
       "loadFailed": "No se pudo cargar la información del cliente. Intenta de nuevo."
     },
@@ -414,6 +417,7 @@
       "principal": "Capital",
       "interest": "Interés"
     },
+    "receiptTitle": "Foto del Recibo",
     "downloadReceipt": "Descargar Recibo",
     "share": "Compartir",
     "shareMessage": "Pago de {{amount}} para el préstamo #{{code}} confirmado.",

@@ -7,6 +7,7 @@ export type ImageSource = "camera" | "library";
 
 export function useImageUpload() {
   const [isUploading, setIsUploading] = useState(false);
+  const [previewUri, setPreviewUri] = useState<string | null>(null);
 
   const pickAndUpload = useCallback(async (source: ImageSource): Promise<string | null> => {
     const permission =
@@ -31,18 +32,15 @@ export function useImageUpload() {
     }
 
     const asset = result.assets[0];
+    setPreviewUri(asset.uri);
     setIsUploading(true);
     try {
-      const { data } = await uploadImage(
-        asset.uri,
-        asset.fileName ?? `photo-${Date.now()}.jpg`,
-        asset.mimeType ?? "image/jpeg",
-      );
+      const { data } = await uploadImage(asset.uri);
       return data.url;
     } finally {
       setIsUploading(false);
     }
   }, []);
 
-  return { pickAndUpload, isUploading };
+  return { pickAndUpload, isUploading, previewUri };
 }

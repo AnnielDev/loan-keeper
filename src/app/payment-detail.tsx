@@ -1,10 +1,12 @@
+import { Image } from "expo-image";
 import * as FileSystem from "expo-file-system/legacy";
 import * as Print from "expo-print";
 import { router, useLocalSearchParams } from "expo-router";
 import * as Sharing from "expo-sharing";
 import type { TFunction } from "i18next";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Icon } from "@/components/general/Icon";
@@ -26,6 +28,7 @@ export default function PaymentDetailScreen() {
   const { colors } = useAppTheme();
   const currency = useAuthStore((state) => state.user?.currency ?? "USD");
   const { data, isLoading, error, refetch } = usePaymentDetail(loanId, installmentId);
+  const [isReceiptPreviewOpen, setIsReceiptPreviewOpen] = useState(false);
 
   const handleDownloadReceipt = async () => {
     if (!data) return;
@@ -163,6 +166,15 @@ export default function PaymentDetailScreen() {
           </Card>
         </View>
 
+        {data.receiptUrl ? (
+          <View>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>{t("paymentDetail.receiptTitle")}</Text>
+            <Pressable onPress={() => setIsReceiptPreviewOpen(true)}>
+              <Image source={{ uri: data.receiptUrl }} style={styles.receiptThumb} contentFit="cover" />
+            </Pressable>
+          </View>
+        ) : null}
+
         <PrimaryButton
           label={t("paymentDetail.downloadReceipt")}
           icon={<Icon family="Ionicons" name="download-outline" size={20} color={colors.onPrimary} />}
@@ -174,6 +186,19 @@ export default function PaymentDetailScreen() {
           <Text style={[styles.shareLabel, { color: colors.primary }]}>{t("paymentDetail.share")}</Text>
         </Pressable>
       </ScrollView>
+
+      <Modal
+        visible={isReceiptPreviewOpen}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setIsReceiptPreviewOpen(false)}
+      >
+        <Pressable style={styles.previewBackdrop} onPress={() => setIsReceiptPreviewOpen(false)}>
+          {data.receiptUrl ? (
+            <Image source={{ uri: data.receiptUrl }} style={styles.previewImage} contentFit="contain" />
+          ) : null}
+        </Pressable>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -453,5 +478,20 @@ const styles = StyleSheet.create({
   retryLabel: {
     fontSize: 14,
     fontWeight: "700",
+  },
+  receiptThumb: {
+    width: 96,
+    height: 96,
+    borderRadius: 12,
+  },
+  previewBackdrop: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.9)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  previewImage: {
+    width: "100%",
+    height: "80%",
   },
 });

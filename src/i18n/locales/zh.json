@@ -225,6 +225,9 @@
       "registerPayment": "登记还款",
       "empty": "该客户没有活跃贷款。"
     },
+    "documents": {
+      "title": "附加文件"
+    },
     "errors": {
       "loadFailed": "无法加载客户信息，请重试。"
     },
@@ -410,6 +413,7 @@
       "principal": "本金",
       "interest": "利息"
     },
+    "receiptTitle": "收据照片",
     "downloadReceipt": "下载收据",
     "share": "分享",
     "shareMessage": "贷款 #{{code}} 的 {{amount}} 付款已确认。",

@@ -165,7 +165,7 @@ export default function CustomerFormScreen() {
       >
         <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <AvatarPicker
-            uri={avatarUrl}
+            uri={avatarUpload.previewUri ?? avatarUrl}
             label={t("customerForm.photo.upload")}
             isUploading={avatarUpload.isUploading}
             onPress={handlePickAvatar}
