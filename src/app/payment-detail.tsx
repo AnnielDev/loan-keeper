@@ -166,6 +166,15 @@ export default function PaymentDetailScreen() {
           </Card>
         </View>
 
+        {data.notes ? (
+          <View>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>{t("paymentDetail.notesTitle")}</Text>
+            <Card style={styles.infoCard}>
+              <Text style={[styles.notesText, { color: colors.text }]}>{data.notes}</Text>
+            </Card>
+          </View>
+        ) : null}
+
         {data.receiptUrl ? (
           <View>
             <Text style={[styles.sectionTitle, { color: colors.text }]}>{t("paymentDetail.receiptTitle")}</Text>
@@ -299,6 +308,7 @@ function buildReceiptHtml(data: PaymentDetail, currency: string, locale: string,
           .row-text { flex: 1; min-width: 0; }
           .row-label { font-size: 11px; color: #6B7280; font-weight: 500; margin: 0 0 2px; }
           .row-value { font-size: 14px; font-weight: 600; margin: 0; }
+          .notes-value { font-size: 13px; line-height: 1.5; margin: 0; padding: 12px 0; }
           .loan-header {
             display: flex;
             align-items: center;
@@ -368,6 +378,19 @@ function buildReceiptHtml(data: PaymentDetail, currency: string, locale: string,
             </div>
           </div>
 
+          ${
+            data.notes
+              ? `
+          <div class="section">
+            <p class="section-title">${escapeHtml(t("paymentDetail.notesTitle"))}</p>
+            <div class="card">
+              <p class="notes-value">${escapeHtml(data.notes)}</p>
+            </div>
+          </div>
+          `
+              : ""
+          }
+
           <div class="footer">
             <p class="footer-code">#${escapeHtml(data.loanCode)}</p>
             <p class="footer-brand">Loan Keeper</p>
@@ -430,6 +453,10 @@ const styles = StyleSheet.create({
   },
   infoCard: {
     gap: 4,
+  },
+  notesText: {
+    fontSize: 14,
+    lineHeight: 20,
   },
   loanHeader: {
     flexDirection: "row",

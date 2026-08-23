@@ -219,6 +219,11 @@
       "address": "पता",
       "customerSince": "ग्राहक बने"
     },
+    "financial": {
+      "title": "वित्तीय जानकारी",
+      "occupation": "व्यवसाय",
+      "monthlyIncome": "मासिक आय"
+    },
     "loans": {
       "title": "सक्रिय ऋण",
       "viewAll": "सभी देखें",
@@ -417,6 +422,7 @@
       "principal": "मूलधन",
       "interest": "ब्याज"
     },
+    "notesTitle": "टिप्पणियाँ",
     "receiptTitle": "रसीद की फोटो",
     "downloadReceipt": "रसीद डाउनलोड करें",
     "share": "साझा करें",

@@ -219,6 +219,11 @@
       "address": "Dirección",
       "customerSince": "Cliente desde"
     },
+    "financial": {
+      "title": "Datos Financieros",
+      "occupation": "Ocupación",
+      "monthlyIncome": "Ingreso Mensual"
+    },
     "loans": {
       "title": "Préstamos Activos",
       "viewAll": "Ver todos",
@@ -417,6 +422,7 @@
       "principal": "Capital",
       "interest": "Interés"
     },
+    "notesTitle": "Notas",
     "receiptTitle": "Foto del Recibo",
     "downloadReceipt": "Descargar Recibo",
     "share": "Compartir",

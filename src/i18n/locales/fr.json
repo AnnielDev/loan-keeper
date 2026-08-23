@@ -219,6 +219,11 @@
       "address": "Adresse",
       "customerSince": "Client depuis"
     },
+    "financial": {
+      "title": "Informations financières",
+      "occupation": "Profession",
+      "monthlyIncome": "Revenu mensuel"
+    },
     "loans": {
       "title": "Prêts Actifs",
       "viewAll": "Voir tout",
@@ -417,6 +422,7 @@
       "principal": "Capital",
       "interest": "Intérêt"
     },
+    "notesTitle": "Notes",
     "receiptTitle": "Photo du Reçu",
     "downloadReceipt": "Télécharger le Reçu",
     "share": "Partager",

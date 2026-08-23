@@ -58,6 +58,8 @@ export type CustomerDetail = {
   documentId: string;
   phone: string | null;
   address: string | null;
+  occupation: string | null;
+  monthlyIncome: number | null;
   avatarUrl: string | null;
   documentUrls: string[];
   riskLevel: RiskLevel;

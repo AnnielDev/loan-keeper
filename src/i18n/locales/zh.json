@@ -216,6 +216,11 @@
       "address": "地址",
       "customerSince": "客户自"
     },
+    "financial": {
+      "title": "财务信息",
+      "occupation": "职业",
+      "monthlyIncome": "月收入"
+    },
     "loans": {
       "title": "活跃贷款",
       "viewAll": "查看全部",
@@ -413,6 +418,7 @@
       "principal": "本金",
       "interest": "利息"
     },
+    "notesTitle": "备注",
     "receiptTitle": "收据照片",
     "downloadReceipt": "下载收据",
     "share": "分享",

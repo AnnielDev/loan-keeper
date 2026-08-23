@@ -219,6 +219,11 @@
       "address": "Address",
       "customerSince": "Customer since"
     },
+    "financial": {
+      "title": "Financial Information",
+      "occupation": "Occupation",
+      "monthlyIncome": "Monthly Income"
+    },
     "loans": {
       "title": "Active Loans",
       "viewAll": "View all",
@@ -417,6 +422,7 @@
       "principal": "Principal",
       "interest": "Interest"
     },
+    "notesTitle": "Notes",
     "receiptTitle": "Receipt Photo",
     "downloadReceipt": "Download Receipt",
     "share": "Share",
