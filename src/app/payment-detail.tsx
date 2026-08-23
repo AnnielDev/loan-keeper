@@ -44,11 +44,20 @@ export default function PaymentDetailScreen() {
         encoding: FileSystem.EncodingType.Base64,
       });
     }
-    if (await Sharing.isAvailableAsync()) {
-      await Sharing.shareAsync(destination ?? uri, {
-        mimeType: "application/pdf",
-        dialogTitle: t("paymentDetail.downloadReceipt"),
-      });
+    try {
+      if (await Sharing.isAvailableAsync()) {
+        await Sharing.shareAsync(destination ?? uri, {
+          mimeType: "application/pdf",
+          dialogTitle: t("paymentDetail.downloadReceipt"),
+        });
+      }
+    } finally {
+      // The share sheet has already read the file by the time shareAsync
+      // resolves (or the share was skipped/cancelled) — delete our copy so
+      // documentDirectory doesn't accumulate a PDF per payment forever.
+      if (destination) {
+        await FileSystem.deleteAsync(destination, { idempotent: true });
+      }
     }
   };
 
