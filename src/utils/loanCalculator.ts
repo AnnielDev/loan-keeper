@@ -21,18 +21,39 @@ export type LoanCalculation = {
   installments: LoanInstallmentPreview[];
 };
 
+export type AmortizationRow = {
+  period: number;
+  dueDate: Date;
+  startingBalance: number;
+  interest: number;
+  principalPaid: number;
+  installment: number;
+  endingBalance: number;
+};
+
 function round(value: number): number {
   return Math.round(value * 100) / 100;
 }
 
+/** Cuota fija de una amortización francesa (interés compuesto sobre saldo insoluto). */
+function calculateCompoundInstallment(principal: number, rate: number, n: number): number {
+  if (n <= 0) return 0;
+  if (rate === 0) return round(principal / n);
+  const growth = Math.pow(1 + rate, n);
+  return round((principal * rate * growth) / (growth - 1));
+}
+
 function calculateTotalInterest(input: LoanCalculationInput): number {
+  const rate = input.interestRate / 100;
+  const n = input.installmentsCount;
+
   if (input.interestType === "compound") {
-    const compounded =
-      input.principal * Math.pow(1 + input.interestRate / 100, input.installmentsCount);
-    return round(compounded - input.principal);
+    if (n <= 0) return 0;
+    const installment = calculateCompoundInstallment(input.principal, rate, n);
+    return round(installment * n - input.principal);
   }
 
-  return round(input.principal * (input.interestRate / 100));
+  return round(input.principal * rate * n);
 }
 
 function addPeriods(startDate: Date, frequency: PaymentFrequency, periods: number): Date {
@@ -62,7 +83,15 @@ export function calculateLoan(input: LoanCalculationInput): LoanCalculation {
     return { totalInterest, totalAmount, installmentAmount: 0, installments: [] };
   }
 
-  const baseAmount = round(totalAmount / count);
+  const rate = input.interestRate / 100;
+
+  // Para "compound" usamos la cuota fija de la amortización francesa directamente,
+  // en vez de derivarla de totalAmount / count, para evitar descuadres de redondeo.
+  const baseAmount =
+    input.interestType === "compound"
+      ? calculateCompoundInstallment(input.principal, rate, count)
+      : round(totalAmount / count);
+
   const installments = Array.from({ length: count }, (_, index) => {
     const isLast = index === count - 1;
     const amount = isLast ? round(totalAmount - baseAmount * (count - 1)) : baseAmount;
@@ -70,4 +99,40 @@ export function calculateLoan(input: LoanCalculationInput): LoanCalculation {
   });
 
   return { totalInterest, totalAmount, installmentAmount: baseAmount, installments };
+}
+
+/** Tabla de amortización mes a mes (interés compuesto / saldo insoluto). */
+export function calculateCompoundAmortizationSchedule(
+  input: LoanCalculationInput
+): AmortizationRow[] {
+  const rate = input.interestRate / 100;
+  const n = Math.max(Math.trunc(input.installmentsCount) || 0, 0);
+  if (n === 0) return [];
+
+  const installment = calculateCompoundInstallment(input.principal, rate, n);
+  let balance = input.principal;
+  const rows: AmortizationRow[] = [];
+
+  for (let period = 1; period <= n; period++) {
+    const interest = round(balance * rate);
+    const isLast = period === n;
+    // En la última cuota, el capital amortizado es exactamente lo que queda de saldo,
+    // para que endingBalance cierre en 0.00 sin residuos por acumulación de redondeo.
+    const principalPaid = isLast ? round(balance) : round(installment - interest);
+    const endingBalance = isLast ? 0 : round(balance - principalPaid);
+
+    rows.push({
+      period,
+      dueDate: addPeriods(input.startDate, input.frequency, period),
+      startingBalance: round(balance),
+      interest,
+      principalPaid,
+      installment: isLast ? round(interest + principalPaid) : installment,
+      endingBalance,
+    });
+
+    balance = endingBalance;
+  }
+
+  return rows;
 }

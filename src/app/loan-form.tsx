@@ -20,15 +20,19 @@ import { Card } from "@/components/ui/Card";
 import { DateField } from "@/components/ui/DateField";
 import { FormHeader } from "@/components/ui/FormHeader";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
-import { Select } from "@/components/ui/Select";
 import { SegmentedToggle } from "@/components/ui/SegmentedToggle";
+import { Select } from "@/components/ui/Select";
 import { TextField } from "@/components/ui/TextField";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { getCustomers } from "@/services/customers";
 import { createLoan } from "@/services/loans";
 import type { CustomerSummary } from "@/types/customer";
 import type { InterestType, PaymentFrequency } from "@/types/loan";
-import { formatNumericDate, getStartOfToday, toLocalDateString } from "@/utils/format";
+import {
+  formatNumericDate,
+  getStartOfToday,
+  toLocalDateString,
+} from "@/utils/format";
 import { calculateLoan } from "@/utils/loanCalculator";
 import { formatMoneyInput, parseMoneyInput } from "@/utils/moneyInput";
 
@@ -38,7 +42,9 @@ const DEFAULT_INTEREST_RATE_CENTS = "500";
 export default function LoanFormScreen() {
   const { t, i18n } = useTranslation();
   const { colors } = useAppTheme();
-  const { customerId: preselectedCustomerId } = useLocalSearchParams<{ customerId?: string }>();
+  const { customerId: preselectedCustomerId } = useLocalSearchParams<{
+    customerId?: string;
+  }>();
 
   const [customers, setCustomers] = useState<CustomerSummary[] | null>(null);
   const [isLoadingCustomers, setIsLoadingCustomers] = useState(true);
@@ -53,7 +59,9 @@ export default function LoanFormScreen() {
   const [interestType, setInterestType] = useState<InterestType>("simple");
   const [frequency, setFrequency] = useState<PaymentFrequency>("monthly");
   const [isFrequencyPickerOpen, setIsFrequencyPickerOpen] = useState(false);
-  const [installmentsCount, setInstallmentsCount] = useState(DEFAULT_INSTALLMENTS_COUNT);
+  const [installmentsCount, setInstallmentsCount] = useState(
+    DEFAULT_INSTALLMENTS_COUNT,
+  );
   const [startDate, setStartDate] = useState(() => new Date());
   const [showSchedule, setShowSchedule] = useState(false);
 
@@ -99,7 +107,11 @@ export default function LoanFormScreen() {
   );
 
   const customerOptions = useMemo(
-    () => (customers ?? []).map((customer) => ({ label: customer.fullName, value: customer._id })),
+    () =>
+      (customers ?? []).map((customer) => ({
+        label: customer.fullName,
+        value: customer._id,
+      })),
     [customers],
   );
 
@@ -118,7 +130,10 @@ export default function LoanFormScreen() {
 
   const parsedPrincipal = parseMoneyInput(principal);
   const parsedInterestRate = parseMoneyInput(interestRate);
-  const parsedInstallmentsCount = Math.max(Number(installmentsCount.replace(/[^0-9]/g, "")) || 0, 0);
+  const parsedInstallmentsCount = Math.max(
+    Number(installmentsCount.replace(/[^0-9]/g, "")) || 0,
+    0,
+  );
 
   const calculation = useMemo(
     () =>
@@ -130,7 +145,14 @@ export default function LoanFormScreen() {
         frequency,
         startDate,
       }),
-    [parsedPrincipal, parsedInterestRate, interestType, parsedInstallmentsCount, frequency, startDate],
+    [
+      parsedPrincipal,
+      parsedInterestRate,
+      interestType,
+      parsedInstallmentsCount,
+      frequency,
+      startDate,
+    ],
   );
 
   const canSubmit =
@@ -163,23 +185,43 @@ export default function LoanFormScreen() {
   };
 
   return (
-    <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: colors.background }}>
+    <SafeAreaView
+      edges={["top"]}
+      style={{ flex: 1, backgroundColor: colors.background }}
+    >
       <View style={styles.topBar}>
         <Pressable onPress={() => router.back()} hitSlop={8}>
           <Icon family="Ionicons" name="close" size={24} color={colors.text} />
         </Pressable>
       </View>
 
-      <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <KeyboardAvoidingView
+        style={styles.flex}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView
+          contentContainerStyle={styles.content}
+          keyboardShouldPersistTaps="handled"
+        >
           <FormHeader
-            icon={<Icon family="Ionicons" name="card" size={22} color={colors.onPrimary} />}
+            icon={
+              <Icon
+                family="Ionicons"
+                name="card"
+                size={22}
+                color={colors.onPrimary}
+              />
+            }
             title={t("loanForm.title")}
             subtitle={t("loanForm.subtitle")}
           />
 
           {isLoadingCustomers ? (
-            <ActivityIndicator size="large" color={colors.primary} style={styles.customersSpinner} />
+            <ActivityIndicator
+              size="large"
+              color={colors.primary}
+              style={styles.customersSpinner}
+            />
           ) : customersError ? (
             <Text style={[styles.emptyText, { color: colors.danger }]}>
               {t("loanForm.errors.customersLoadFailed")}
@@ -214,9 +256,18 @@ export default function LoanFormScreen() {
                 <View style={styles.flex}>
                   <TextField
                     label={t("loanForm.fields.principal")}
-                    icon={<Icon family="Ionicons" name="cash-outline" size={18} color={colors.textSecondary} />}
+                    icon={
+                      <Icon
+                        family="Ionicons"
+                        name="cash-outline"
+                        size={18}
+                        color={colors.textSecondary}
+                      />
+                    }
                     value={principal}
-                    onChangeText={(text) => setPrincipal(formatMoneyInput(text, i18n.language))}
+                    onChangeText={(text) =>
+                      setPrincipal(formatMoneyInput(text, i18n.language))
+                    }
                     placeholder={t("loanForm.placeholders.principal")}
                     keyboardType="decimal-pad"
                   />
@@ -224,9 +275,18 @@ export default function LoanFormScreen() {
                 <View style={styles.flex}>
                   <TextField
                     label={t("loanForm.fields.interestRate")}
-                    icon={<Icon family="Ionicons" name="trending-up-outline" size={18} color={colors.textSecondary} />}
+                    icon={
+                      <Icon
+                        family="Ionicons"
+                        name="trending-up-outline"
+                        size={18}
+                        color={colors.textSecondary}
+                      />
+                    }
                     value={interestRate}
-                    onChangeText={(text) => setInterestRate(formatMoneyInput(text, i18n.language))}
+                    onChangeText={(text) =>
+                      setInterestRate(formatMoneyInput(text, i18n.language))
+                    }
                     placeholder={t("loanForm.placeholders.interestRate")}
                     keyboardType="decimal-pad"
                   />
@@ -263,7 +323,14 @@ export default function LoanFormScreen() {
                 <View style={styles.flex}>
                   <TextField
                     label={t("loanForm.fields.installmentsCount")}
-                    icon={<Icon family="Ionicons" name="repeat-outline" size={18} color={colors.textSecondary} />}
+                    icon={
+                      <Icon
+                        family="Ionicons"
+                        name="repeat-outline"
+                        size={18}
+                        color={colors.textSecondary}
+                      />
+                    }
                     value={installmentsCount}
                     onChangeText={setInstallmentsCount}
                     placeholder={t("loanForm.placeholders.installmentsCount")}
@@ -276,7 +343,6 @@ export default function LoanFormScreen() {
                     value={startDate}
                     displayValue={formatNumericDate(startDate, i18n.language)}
                     onChange={setStartDate}
-                    minimumDate={minStartDate}
                     doneLabel={t("loanForm.datePickerDone")}
                   />
                 </View>
@@ -284,22 +350,52 @@ export default function LoanFormScreen() {
 
               <LoanEstimateSummary calculation={calculation} />
 
-              <Pressable onPress={() => setShowSchedule((prev) => !prev)} style={styles.scheduleToggle}>
-                <Icon family="Ionicons" name="calendar-outline" size={16} color={colors.primary} />
-                <Text style={[styles.scheduleToggleLabel, { color: colors.primary }]}>
-                  {t(showSchedule ? "loanForm.hideSchedule" : "loanForm.viewSchedule")}
+              <Pressable
+                onPress={() => setShowSchedule((prev) => !prev)}
+                style={styles.scheduleToggle}
+              >
+                <Icon
+                  family="Ionicons"
+                  name="calendar-outline"
+                  size={16}
+                  color={colors.primary}
+                />
+                <Text
+                  style={[
+                    styles.scheduleToggleLabel,
+                    { color: colors.primary },
+                  ]}
+                >
+                  {t(
+                    showSchedule
+                      ? "loanForm.hideSchedule"
+                      : "loanForm.viewSchedule",
+                  )}
                 </Text>
               </Pressable>
 
-              {showSchedule ? <InstallmentScheduleList installments={calculation.installments} /> : null}
+              {showSchedule ? (
+                <InstallmentScheduleList
+                  installments={calculation.installments}
+                />
+              ) : null}
 
               {submitError ? (
-                <Text style={[styles.submitError, { color: colors.danger }]}>{submitError}</Text>
+                <Text style={[styles.submitError, { color: colors.danger }]}>
+                  {submitError}
+                </Text>
               ) : null}
 
               <PrimaryButton
                 label={t("loanForm.submit")}
-                icon={<Icon family="Ionicons" name="arrow-forward" size={20} color={colors.onPrimary} />}
+                icon={
+                  <Icon
+                    family="Ionicons"
+                    name="arrow-forward"
+                    size={20}
+                    color={colors.onPrimary}
+                  />
+                }
                 onPress={handleSubmit}
                 isLoading={isSubmitting}
                 disabled={!canSubmit}

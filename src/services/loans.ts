@@ -15,7 +15,7 @@ export function getLoans(params: { search?: string; status?: LoanStatusFilter })
   if (params.status && params.status !== "all") query.set("status", params.status);
 
   const qs = query.toString();
-  return apiFetch<LoanSummary[]>(`/loans${qs ? `?${qs}` : ""}`);
+  return apiFetch<LoanSummary[]>(`/loans/mine${qs ? `?${qs}` : ""}`);
 }
 
 export function getLoan(id: string) {
