@@ -20,6 +20,17 @@ type DateFieldProps = {
   doneLabel?: string;
 };
 
+// Jetpack Compose's DatePicker always keys selection off UTC midnight for the
+// chosen calendar day, so a plain local Date fed in/out of it drifts a day in
+// timezones behind UTC. Map local Y-M-D <-> UTC Y-M-D at the boundary instead.
+function toAndroidPickerDate(date: Date): Date {
+  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+}
+
+function fromAndroidPickerDate(date: Date): Date {
+  return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+}
+
 export function DateField({
   label,
   value,
@@ -55,12 +66,12 @@ export function DateField({
 
       {Platform.OS === "android" && isOpen ? (
         <DateTimePicker
-          value={value}
+          value={toAndroidPickerDate(value)}
           mode="date"
-          minimumDate={minimumDate}
-          maximumDate={maximumDate}
+          minimumDate={minimumDate ? toAndroidPickerDate(minimumDate) : undefined}
+          maximumDate={maximumDate ? toAndroidPickerDate(maximumDate) : undefined}
           onValueChange={(_, date) => {
-            onChange(date);
+            onChange(fromAndroidPickerDate(date));
             setIsOpen(false);
           }}
           onDismiss={() => setIsOpen(false)}
