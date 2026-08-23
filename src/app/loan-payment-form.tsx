@@ -24,17 +24,31 @@ import { useAppTheme } from "@/hooks/useAppTheme";
 import { useLoanDetail } from "@/hooks/useLoanDetail";
 import { payInstallment } from "@/services/loans";
 import type { PaymentMethod } from "@/types/loan";
-import { formatNumericDate, parseCalendarDateForDisplay, toLocalDateString } from "@/utils/format";
-import { formatMoneyInput, parseMoneyInput, moneyToInputText } from "@/utils/moneyInput";
+import {
+  formatNumericDate,
+  parseCalendarDateForDisplay,
+  toLocalDateString,
+} from "@/utils/format";
+import {
+  formatMoneyInput,
+  moneyToInputText,
+  parseMoneyInput,
+} from "@/utils/moneyInput";
 
 export default function LoanPaymentFormScreen() {
-  const { loanId, installmentId } = useLocalSearchParams<{ loanId: string; installmentId: string }>();
+  const { loanId, installmentId } = useLocalSearchParams<{
+    loanId: string;
+    installmentId: string;
+  }>();
   const { t, i18n } = useTranslation();
   const { colors } = useAppTheme();
   const { data, isLoading, error, refetch } = useLoanDetail(loanId);
 
-  const installment = data?.installments.find((item) => item._id === installmentId) ?? null;
-  const minPaymentDate = data ? parseCalendarDateForDisplay(data.startDate) : undefined;
+  const installment =
+    data?.installments.find((item) => item._id === installmentId) ?? null;
+  const minPaymentDate = data
+    ? parseCalendarDateForDisplay(data.startDate)
+    : undefined;
 
   const [amount, setAmount] = useState("");
   const [hasPrefilled, setHasPrefilled] = useState(false);
@@ -92,7 +106,10 @@ export default function LoanPaymentFormScreen() {
 
   if (isLoading) {
     return (
-      <SafeAreaView edges={["top"]} style={[styles.center, { backgroundColor: colors.background }]}>
+      <SafeAreaView
+        edges={["top"]}
+        style={[styles.center, { backgroundColor: colors.background }]}
+      >
         <ActivityIndicator size="large" color={colors.primary} />
       </SafeAreaView>
     );
@@ -100,38 +117,77 @@ export default function LoanPaymentFormScreen() {
 
   if ((error && !data) || !data || !installment) {
     return (
-      <SafeAreaView edges={["top"]} style={[styles.center, { backgroundColor: colors.background }]}>
+      <SafeAreaView
+        edges={["top"]}
+        style={[styles.center, { backgroundColor: colors.background }]}
+      >
         <Text style={[styles.errorText, { color: colors.textSecondary }]}>
           {t("loanDetail.errors.loadFailed")}
         </Text>
-        <Pressable onPress={refetch} style={[styles.retryButton, { backgroundColor: colors.primary }]}>
-          <Text style={[styles.retryLabel, { color: colors.onPrimary }]}>{t("loanDetail.retry")}</Text>
+        <Pressable
+          onPress={refetch}
+          style={[styles.retryButton, { backgroundColor: colors.primary }]}
+        >
+          <Text style={[styles.retryLabel, { color: colors.onPrimary }]}>
+            {t("loanDetail.retry")}
+          </Text>
         </Pressable>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: colors.background }}>
+    <SafeAreaView
+      edges={["top"]}
+      style={{ flex: 1, backgroundColor: colors.background }}
+    >
       <View style={styles.topBar}>
         <Pressable onPress={() => router.back()} hitSlop={8}>
-          <Icon family="Ionicons" name="chevron-back" size={26} color={colors.text} />
+          <Icon
+            family="Ionicons"
+            name="chevron-back"
+            size={26}
+            color={colors.text}
+          />
         </Pressable>
-        <Text style={[styles.topBarTitle, { color: colors.text }]}>{t("paymentForm.title")}</Text>
+        <Text style={[styles.topBarTitle, { color: colors.text }]}>
+          {t("paymentForm.title")}
+        </Text>
         <View style={styles.topBarSpacer} />
       </View>
 
-      <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-          <PaymentSummaryCard loanCode={data!.code} customerName={data!.customerName} amount={installment.amount} />
+      <KeyboardAvoidingView
+        style={styles.flex}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView
+          contentContainerStyle={styles.content}
+          keyboardShouldPersistTaps="handled"
+        >
+          <PaymentSummaryCard
+            loanCode={data!.code}
+            customerName={data!.customerName}
+            amount={installment.amount}
+          />
 
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>{t("paymentForm.sectionTitle")}</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+            {t("paymentForm.sectionTitle")}
+          </Text>
 
           <TextField
             label={t("paymentForm.fields.amount")}
-            icon={<Icon family="Ionicons" name="cash-outline" size={18} color={colors.textSecondary} />}
+            icon={
+              <Icon
+                family="Ionicons"
+                name="cash-outline"
+                size={18}
+                color={colors.textSecondary}
+              />
+            }
             value={amount}
-            onChangeText={(text) => setAmount(formatMoneyInput(text, i18n.language))}
+            onChangeText={(text) =>
+              setAmount(formatMoneyInput(text, i18n.language))
+            }
             keyboardType="decimal-pad"
           />
 
@@ -140,8 +196,6 @@ export default function LoanPaymentFormScreen() {
             value={paymentDate}
             displayValue={formatNumericDate(paymentDate, i18n.language)}
             onChange={setPaymentDate}
-            minimumDate={minPaymentDate}
-            maximumDate={new Date()}
             doneLabel={t("loanForm.datePickerDone")}
           />
 
@@ -161,7 +215,14 @@ export default function LoanPaymentFormScreen() {
 
           <TextField
             label={t("paymentForm.fields.reference")}
-            icon={<Icon family="Ionicons" name="pricetag-outline" size={18} color={colors.textSecondary} />}
+            icon={
+              <Icon
+                family="Ionicons"
+                name="pricetag-outline"
+                size={18}
+                color={colors.textSecondary}
+              />
+            }
             value={referenceNumber}
             onChangeText={setReferenceNumber}
             placeholder={t("paymentForm.placeholders.reference")}
@@ -178,19 +239,30 @@ export default function LoanPaymentFormScreen() {
           />
 
           {submitError ? (
-            <Text style={[styles.submitError, { color: colors.danger }]}>{submitError}</Text>
+            <Text style={[styles.submitError, { color: colors.danger }]}>
+              {submitError}
+            </Text>
           ) : null}
 
           <PrimaryButton
             label={t("paymentForm.submit")}
-            icon={<Icon family="Ionicons" name="checkmark-circle-outline" size={20} color={colors.onPrimary} />}
+            icon={
+              <Icon
+                family="Ionicons"
+                name="checkmark-circle-outline"
+                size={20}
+                color={colors.onPrimary}
+              />
+            }
             onPress={handleSubmit}
             isLoading={isSubmitting}
             disabled={!canSubmit}
           />
 
           <Pressable onPress={() => router.back()} style={styles.cancelButton}>
-            <Text style={[styles.cancelLabel, { color: colors.primary }]}>{t("paymentForm.cancel")}</Text>
+            <Text style={[styles.cancelLabel, { color: colors.primary }]}>
+              {t("paymentForm.cancel")}
+            </Text>
           </Pressable>
         </ScrollView>
       </KeyboardAvoidingView>
