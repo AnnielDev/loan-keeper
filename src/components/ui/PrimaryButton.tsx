@@ -1,5 +1,11 @@
 import type { ReactNode } from "react";
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 import { useAppTheme } from "@/hooks/useAppTheme";
 
@@ -25,21 +31,32 @@ export function PrimaryButton({
   const { colors } = useAppTheme();
   const isDisabled = disabled || isLoading;
   const backgroundColor =
-    tone === "success" ? colors.successSurface : tone === "danger" ? colors.danger : colors.primary;
-  const foregroundColor = tone === "success" ? colors.success : colors.onPrimary;
+    tone === "success"
+      ? colors.successSurface
+      : tone === "danger"
+        ? colors.danger
+        : colors.primary;
+  const foregroundColor =
+    tone === "success" ? colors.success : colors.onPrimary;
 
   return (
     <Pressable
       onPress={onPress}
       disabled={isDisabled}
-      style={[styles.button, { backgroundColor }, isDisabled && styles.disabled]}
+      style={[
+        styles.button,
+        { backgroundColor },
+        isDisabled && styles.disabled,
+      ]}
     >
       {isLoading ? (
         <ActivityIndicator color={foregroundColor} />
       ) : (
         <View style={styles.content}>
           {icon}
-          <Text style={[styles.label, { color: foregroundColor }]}>{label}</Text>
+          <Text style={[styles.label, { color: foregroundColor }]}>
+            {label}
+          </Text>
         </View>
       )}
     </Pressable>
