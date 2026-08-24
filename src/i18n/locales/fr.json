@@ -342,6 +342,28 @@
     },
     "retry": "Réessayer"
   },
+  "notifications": {
+    "monthly": {
+      "title": "Paiements de ce mois",
+      "body_one": "Vous avez un paiement en attente ce mois-ci : {{customerName}} — {{amount}}.",
+      "body_other": "Vous avez {{count}} paiements à encaisser ce mois-ci."
+    },
+    "weekly": {
+      "title": "Paiements de cette semaine",
+      "body_one": "Le paiement de {{customerName}} de {{amount}} est dû cette semaine.",
+      "body_other": "Vous avez {{count}} paiements à encaisser cette semaine."
+    },
+    "dueToday": {
+      "title": "Paiement dû aujourd'hui",
+      "body_one": "Le paiement de {{customerName}} de {{amount}} est dû aujourd'hui.",
+      "body_other": "Vous avez {{count}} paiements dus aujourd'hui."
+    },
+    "dueDate": {
+      "title": "Paiement à venir",
+      "body_one": "Le paiement de {{customerName}} de {{amount}} est dû le {{date}}.",
+      "body_other": "Vous avez {{count}} paiements dus le {{date}}."
+    }
+  },
   "loanDetail": {
     "title": "Prêt #{{code}}",
     "status": {

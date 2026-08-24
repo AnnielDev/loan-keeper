@@ -14,6 +14,7 @@ import { useAppTheme } from "@/hooks/useAppTheme";
 import { useAuthStore } from "@/store/auth";
 import { useLocationAccessStore } from "@/store/location";
 import "@/store/network";
+import "@/store/notifications";
 
 SplashScreen.preventAutoHideAsync();
 

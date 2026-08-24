@@ -342,6 +342,28 @@
     },
     "retry": "पुनः प्रयास करें"
   },
+  "notifications": {
+    "monthly": {
+      "title": "इस महीने के भुगतान",
+      "body_one": "इस महीने एक भुगतान लंबित है: {{customerName}} — {{amount}}.",
+      "body_other": "इस महीने आपके पास वसूलने के लिए {{count}} भुगतान हैं."
+    },
+    "weekly": {
+      "title": "इस सप्ताह के भुगतान",
+      "body_one": "{{customerName}} का {{amount}} का भुगतान इस सप्ताह देय है.",
+      "body_other": "इस सप्ताह आपके पास वसूलने के लिए {{count}} भुगतान हैं."
+    },
+    "dueToday": {
+      "title": "आज देय भुगतान",
+      "body_one": "{{customerName}} का {{amount}} का भुगतान आज देय है.",
+      "body_other": "आज आपके पास {{count}} भुगतान देय हैं."
+    },
+    "dueDate": {
+      "title": "आगामी भुगतान देय",
+      "body_one": "{{customerName}} का {{amount}} का भुगतान {{date}} को देय है.",
+      "body_other": "{{date}} को आपके पास {{count}} भुगतान देय हैं."
+    }
+  },
   "loanDetail": {
     "title": "ऋण #{{code}}",
     "status": {

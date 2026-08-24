@@ -342,6 +342,28 @@
     },
     "retry": "Retry"
   },
+  "notifications": {
+    "monthly": {
+      "title": "Payments this month",
+      "body_one": "You have a pending payment this month: {{customerName}} — {{amount}}.",
+      "body_other": "You have {{count}} payments to collect this month."
+    },
+    "weekly": {
+      "title": "Payments this week",
+      "body_one": "{{customerName}}'s payment of {{amount}} is due this week.",
+      "body_other": "You have {{count}} payments to collect this week."
+    },
+    "dueToday": {
+      "title": "Payment due today",
+      "body_one": "{{customerName}}'s payment of {{amount}} is due today.",
+      "body_other": "You have {{count}} payments due today."
+    },
+    "dueDate": {
+      "title": "Upcoming payment due",
+      "body_one": "{{customerName}}'s payment of {{amount}} is due on {{date}}.",
+      "body_other": "You have {{count}} payments due on {{date}}."
+    }
+  },
   "loanDetail": {
     "title": "Loan #{{code}}",
     "status": {

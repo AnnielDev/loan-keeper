@@ -338,6 +338,28 @@
     },
     "retry": "重试"
   },
+  "notifications": {
+    "monthly": {
+      "title": "本月待收款项",
+      "body_one": "本月有一笔待收款项：{{customerName}} — {{amount}}。",
+      "body_other": "本月有 {{count}} 笔待收款项。"
+    },
+    "weekly": {
+      "title": "本周待收款项",
+      "body_one": "{{customerName}} 的 {{amount}} 款项将于本周到期。",
+      "body_other": "本周有 {{count}} 笔待收款项。"
+    },
+    "dueToday": {
+      "title": "今日到期款项",
+      "body_one": "{{customerName}} 的 {{amount}} 款项今日到期。",
+      "body_other": "今日有 {{count}} 笔款项到期。"
+    },
+    "dueDate": {
+      "title": "即将到期款项",
+      "body_one": "{{customerName}} 的 {{amount}} 款项将于 {{date}} 到期。",
+      "body_other": "{{date}} 有 {{count}} 笔款项到期。"
+    }
+  },
   "loanDetail": {
     "title": "贷款 #{{code}}",
     "status": {

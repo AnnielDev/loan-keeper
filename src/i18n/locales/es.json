@@ -342,6 +342,28 @@
     },
     "retry": "Reintentar"
   },
+  "notifications": {
+    "monthly": {
+      "title": "Pagos de este mes",
+      "body_one": "Tienes un pago pendiente este mes: {{customerName}} — {{amount}}.",
+      "body_other": "Tienes {{count}} pagos por cobrar este mes."
+    },
+    "weekly": {
+      "title": "Pagos de esta semana",
+      "body_one": "El pago de {{customerName}} por {{amount}} vence esta semana.",
+      "body_other": "Tienes {{count}} pagos por cobrar esta semana."
+    },
+    "dueToday": {
+      "title": "Pago vence hoy",
+      "body_one": "El pago de {{customerName}} por {{amount}} vence hoy.",
+      "body_other": "Tienes {{count}} pagos que vencen hoy."
+    },
+    "dueDate": {
+      "title": "Próximo pago por vencer",
+      "body_one": "El pago de {{customerName}} por {{amount}} vence el {{date}}.",
+      "body_other": "Tienes {{count}} pagos que vencen el {{date}}."
+    }
+  },
   "loanDetail": {
     "title": "Préstamo #{{code}}",
     "status": {
