@@ -270,9 +270,12 @@ export default function CustomerFormScreen() {
           </Card>
 
           <Card style={styles.card}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>
-              {t("customerForm.sections.documents")}
-            </Text>
+            <View style={styles.sectionHeaderRow}>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>
+                {t("customerForm.sections.documents")}
+              </Text>
+              <Badge label={t("customerForm.optional")} tone="neutral" />
+            </View>
             <Text style={[styles.sectionDescription, { color: colors.textSecondary }]}>
               {t("customerForm.documentsDescription")}
             </Text>
