@@ -13,7 +13,12 @@ export function SearchInput({ value, onChangeText, placeholder }: SearchInputPro
   const { colors } = useAppTheme();
 
   return (
-    <View style={[styles.wrapper, { backgroundColor: colors.inputBackground }]}>
+    <View
+      style={[
+        styles.wrapper,
+        { backgroundColor: colors.inputBackground, borderColor: colors.inputBorder },
+      ]}
+    >
       <Icon family="Ionicons" name="search" size={18} color={colors.textSecondary} />
       <TextInput
         style={[styles.input, { color: colors.text }]}
@@ -34,6 +39,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     borderRadius: 14,
+    borderWidth: 1,
     paddingHorizontal: 14,
     paddingVertical: 12,
   },

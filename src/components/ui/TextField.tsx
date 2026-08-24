@@ -36,9 +36,9 @@ export function TextField({
       <View
         style={[
           styles.inputWrapper,
-          { backgroundColor: colors.inputBackground },
+          { backgroundColor: colors.inputBackground, borderColor: colors.inputBorder },
           multiline && styles.inputWrapperMultiline,
-          errorMessage ? { borderWidth: 1, borderColor: colors.danger } : null,
+          errorMessage ? { borderColor: colors.danger } : null,
         ]}
       >
         {icon}
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     borderRadius: 12,
+    borderWidth: 1,
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
