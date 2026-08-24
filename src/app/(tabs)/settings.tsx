@@ -62,6 +62,7 @@ export default function SettingsTabScreen() {
 
   const [isDeleteConfirmVisible, setIsDeleteConfirmVisible] = useState(false);
   const [isDeletingAccount, setIsDeletingAccount] = useState(false);
+  const [isSignOutConfirmVisible, setIsSignOutConfirmVisible] = useState(false);
 
   const {
     data: languagesResponse,
@@ -128,6 +129,11 @@ export default function SettingsTabScreen() {
     } finally {
       setIsSavingName(false);
     }
+  };
+
+  const handleConfirmSignOut = () => {
+    setIsSignOutConfirmVisible(false);
+    signOut();
   };
 
   const handleConfirmDeleteAccount = async () => {
@@ -351,7 +357,10 @@ export default function SettingsTabScreen() {
           </Pressable>
         )}
 
-        <Pressable onPress={signOut} style={styles.settingsRow}>
+        <Pressable
+          onPress={() => setIsSignOutConfirmVisible(true)}
+          style={styles.settingsRow}
+        >
           <View style={styles.settingsIconWrap}>
             <Icon family="Ionicons" name="log-out-outline" size={18} color={colors.textSecondary} />
           </View>
@@ -407,6 +416,45 @@ export default function SettingsTabScreen() {
                   tone="danger"
                   onPress={handleConfirmDeleteAccount}
                   isLoading={isDeletingAccount}
+                />
+              </View>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
+      <Modal
+        visible={isSignOutConfirmVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setIsSignOutConfirmVisible(false)}
+      >
+        <Pressable
+          style={styles.backdrop}
+          onPress={() => setIsSignOutConfirmVisible(false)}
+        >
+          <Pressable style={styles.dialog} onPress={() => {}}>
+            <View style={styles.dialogIconCircle}>
+              <Icon family="Ionicons" name="log-out-outline" size={26} color={colors.danger} />
+            </View>
+            <Text style={styles.dialogTitle}>
+              {t("settings.account.signOutConfirm.title")}
+            </Text>
+            <Text style={styles.dialogMessage}>
+              {t("settings.account.signOutConfirm.message")}
+            </Text>
+            <View style={styles.dialogActions}>
+              <View style={styles.dialogButton}>
+                <SecondaryButton
+                  label={t("settings.account.signOutConfirm.cancel")}
+                  onPress={() => setIsSignOutConfirmVisible(false)}
+                />
+              </View>
+              <View style={styles.dialogButton}>
+                <PrimaryButton
+                  label={t("settings.account.signOutConfirm.confirm")}
+                  tone="danger"
+                  onPress={handleConfirmSignOut}
                 />
               </View>
             </View>

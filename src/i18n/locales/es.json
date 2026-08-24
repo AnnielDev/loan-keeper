@@ -42,6 +42,12 @@
       "nameErrorTitle": "No se pudo actualizar el nombre",
       "nameError": "Algo salió mal. Intenta de nuevo.",
       "signOut": "Cerrar sesión",
+      "signOutConfirm": {
+        "title": "¿Cerrar sesión?",
+        "message": "Tendrás que volver a iniciar sesión para acceder a tu cuenta.",
+        "cancel": "Cancelar",
+        "confirm": "Cerrar sesión"
+      },
       "deleteAccount": {
         "action": "Eliminar cuenta",
         "confirmTitle": "¿Eliminar tu cuenta?",

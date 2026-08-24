@@ -42,6 +42,12 @@
       "nameErrorTitle": "姓名更新失败",
       "nameError": "出了点问题，请重试。",
       "signOut": "退出登录",
+      "signOutConfirm": {
+        "title": "退出登录？",
+        "message": "退出后需要重新登录才能访问您的账户。",
+        "cancel": "取消",
+        "confirm": "退出登录"
+      },
       "deleteAccount": {
         "action": "删除账户",
         "confirmTitle": "删除你的账户？",

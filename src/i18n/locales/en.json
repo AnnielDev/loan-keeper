@@ -42,6 +42,12 @@
       "nameErrorTitle": "Couldn't update name",
       "nameError": "Something went wrong. Try again.",
       "signOut": "Sign out",
+      "signOutConfirm": {
+        "title": "Sign out?",
+        "message": "You'll need to sign in again to access your account.",
+        "cancel": "Cancel",
+        "confirm": "Sign out"
+      },
       "deleteAccount": {
         "action": "Delete account",
         "confirmTitle": "Delete your account?",

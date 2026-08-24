@@ -42,6 +42,12 @@
       "nameErrorTitle": "Impossible de mettre à jour le nom",
       "nameError": "Une erreur s'est produite. Réessayez.",
       "signOut": "Déconnexion",
+      "signOutConfirm": {
+        "title": "Se déconnecter ?",
+        "message": "Vous devrez vous reconnecter pour accéder à votre compte.",
+        "cancel": "Annuler",
+        "confirm": "Déconnexion"
+      },
       "deleteAccount": {
         "action": "Supprimer le compte",
         "confirmTitle": "Supprimer votre compte ?",
