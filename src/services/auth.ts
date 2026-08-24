@@ -32,6 +32,12 @@ export function logout() {
   });
 }
 
+export function deleteAccount() {
+  return apiFetch<{ message?: string }>("/users/me", {
+    method: "DELETE",
+  });
+}
+
 export function forgotPassword(payload: ForgotPasswordPayload) {
   return apiFetch<{ message?: string }>("/auth/forgot-password", {
     method: "POST",

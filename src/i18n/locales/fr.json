@@ -35,7 +35,22 @@
     },
     "account": {
       "title": "Compte",
-      "signOut": "Déconnexion"
+      "nameLabel": "Nom",
+      "namePlaceholder": "Entrez votre nom",
+      "nameCancel": "Annuler",
+      "nameSave": "Enregistrer",
+      "nameErrorTitle": "Impossible de mettre à jour le nom",
+      "nameError": "Une erreur s'est produite. Réessayez.",
+      "signOut": "Déconnexion",
+      "deleteAccount": {
+        "action": "Supprimer le compte",
+        "confirmTitle": "Supprimer votre compte ?",
+        "confirmMessage": "Cette action supprimera définitivement votre compte, ainsi que TOUS vos clients et prêts. Cette action est irréversible.",
+        "cancel": "Annuler",
+        "confirm": "Supprimer le compte",
+        "errorTitle": "Impossible de supprimer le compte",
+        "errorMessage": "Une erreur s'est produite. Réessayez."
+      }
     }
   },
   "locationGate": {
@@ -421,6 +436,12 @@
     },
     "submit": "Confirmer le Paiement",
     "cancel": "Annuler",
+    "confirmDialog": {
+      "title": "Confirmer ce paiement ?",
+      "message": "Une fois confirmé, ce paiement ne pourra plus être modifié ni annulé.",
+      "cancel": "Annuler",
+      "confirm": "Oui"
+    },
     "errors": {
       "generic": "Impossible d'enregistrer le paiement. Réessayez."
     }

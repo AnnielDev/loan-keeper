@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
+  Modal,
   Platform,
   Pressable,
   ScrollView,
@@ -18,6 +19,7 @@ import { PaymentSummaryCard } from "@/components/loans/PaymentSummaryCard";
 import { ReceiptUploadField } from "@/components/loans/ReceiptUploadField";
 import { DateField } from "@/components/ui/DateField";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
+import { SecondaryButton } from "@/components/ui/SecondaryButton";
 import { Select } from "@/components/ui/Select";
 import { TextField } from "@/components/ui/TextField";
 import { useAppTheme } from "@/hooks/useAppTheme";
@@ -61,6 +63,7 @@ export default function LoanPaymentFormScreen() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
 
   useEffect(() => {
     if (installment && !hasPrefilled) {
@@ -101,6 +104,7 @@ export default function LoanPaymentFormScreen() {
         params: { loanId, installmentId },
       });
     } catch {
+      setIsConfirmVisible(false);
       setSubmitError(t("paymentForm.errors.generic"));
     } finally {
       setIsSubmitting(false);
@@ -257,8 +261,7 @@ export default function LoanPaymentFormScreen() {
                 color={colors.onPrimary}
               />
             }
-            onPress={handleSubmit}
-            isLoading={isSubmitting}
+            onPress={() => setIsConfirmVisible(true)}
             disabled={!canSubmit}
           />
 
@@ -269,6 +272,61 @@ export default function LoanPaymentFormScreen() {
           </Pressable>
         </ScrollView>
       </KeyboardAvoidingView>
+
+      <Modal
+        visible={isConfirmVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => !isSubmitting && setIsConfirmVisible(false)}
+      >
+        <Pressable
+          style={styles.backdrop}
+          onPress={() => !isSubmitting && setIsConfirmVisible(false)}
+        >
+          <Pressable
+            style={[styles.dialog, { backgroundColor: colors.card }]}
+            onPress={() => {}}
+          >
+            <View
+              style={[
+                styles.dialogIconCircle,
+                { backgroundColor: colors.warningSurface },
+              ]}
+            >
+              <Icon
+                family="Ionicons"
+                name="alert-circle-outline"
+                size={26}
+                color={colors.warning}
+              />
+            </View>
+            <Text style={[styles.dialogTitle, { color: colors.text }]}>
+              {t("paymentForm.confirmDialog.title")}
+            </Text>
+            <Text
+              style={[styles.dialogMessage, { color: colors.textSecondary }]}
+            >
+              {t("paymentForm.confirmDialog.message")}
+            </Text>
+            <View style={styles.dialogActions}>
+              <View style={styles.dialogButton}>
+                <SecondaryButton
+                  label={t("paymentForm.confirmDialog.cancel")}
+                  onPress={() => setIsConfirmVisible(false)}
+                  disabled={isSubmitting}
+                />
+              </View>
+              <View style={styles.dialogButton}>
+                <PrimaryButton
+                  label={t("paymentForm.confirmDialog.confirm")}
+                  onPress={handleSubmit}
+                  isLoading={isSubmitting}
+                />
+              </View>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -340,5 +398,52 @@ const styles = StyleSheet.create({
   retryLabel: {
     fontSize: 14,
     fontWeight: "700",
+  },
+  backdrop: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 24,
+  },
+  dialog: {
+    width: "100%",
+    maxWidth: 340,
+    borderRadius: 24,
+    padding: 24,
+    alignItems: "center",
+    gap: 6,
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.25,
+    shadowRadius: 24,
+    elevation: 12,
+  },
+  dialogIconCircle: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 4,
+  },
+  dialogTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+  dialogMessage: {
+    fontSize: 14,
+    textAlign: "center",
+    lineHeight: 20,
+    marginBottom: 14,
+  },
+  dialogActions: {
+    flexDirection: "row",
+    gap: 12,
+    width: "100%",
+  },
+  dialogButton: {
+    flex: 1,
   },
 });

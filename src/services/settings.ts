@@ -6,6 +6,7 @@ import type {
   UpdateCurrencyPayload,
   UpdateLanguagePayload,
   UpdateLocationPayload,
+  UpdateNamePayload,
   User,
 } from "@/types/auth";
 
@@ -33,6 +34,13 @@ export function getCurrencies() {
 
 export function updateCurrency(payload: UpdateCurrencyPayload) {
   return apiFetch<ApiSuccess<User>>("/settings/currency", {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
+}
+
+export function updateName(payload: UpdateNamePayload) {
+  return apiFetch<ApiSuccess<User>>("/settings/name", {
     method: "PATCH",
     body: JSON.stringify(payload),
   });

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
+  Modal,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -11,19 +12,28 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Icon } from "@/components/general/Icon";
+import { PrimaryButton } from "@/components/ui/PrimaryButton";
+import { SecondaryButton } from "@/components/ui/SecondaryButton";
 import { Select } from "@/components/ui/Select";
+import { TextField } from "@/components/ui/TextField";
 import type { ColorScheme, ThemeColors } from "@/constants/theme";
 import { useApiResource } from "@/hooks/useApiResource";
 import { useAppTheme } from "@/hooks/useAppTheme";
+import { useFormField } from "@/hooks/useFormField";
 import { setAppLanguage } from "@/i18n";
+import { ApiError } from "@/services/api";
+import { deleteAccount } from "@/services/auth";
 import {
   getCurrencies,
   getLanguages,
   updateCurrency,
   updateLanguage,
+  updateName,
 } from "@/services/settings";
+import { useApiAlertStore } from "@/store/apiAlert";
 import { useAuthStore } from "@/store/auth";
 import { formatCurrency } from "@/utils/format";
+import { MAX_NAME_LENGTH, required, maxLength } from "@/utils/validation";
 
 const appearanceOptions: { scheme: ColorScheme; icon: "sunny" | "moon" }[] = [
   { scheme: "light", icon: "sunny" },
@@ -32,12 +42,26 @@ const appearanceOptions: { scheme: ColorScheme; icon: "sunny" | "moon" }[] = [
 
 export default function SettingsTabScreen() {
   const { t, i18n } = useTranslation();
+  const translate = t as unknown as (key: string) => string;
+  const user = useAuthStore((state) => state.user);
   const signOut = useAuthStore((state) => state.signOut);
+  const forceSignOut = useAuthStore((state) => state.forceSignOut);
   const updateUser = useAuthStore((state) => state.updateUser);
+  const showApiAlert = useApiAlertStore((state) => state.showApiAlert);
   const { colors, scheme, setMode } = useAppTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
   const [isLanguagePickerOpen, setIsLanguagePickerOpen] = useState(false);
   const [isCurrencyPickerOpen, setIsCurrencyPickerOpen] = useState(false);
+
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [isSavingName, setIsSavingName] = useState(false);
+  const nameField = useFormField<string>(
+    user?.name ?? "",
+    useMemo(() => [required(), maxLength(MAX_NAME_LENGTH)], []),
+  );
+
+  const [isDeleteConfirmVisible, setIsDeleteConfirmVisible] = useState(false);
+  const [isDeletingAccount, setIsDeletingAccount] = useState(false);
 
   const {
     data: languagesResponse,
@@ -75,6 +99,49 @@ export default function SettingsTabScreen() {
       updateUser(data);
     } catch {
       // Best effort: retry happens on the next selection attempt.
+    }
+  };
+
+  const handleStartEditName = () => {
+    nameField.setValue(user?.name ?? "");
+    setIsEditingName(true);
+  };
+
+  const handleCancelEditName = () => {
+    setIsEditingName(false);
+  };
+
+  const handleSaveName = async () => {
+    nameField.onBlur();
+    if (!nameField.isValid) return;
+
+    setIsSavingName(true);
+    try {
+      const { data } = await updateName({ name: nameField.value.trim() });
+      updateUser(data);
+      setIsEditingName(false);
+    } catch (err) {
+      showApiAlert(
+        t("settings.account.nameErrorTitle"),
+        err instanceof ApiError ? err.message : t("settings.account.nameError"),
+      );
+    } finally {
+      setIsSavingName(false);
+    }
+  };
+
+  const handleConfirmDeleteAccount = async () => {
+    setIsDeletingAccount(true);
+    try {
+      await deleteAccount();
+      setIsDeleteConfirmVisible(false);
+      forceSignOut();
+    } catch (err) {
+      setIsDeletingAccount(false);
+      showApiAlert(
+        t("settings.account.deleteAccount.errorTitle"),
+        err instanceof ApiError ? err.message : t("settings.account.deleteAccount.errorMessage"),
+      );
     }
   };
 
@@ -242,14 +309,110 @@ export default function SettingsTabScreen() {
         )}
 
         <Text style={styles.sectionTitle}>{t("settings.account.title")}</Text>
-        <Pressable onPress={signOut} style={styles.signOutButton}>
-          <View style={styles.signOutIconWrap}>
-            <Icon family="Ionicons" name="log-out-outline" size={18} color={colors.danger} />
+
+        {isEditingName ? (
+          <View style={styles.nameEditCard}>
+            <TextField
+              label={t("settings.account.nameLabel")}
+              icon={<Icon family="Ionicons" name="person-outline" size={18} color={colors.textSecondary} />}
+              value={nameField.value}
+              onChangeText={nameField.setValue}
+              onBlur={nameField.onBlur}
+              placeholder={t("settings.account.namePlaceholder")}
+              errorMessage={nameField.errorKey ? translate(nameField.errorKey) : null}
+            />
+            <View style={styles.nameEditActions}>
+              <View style={styles.nameEditButton}>
+                <SecondaryButton
+                  label={t("settings.account.nameCancel")}
+                  onPress={handleCancelEditName}
+                  disabled={isSavingName}
+                />
+              </View>
+              <View style={styles.nameEditButton}>
+                <PrimaryButton
+                  label={t("settings.account.nameSave")}
+                  onPress={handleSaveName}
+                  isLoading={isSavingName}
+                />
+              </View>
+            </View>
           </View>
-          <Text style={styles.signOutLabel}>{t("settings.account.signOut")}</Text>
+        ) : (
+          <Pressable onPress={handleStartEditName} style={styles.settingsRow}>
+            <View style={styles.settingsIconWrap}>
+              <Icon family="Ionicons" name="person-outline" size={18} color={colors.textSecondary} />
+            </View>
+            <View style={styles.settingsRowTextWrap}>
+              <Text style={styles.settingsRowLabel}>{t("settings.account.nameLabel")}</Text>
+              <Text style={styles.settingsRowValue}>{user?.name}</Text>
+            </View>
+            <Icon family="Ionicons" name="create-outline" size={18} color={colors.textSecondary} />
+          </Pressable>
+        )}
+
+        <Pressable onPress={signOut} style={styles.settingsRow}>
+          <View style={styles.settingsIconWrap}>
+            <Icon family="Ionicons" name="log-out-outline" size={18} color={colors.textSecondary} />
+          </View>
+          <Text style={styles.actionLabel}>{t("settings.account.signOut")}</Text>
+          <Icon family="Ionicons" name="chevron-forward" size={18} color={colors.textSecondary} />
+        </Pressable>
+
+        <Pressable
+          onPress={() => setIsDeleteConfirmVisible(true)}
+          style={styles.signOutButton}
+        >
+          <View style={styles.signOutIconWrap}>
+            <Icon family="Ionicons" name="trash-outline" size={18} color={colors.danger} />
+          </View>
+          <Text style={styles.signOutLabel}>
+            {t("settings.account.deleteAccount.action")}
+          </Text>
           <Icon family="Ionicons" name="chevron-forward" size={18} color={colors.danger} />
         </Pressable>
       </ScrollView>
+
+      <Modal
+        visible={isDeleteConfirmVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setIsDeleteConfirmVisible(false)}
+      >
+        <Pressable
+          style={styles.backdrop}
+          onPress={() => !isDeletingAccount && setIsDeleteConfirmVisible(false)}
+        >
+          <Pressable style={styles.dialog} onPress={() => {}}>
+            <View style={styles.dialogIconCircle}>
+              <Icon family="Ionicons" name="trash-outline" size={26} color={colors.danger} />
+            </View>
+            <Text style={styles.dialogTitle}>
+              {t("settings.account.deleteAccount.confirmTitle")}
+            </Text>
+            <Text style={styles.dialogMessage}>
+              {t("settings.account.deleteAccount.confirmMessage")}
+            </Text>
+            <View style={styles.dialogActions}>
+              <View style={styles.dialogButton}>
+                <SecondaryButton
+                  label={t("settings.account.deleteAccount.cancel")}
+                  onPress={() => setIsDeleteConfirmVisible(false)}
+                  disabled={isDeletingAccount}
+                />
+              </View>
+              <View style={styles.dialogButton}>
+                <PrimaryButton
+                  label={t("settings.account.deleteAccount.confirm")}
+                  tone="danger"
+                  onPress={handleConfirmDeleteAccount}
+                  isLoading={isDeletingAccount}
+                />
+              </View>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -389,5 +552,106 @@ const createStyles = (colors: ThemeColors) =>
       fontSize: 15,
       fontWeight: "700",
       color: colors.danger,
+    },
+    settingsRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 12,
+      paddingVertical: 12,
+      paddingHorizontal: 14,
+      borderRadius: 16,
+      backgroundColor: colors.card,
+    },
+    settingsIconWrap: {
+      width: 34,
+      height: 34,
+      borderRadius: 17,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: colors.surface,
+    },
+    settingsRowTextWrap: {
+      flex: 1,
+      gap: 2,
+    },
+    settingsRowLabel: {
+      fontSize: 12,
+      fontWeight: "600",
+      color: colors.textSecondary,
+    },
+    settingsRowValue: {
+      fontSize: 15,
+      fontWeight: "700",
+      color: colors.text,
+    },
+    actionLabel: {
+      flex: 1,
+      fontSize: 15,
+      fontWeight: "700",
+      color: colors.text,
+    },
+    nameEditCard: {
+      gap: 14,
+      padding: 14,
+      borderRadius: 16,
+      backgroundColor: colors.card,
+    },
+    nameEditActions: {
+      flexDirection: "row",
+      gap: 12,
+    },
+    nameEditButton: {
+      flex: 1,
+    },
+    backdrop: {
+      flex: 1,
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 24,
+    },
+    dialog: {
+      width: "100%",
+      maxWidth: 340,
+      borderRadius: 24,
+      padding: 24,
+      alignItems: "center",
+      gap: 6,
+      backgroundColor: colors.card,
+      shadowColor: "#000000",
+      shadowOffset: { width: 0, height: 12 },
+      shadowOpacity: 0.25,
+      shadowRadius: 24,
+      elevation: 12,
+    },
+    dialogIconCircle: {
+      width: 56,
+      height: 56,
+      borderRadius: 28,
+      alignItems: "center",
+      justifyContent: "center",
+      marginBottom: 4,
+      backgroundColor: colors.dangerSurface,
+    },
+    dialogTitle: {
+      fontSize: 18,
+      fontWeight: "700",
+      textAlign: "center",
+      color: colors.text,
+    },
+    dialogMessage: {
+      fontSize: 14,
+      textAlign: "center",
+      lineHeight: 20,
+      marginBottom: 14,
+      color: colors.textSecondary,
+    },
+    dialogActions: {
+      flexDirection: "row",
+      gap: 12,
+      width: "100%",
+    },
+    dialogButton: {
+      flex: 1,
     },
   });

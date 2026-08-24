@@ -35,7 +35,22 @@
     },
     "account": {
       "title": "账户",
-      "signOut": "退出登录"
+      "nameLabel": "姓名",
+      "namePlaceholder": "请输入你的姓名",
+      "nameCancel": "取消",
+      "nameSave": "保存",
+      "nameErrorTitle": "姓名更新失败",
+      "nameError": "出了点问题，请重试。",
+      "signOut": "退出登录",
+      "deleteAccount": {
+        "action": "删除账户",
+        "confirmTitle": "删除你的账户？",
+        "confirmMessage": "这将永久删除你的账户，以及你所有的客户和贷款。此操作无法撤销。",
+        "cancel": "取消",
+        "confirm": "删除账户",
+        "errorTitle": "账户删除失败",
+        "errorMessage": "出了点问题，请重试。"
+      }
     }
   },
   "locationGate": {
@@ -417,6 +432,12 @@
     },
     "submit": "确认还款",
     "cancel": "取消",
+    "confirmDialog": {
+      "title": "确认此次付款？",
+      "message": "确认后，此次付款将无法修改或撤销。",
+      "cancel": "取消",
+      "confirm": "是"
+    },
     "errors": {
       "generic": "无法登记还款。请重试。"
     }

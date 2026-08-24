@@ -231,10 +231,6 @@ export default function LoanFormScreen() {
               <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
                 {t("loanForm.noCustomers")}
               </Text>
-              <PrimaryButton
-                label={t("loanForm.addCustomer")}
-                onPress={() => router.push("/customer-form")}
-              />
             </Card>
           ) : (
             <>

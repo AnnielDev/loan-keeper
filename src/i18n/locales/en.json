@@ -35,7 +35,22 @@
     },
     "account": {
       "title": "Account",
-      "signOut": "Sign out"
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter your name",
+      "nameCancel": "Cancel",
+      "nameSave": "Save",
+      "nameErrorTitle": "Couldn't update name",
+      "nameError": "Something went wrong. Try again.",
+      "signOut": "Sign out",
+      "deleteAccount": {
+        "action": "Delete account",
+        "confirmTitle": "Delete your account?",
+        "confirmMessage": "This will permanently delete your account, along with ALL your customers and loans. This can't be undone.",
+        "cancel": "Cancel",
+        "confirm": "Delete account",
+        "errorTitle": "Couldn't delete account",
+        "errorMessage": "Something went wrong. Try again."
+      }
     }
   },
   "locationGate": {
@@ -421,6 +436,12 @@
     },
     "submit": "Confirm Payment",
     "cancel": "Cancel",
+    "confirmDialog": {
+      "title": "Confirm this payment?",
+      "message": "Once confirmed, this payment can't be edited or undone.",
+      "cancel": "Cancel",
+      "confirm": "Yes"
+    },
     "errors": {
       "generic": "Couldn't register the payment. Try again."
     }

@@ -35,7 +35,22 @@
     },
     "account": {
       "title": "Cuenta",
-      "signOut": "Cerrar sesión"
+      "nameLabel": "Nombre",
+      "namePlaceholder": "Ingresa tu nombre",
+      "nameCancel": "Cancelar",
+      "nameSave": "Guardar",
+      "nameErrorTitle": "No se pudo actualizar el nombre",
+      "nameError": "Algo salió mal. Intenta de nuevo.",
+      "signOut": "Cerrar sesión",
+      "deleteAccount": {
+        "action": "Eliminar cuenta",
+        "confirmTitle": "¿Eliminar tu cuenta?",
+        "confirmMessage": "Esto eliminará tu cuenta de forma permanente, junto con TODOS tus clientes y préstamos. Esta acción no se puede deshacer.",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar cuenta",
+        "errorTitle": "No se pudo eliminar la cuenta",
+        "errorMessage": "Algo salió mal. Intenta de nuevo."
+      }
     }
   },
   "locationGate": {
@@ -421,6 +436,12 @@
     },
     "submit": "Confirmar Pago",
     "cancel": "Cancelar",
+    "confirmDialog": {
+      "title": "¿Confirmar este pago?",
+      "message": "Una vez confirmado, este pago no se puede editar ni deshacer.",
+      "cancel": "Cancelar",
+      "confirm": "Sí"
+    },
     "errors": {
       "generic": "No se pudo registrar el pago. Inténtalo de nuevo."
     }

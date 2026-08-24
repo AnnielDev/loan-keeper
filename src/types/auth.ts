@@ -60,6 +60,10 @@ export type UpdateCurrencyPayload = {
   currency: string;
 };
 
+export type UpdateNamePayload = {
+  name: string;
+};
+
 export type ForgotPasswordPayload = {
   email: string;
 };

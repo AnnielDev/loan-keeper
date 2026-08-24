@@ -96,7 +96,10 @@ export function StatCard({
         <>
           <View style={styles.cardHeader}>
             <View
-              style={[styles.cardIcon, { backgroundColor: iconBackground[tone] }]}
+              style={[
+                styles.cardIcon,
+                { backgroundColor: iconBackground[tone] },
+              ]}
             >
               {icon}
             </View>
@@ -116,7 +119,7 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     borderRadius: 20,
-    padding: 16,
+    padding: 15,
     gap: 10,
   },
   cardHeader: {
@@ -141,7 +144,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   cardValue: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "700",
   },
   pill: {
