@@ -127,7 +127,7 @@ export default function CustomerFormScreen() {
         occupation: occupationField.value.trim() || undefined,
         monthlyIncome: income > 0 ? income : undefined,
         avatarUrl: avatarUrl ?? undefined,
-        documentUrls: documentUrls.length > 0 ? documentUrls : undefined,
+        documentUrls,
       };
       if (id) {
         await updateCustomer(id, payload);
