@@ -193,8 +193,6 @@
       "compound": "复利"
     },
     "frequency": {
-      "weekly": "每周",
-      "biweekly": "每两周",
       "monthly": "每月",
       "every_2_months": "每2个月",
       "every_3_months": "每3个月"

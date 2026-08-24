@@ -196,8 +196,6 @@
       "compound": "Compuesto"
     },
     "frequency": {
-      "weekly": "Semanal",
-      "biweekly": "Quincenal",
       "monthly": "Mensual",
       "every_2_months": "Cada 2 meses",
       "every_3_months": "Cada 3 meses"

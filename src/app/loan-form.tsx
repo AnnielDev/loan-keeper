@@ -28,11 +28,7 @@ import { getCustomers } from "@/services/customers";
 import { createLoan } from "@/services/loans";
 import type { CustomerSummary } from "@/types/customer";
 import type { InterestType, PaymentFrequency } from "@/types/loan";
-import {
-  formatNumericDate,
-  getStartOfToday,
-  toLocalDateString,
-} from "@/utils/format";
+import { formatNumericDate, toLocalDateString } from "@/utils/format";
 import { calculateLoan } from "@/utils/loanCalculator";
 import { formatMoneyInput, parseMoneyInput } from "@/utils/moneyInput";
 
@@ -64,8 +60,6 @@ export default function LoanFormScreen() {
   );
   const [startDate, setStartDate] = useState(() => new Date());
   const [showSchedule, setShowSchedule] = useState(false);
-
-  const minStartDate = getStartOfToday();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -116,8 +110,6 @@ export default function LoanFormScreen() {
   );
 
   const frequencyOptions: { label: string; value: PaymentFrequency }[] = [
-    { label: t("loanForm.frequency.weekly"), value: "weekly" },
-    { label: t("loanForm.frequency.biweekly"), value: "biweekly" },
     { label: t("loanForm.frequency.monthly"), value: "monthly" },
     { label: t("loanForm.frequency.every_2_months"), value: "every_2_months" },
     { label: t("loanForm.frequency.every_3_months"), value: "every_3_months" },
@@ -159,7 +151,6 @@ export default function LoanFormScreen() {
     !!customerId &&
     parsedPrincipal > 0 &&
     parsedInstallmentsCount > 0 &&
-    startDate.getTime() >= minStartDate.getTime() &&
     !isSubmitting;
 
   const handleSubmit = async () => {

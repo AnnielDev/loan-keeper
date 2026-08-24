@@ -58,11 +58,7 @@ function calculateTotalInterest(input: LoanCalculationInput): number {
 
 function addPeriods(startDate: Date, frequency: PaymentFrequency, periods: number): Date {
   const date = new Date(startDate);
-  if (frequency === "weekly") {
-    date.setDate(date.getDate() + periods * 7);
-  } else if (frequency === "biweekly") {
-    date.setDate(date.getDate() + periods * 14);
-  } else if (frequency === "every_2_months") {
+  if (frequency === "every_2_months") {
     date.setMonth(date.getMonth() + periods * 2);
   } else if (frequency === "every_3_months") {
     date.setMonth(date.getMonth() + periods * 3);

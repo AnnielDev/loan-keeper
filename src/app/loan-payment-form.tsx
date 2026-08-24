@@ -26,11 +26,7 @@ import { useAppTheme } from "@/hooks/useAppTheme";
 import { useLoanDetail } from "@/hooks/useLoanDetail";
 import { payInstallment } from "@/services/loans";
 import type { PaymentMethod } from "@/types/loan";
-import {
-  formatNumericDate,
-  parseCalendarDateForDisplay,
-  toLocalDateString,
-} from "@/utils/format";
+import { formatNumericDate, toLocalDateString } from "@/utils/format";
 import {
   formatMoneyInput,
   moneyToInputText,
@@ -48,9 +44,6 @@ export default function LoanPaymentFormScreen() {
 
   const installment =
     data?.installments.find((item) => item._id === installmentId) ?? null;
-  const minPaymentDate = data
-    ? parseCalendarDateForDisplay(data.startDate)
-    : undefined;
 
   const [amount, setAmount] = useState("");
   const [hasPrefilled, setHasPrefilled] = useState(false);
@@ -80,11 +73,7 @@ export default function LoanPaymentFormScreen() {
   ];
 
   const parsedAmount = parseMoneyInput(amount);
-  const canSubmit =
-    !!installment &&
-    parsedAmount > 0 &&
-    (!minPaymentDate || paymentDate.getTime() >= minPaymentDate.getTime()) &&
-    !isSubmitting;
+  const canSubmit = !!installment && parsedAmount > 0 && !isSubmitting;
 
   const handleSubmit = async () => {
     if (!installment || !data) return;
