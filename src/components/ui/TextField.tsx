@@ -36,7 +36,7 @@ export function TextField({
       <View
         style={[
           styles.inputWrapper,
-          { backgroundColor: colors.surface },
+          { backgroundColor: colors.inputBackground },
           multiline && styles.inputWrapperMultiline,
           errorMessage ? { borderWidth: 1, borderColor: colors.danger } : null,
         ]}

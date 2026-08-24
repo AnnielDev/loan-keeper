@@ -13,7 +13,7 @@ export function SearchInput({ value, onChangeText, placeholder }: SearchInputPro
   const { colors } = useAppTheme();
 
   return (
-    <View style={[styles.wrapper, { backgroundColor: colors.surface }]}>
+    <View style={[styles.wrapper, { backgroundColor: colors.inputBackground }]}>
       <Icon family="Ionicons" name="search" size={18} color={colors.textSecondary} />
       <TextInput
         style={[styles.input, { color: colors.text }]}

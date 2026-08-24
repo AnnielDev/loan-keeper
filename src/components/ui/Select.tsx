@@ -49,7 +49,7 @@ export function Select<T extends string>({
         onPress={onOpen}
         style={[
           styles.trigger,
-          { borderColor: colors.border, backgroundColor: colors.card },
+          { borderColor: colors.border, backgroundColor: colors.inputBackground },
         ]}
       >
         <Text style={[styles.triggerLabel, { color: colors.text }]}>

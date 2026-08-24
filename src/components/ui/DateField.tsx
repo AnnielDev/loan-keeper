@@ -58,7 +58,7 @@ export function DateField({
       <Text style={[styles.label, { color: colors.textSecondary }]}>{label}</Text>
       <Pressable
         onPress={() => setIsOpen(true)}
-        style={[styles.trigger, { backgroundColor: colors.surface }]}
+        style={[styles.trigger, { backgroundColor: colors.inputBackground }]}
       >
         <Text style={[styles.value, { color: colors.text }]}>{displayValue}</Text>
         <Icon family="Ionicons" name="calendar-outline" size={18} color={colors.textSecondary} />
