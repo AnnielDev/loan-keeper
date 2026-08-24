@@ -419,9 +419,9 @@
       "amount": "还款金额",
       "date": "还款日期",
       "method": "付款方式",
-      "reference": "参考编号",
+      "reference": "参考编号（可选）",
       "receipt": "凭证（可选）",
-      "notes": "备注"
+      "notes": "备注（可选）"
     },
     "placeholders": {
       "reference": "例如 9028340",

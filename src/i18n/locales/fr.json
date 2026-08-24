@@ -423,9 +423,9 @@
       "amount": "Montant à payer",
       "date": "Date de paiement",
       "method": "Méthode de paiement",
-      "reference": "Numéro de Référence",
+      "reference": "Numéro de Référence (Facultatif)",
       "receipt": "Justificatif (Facultatif)",
-      "notes": "Notes"
+      "notes": "Notes (Facultatif)"
     },
     "placeholders": {
       "reference": "Ex. 9028340",

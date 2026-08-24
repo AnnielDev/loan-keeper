@@ -423,9 +423,9 @@
       "amount": "Monto a pagar",
       "date": "Fecha de pago",
       "method": "Método de pago",
-      "reference": "Número de Referencia",
+      "reference": "Número de Referencia (Opcional)",
       "receipt": "Comprobante (Opcional)",
-      "notes": "Notas"
+      "notes": "Notas (Opcional)"
     },
     "placeholders": {
       "reference": "Ej. 9028340",

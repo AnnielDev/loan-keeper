@@ -423,9 +423,9 @@
       "amount": "Amount to Pay",
       "date": "Payment Date",
       "method": "Payment Method",
-      "reference": "Reference Number",
+      "reference": "Reference Number (Optional)",
       "receipt": "Receipt (Optional)",
-      "notes": "Notes"
+      "notes": "Notes (Optional)"
     },
     "placeholders": {
       "reference": "E.g. 9028340",
