@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import {
   ActivityIndicator,
-  Pressable,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -40,7 +40,7 @@ export function PrimaryButton({
     tone === "success" ? colors.success : colors.onPrimary;
 
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={onPress}
       disabled={isDisabled}
       style={[
@@ -59,7 +59,7 @@ export function PrimaryButton({
           </Text>
         </View>
       )}
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 

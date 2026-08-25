@@ -1,5 +1,11 @@
 import type { ReactNode } from "react";
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { useAppTheme } from "@/hooks/useAppTheme";
 
@@ -11,15 +17,25 @@ type SecondaryButtonProps = {
   disabled?: boolean;
 };
 
-export function SecondaryButton({ label, onPress, icon, isLoading, disabled }: SecondaryButtonProps) {
+export function SecondaryButton({
+  label,
+  onPress,
+  icon,
+  isLoading,
+  disabled,
+}: SecondaryButtonProps) {
   const { colors } = useAppTheme();
   const isDisabled = disabled || isLoading;
 
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={onPress}
       disabled={isDisabled}
-      style={[styles.button, { backgroundColor: colors.surface }, isDisabled && styles.disabled]}
+      style={[
+        styles.button,
+        { backgroundColor: colors.surface },
+        isDisabled && styles.disabled,
+      ]}
     >
       {isLoading ? (
         <ActivityIndicator color={colors.text} />
@@ -29,7 +45,7 @@ export function SecondaryButton({ label, onPress, icon, isLoading, disabled }: S
           <Text style={[styles.label, { color: colors.text }]}>{label}</Text>
         </View>
       )}
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 
