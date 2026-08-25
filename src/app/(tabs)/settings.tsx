@@ -2,7 +2,9 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -153,10 +155,15 @@ export default function SettingsTabScreen() {
 
   return (
     <SafeAreaView edges={["top"]} style={styles.container}>
-      <ScrollView
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
+      <KeyboardAvoidingView
+        style={styles.flex}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
+        <ScrollView
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
         <Text style={styles.title}>{t("tabs.settings")}</Text>
 
         <View style={styles.appearanceRow}>
@@ -380,7 +387,8 @@ export default function SettingsTabScreen() {
           </Text>
           <Icon family="Ionicons" name="chevron-forward" size={18} color={colors.danger} />
         </Pressable>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
 
       <Modal
         visible={isDeleteConfirmVisible}
@@ -470,6 +478,9 @@ const createStyles = (colors: ThemeColors) =>
     container: {
       flex: 1,
       backgroundColor: colors.background,
+    },
+    flex: {
+      flex: 1,
     },
     content: {
       padding: 16,
