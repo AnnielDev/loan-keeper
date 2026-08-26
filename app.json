@@ -50,7 +50,14 @@
         }
       ],
       "expo-sharing",
-      "expo-notifications"
+      "expo-notifications",
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Permitimos guardar las imágenes descargadas en tu galería.",
+          "savePhotosPermission": "Permitimos guardar las imágenes descargadas en tu galería."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

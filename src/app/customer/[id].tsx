@@ -15,7 +15,7 @@ import {
   Text,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { CustomerBalanceCard } from "@/components/customers/CustomerBalanceCard";
 import { CustomerContactCard } from "@/components/customers/CustomerContactCard";
@@ -31,6 +31,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StatCard } from "@/components/ui/StatCard";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useCustomerDetail } from "@/hooks/useCustomerDetail";
+import { useImageDownload } from "@/hooks/useImageDownload";
 import { useAuthStore } from "@/store/auth";
 import type { CustomerLoanSummary } from "@/types/customer";
 import { formatCurrency } from "@/utils/format";
@@ -45,10 +46,22 @@ export default function CustomerDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { t, i18n } = useTranslation();
   const { colors } = useAppTheme();
+  const insets = useSafeAreaInsets();
   const currency = useAuthStore((state) => state.user?.currency ?? "USD");
   const { data, isLoading, isRefreshing, error, refetch } =
     useCustomerDetail(id);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const { downloadImage, isDownloading } = useImageDownload();
+  const [downloadSucceeded, setDownloadSucceeded] = useState(false);
+
+  const handleDownloadPreview = async () => {
+    if (!previewUrl) return;
+    const succeeded = await downloadImage(previewUrl);
+    if (succeeded) {
+      setDownloadSucceeded(true);
+      setTimeout(() => setDownloadSucceeded(false), 1200);
+    }
+  };
 
   const handleRegisterPayment = (loan: CustomerLoanSummary) => {
     if (!loan.nextInstallmentId) return;
@@ -325,6 +338,24 @@ export default function CustomerDetailScreen() {
               contentFit="contain"
             />
           ) : null}
+          <View style={[styles.previewActions, { top: insets.top + 12 }]}>
+            <CircleIconButton
+              tone="neutral"
+              onPress={handleDownloadPreview}
+              icon={
+                isDownloading ? (
+                  <ActivityIndicator size="small" color={colors.text} />
+                ) : (
+                  <Icon
+                    family="Ionicons"
+                    name={downloadSucceeded ? "checkmark-circle" : "download-outline"}
+                    size={20}
+                    color={downloadSucceeded ? colors.success : colors.text}
+                  />
+                )
+              }
+            />
+          </View>
         </Pressable>
       </Modal>
     </SafeAreaView>
@@ -406,5 +437,9 @@ const styles = StyleSheet.create({
   previewImage: {
     width: "100%",
     height: "80%",
+  },
+  previewActions: {
+    position: "absolute",
+    right: 16,
   },
 });
