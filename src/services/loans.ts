@@ -1,4 +1,5 @@
 import { apiFetch } from "@/services/api";
+import type { PaginatedResponse } from "@/types/api";
 import type { ApiSuccess } from "@/types/auth";
 import type {
   CreateLoanPayload,
@@ -11,18 +12,30 @@ import type {
   PaymentDetail,
 } from "@/types/loan";
 
-export function getLoans(params: {
+type LoansFilterParams = {
   search?: string;
   status?: LoanStatusFilter;
   origin?: LoanOriginFilter;
-}) {
+};
+
+export function getLoans(params: LoansFilterParams): Promise<LoanSummary[]>;
+export function getLoans(
+  params: LoansFilterParams & { page: number; limit: number },
+): Promise<PaginatedResponse<LoanSummary>>;
+export function getLoans(
+  params: LoansFilterParams & { page?: number; limit?: number },
+) {
   const query = new URLSearchParams();
   if (params.search) query.set("search", params.search);
   if (params.status && params.status !== "all") query.set("status", params.status);
   if (params.origin && params.origin !== "all") query.set("origin", params.origin);
+  if (params.page) query.set("page", String(params.page));
+  if (params.limit) query.set("limit", String(params.limit));
 
   const qs = query.toString();
-  return apiFetch<LoanSummary[]>(`/loans/mine${qs ? `?${qs}` : ""}`);
+  return apiFetch<LoanSummary[] | PaginatedResponse<LoanSummary>>(
+    `/loans/mine${qs ? `?${qs}` : ""}`,
+  );
 }
 
 export function getLoan(id: string) {

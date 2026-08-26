@@ -31,7 +31,10 @@ export default function CustomersTabScreen() {
   const { colors } = useAppTheme();
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<CustomerStatusFilter>("all");
-  const { data, isLoading, isRefreshing, error, refetch } = useCustomers(search, status);
+  const { data, isLoading, isRefreshing, isLoadingMore, error, refetch, loadMore } = useCustomers(
+    search,
+    status,
+  );
   const showApiAlert = useApiAlertStore((state) => state.showApiAlert);
 
   const filterOptions: { label: string; value: CustomerStatusFilter }[] = [
@@ -112,6 +115,13 @@ export default function CustomersTabScreen() {
           </Text>
         }
         ItemSeparatorComponent={() => <View style={styles.separator} />}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          isLoadingMore ? (
+            <ActivityIndicator style={styles.footerLoader} color={colors.primary} />
+          ) : null
+        }
       />
 
       <FloatingActionButton
@@ -145,6 +155,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "center",
     marginTop: 40,
+  },
+  footerLoader: {
+    marginVertical: 20,
   },
   errorText: {
     fontSize: 14,

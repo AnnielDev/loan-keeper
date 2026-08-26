@@ -38,7 +38,11 @@ export default function LoansTabScreen() {
   const [filter, setFilter] = useState<LoanFilterValue>("all");
   const status: LoanStatusFilter = filter === "new" || filter === "legacy" ? "all" : filter;
   const origin: LoanOriginFilter = filter === "new" || filter === "legacy" ? filter : "all";
-  const { data, isLoading, isRefreshing, error, refetch } = useLoans(search, status, origin);
+  const { data, isLoading, isRefreshing, isLoadingMore, error, refetch, loadMore } = useLoans(
+    search,
+    status,
+    origin,
+  );
   const showApiAlert = useApiAlertStore((state) => state.showApiAlert);
 
   const filterOptions: { label: string; value: LoanFilterValue }[] = [
@@ -120,6 +124,13 @@ export default function LoansTabScreen() {
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>{t("loans.empty")}</Text>
         }
         ItemSeparatorComponent={() => <View style={styles.separator} />}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          isLoadingMore ? (
+            <ActivityIndicator style={styles.footerLoader} color={colors.primary} />
+          ) : null
+        }
       />
 
       <FloatingActionButton
@@ -153,6 +164,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "center",
     marginTop: 40,
+  },
+  footerLoader: {
+    marginVertical: 20,
   },
   errorText: {
     fontSize: 14,

@@ -1,4 +1,5 @@
 import { apiFetch } from "@/services/api";
+import type { PaginatedResponse } from "@/types/api";
 import type { ApiSuccess } from "@/types/auth";
 import type {
   CreateCustomerPayload,
@@ -9,13 +10,25 @@ import type {
   UpdateCustomerPayload,
 } from "@/types/customer";
 
-export function getCustomers(params: { search?: string; status?: CustomerStatusFilter }) {
+type CustomersFilterParams = { search?: string; status?: CustomerStatusFilter };
+
+export function getCustomers(params: CustomersFilterParams): Promise<CustomerSummary[]>;
+export function getCustomers(
+  params: CustomersFilterParams & { page: number; limit: number },
+): Promise<PaginatedResponse<CustomerSummary>>;
+export function getCustomers(
+  params: CustomersFilterParams & { page?: number; limit?: number },
+) {
   const query = new URLSearchParams();
   if (params.search) query.set("search", params.search);
   if (params.status && params.status !== "all") query.set("status", params.status);
+  if (params.page) query.set("page", String(params.page));
+  if (params.limit) query.set("limit", String(params.limit));
 
   const qs = query.toString();
-  return apiFetch<CustomerSummary[]>(`/customers/mine${qs ? `?${qs}` : ""}`);
+  return apiFetch<CustomerSummary[] | PaginatedResponse<CustomerSummary>>(
+    `/customers/mine${qs ? `?${qs}` : ""}`,
+  );
 }
 
 export function createCustomer(payload: CreateCustomerPayload) {
