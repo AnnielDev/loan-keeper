@@ -1,4 +1,3 @@
-import { Link, useRouter } from "expo-router";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -19,6 +18,7 @@ import { useAppTheme } from "@/hooks/useAppTheme";
 import { useFormField } from "@/hooks/useFormField";
 import * as authService from "@/services/auth";
 import { ApiError } from "@/services/api";
+import { router } from "@/utils/navigation";
 import {
   email as emailRule,
   MAX_EMAIL_LENGTH,
@@ -28,7 +28,6 @@ import {
 
 export default function ForgotPassword() {
   const { t } = useTranslation();
-  const router = useRouter();
   const { colors } = useAppTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
 
@@ -112,13 +111,11 @@ export default function ForgotPassword() {
           )}
         </TouchableOpacity>
 
-        <Link href="/sign-in" asChild>
-          <TouchableOpacity>
-            <Text style={styles.link}>
-              {t("auth.forgotPassword.backToSignIn")}
-            </Text>
-          </TouchableOpacity>
-        </Link>
+        <TouchableOpacity onPress={() => router.push("/sign-in")}>
+          <Text style={styles.link}>
+            {t("auth.forgotPassword.backToSignIn")}
+          </Text>
+        </TouchableOpacity>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

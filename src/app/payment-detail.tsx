@@ -1,7 +1,9 @@
 import { Image } from "expo-image";
 import * as FileSystem from "expo-file-system/legacy";
 import * as Print from "expo-print";
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
+
+import { router } from "@/utils/navigation";
 import * as Sharing from "expo-sharing";
 import type { TFunction } from "i18next";
 import { useState } from "react";

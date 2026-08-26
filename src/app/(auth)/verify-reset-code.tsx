@@ -1,4 +1,4 @@
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -18,11 +18,11 @@ import type { ThemeColors } from "@/constants/theme";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useFormField } from "@/hooks/useFormField";
 import * as authService from "@/services/auth";
+import { router } from "@/utils/navigation";
 import { code as codeRule, required } from "@/utils/validation";
 
 export default function VerifyResetCode() {
   const { t } = useTranslation();
-  const router = useRouter();
   const { email } = useLocalSearchParams<{ email: string }>();
   const { colors } = useAppTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
@@ -134,13 +134,11 @@ export default function VerifyResetCode() {
           </Text>
         </TouchableOpacity>
 
-        <Link href="/forgot-password" asChild>
-          <TouchableOpacity>
-            <Text style={styles.link}>
-              {t("auth.verifyCode.changeEmail")}
-            </Text>
-          </TouchableOpacity>
-        </Link>
+        <TouchableOpacity onPress={() => router.push("/forgot-password")}>
+          <Text style={styles.link}>
+            {t("auth.verifyCode.changeEmail")}
+          </Text>
+        </TouchableOpacity>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

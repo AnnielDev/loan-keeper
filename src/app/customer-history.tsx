@@ -1,4 +1,6 @@
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
+
+import { router } from "@/utils/navigation";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {

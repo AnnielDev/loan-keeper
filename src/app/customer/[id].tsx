@@ -1,5 +1,7 @@
 import { Image } from "expo-image";
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
+
+import { router } from "@/utils/navigation";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {

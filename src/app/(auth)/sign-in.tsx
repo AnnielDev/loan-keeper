@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -22,6 +21,7 @@ import { useFormField } from "@/hooks/useFormField";
 import { ApiError } from "@/services/api";
 import { useAuthStore } from "@/store/auth";
 import { useNetworkStore } from "@/store/network";
+import { router } from "@/utils/navigation";
 import {
   email as emailRule,
   MAX_EMAIL_LENGTH,
@@ -162,13 +162,11 @@ export default function SignIn() {
           ) : null}
         </View>
 
-        <Link href="/forgot-password" asChild>
-          <TouchableOpacity>
-            <Text style={styles.forgotPasswordLink}>
-              {t("auth.signIn.forgotPassword")}
-            </Text>
-          </TouchableOpacity>
-        </Link>
+        <TouchableOpacity onPress={() => router.push("/forgot-password")}>
+          <Text style={styles.forgotPasswordLink}>
+            {t("auth.signIn.forgotPassword")}
+          </Text>
+        </TouchableOpacity>
 
         {error ? <Text style={styles.error}>{error}</Text> : null}
 
@@ -184,11 +182,9 @@ export default function SignIn() {
           )}
         </TouchableOpacity>
 
-        <Link href="/sign-up" asChild>
-          <TouchableOpacity>
-            <Text style={styles.link}>{t("auth.signIn.switchToSignUp")}</Text>
-          </TouchableOpacity>
-        </Link>
+        <TouchableOpacity onPress={() => router.push("/sign-up")}>
+          <Text style={styles.link}>{t("auth.signIn.switchToSignUp")}</Text>
+        </TouchableOpacity>
 
         <View style={styles.themeToggle}>
           <ThemeToggle />

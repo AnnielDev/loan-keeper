@@ -1,4 +1,3 @@
-import { Link, useRouter } from "expo-router";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -25,6 +24,7 @@ import { ApiError } from "@/services/api";
 import { getCurrencies } from "@/services/settings";
 import { useAuthStore } from "@/store/auth";
 import { formatMoneyInput, parseMoneyInput } from "@/utils/moneyInput";
+import { router } from "@/utils/navigation";
 import {
   email as emailRule,
   MAX_EMAIL_LENGTH,
@@ -37,7 +37,6 @@ import {
 
 export default function SignUp() {
   const { t, i18n } = useTranslation();
-  const router = useRouter();
   const signUp = useAuthStore((state) => state.signUp);
   const isSubmitting = useAuthStore((state) => state.isSubmitting);
   const { colors } = useAppTheme();
@@ -264,11 +263,9 @@ export default function SignUp() {
           )}
         </TouchableOpacity>
 
-        <Link href="/sign-in" asChild>
-          <TouchableOpacity>
-            <Text style={styles.link}>{t("auth.signUp.switchToSignIn")}</Text>
-          </TouchableOpacity>
-        </Link>
+        <TouchableOpacity onPress={() => router.push("/sign-in")}>
+          <Text style={styles.link}>{t("auth.signUp.switchToSignIn")}</Text>
+        </TouchableOpacity>
 
         <View style={styles.themeToggle}>
           <ThemeToggle />
