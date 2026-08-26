@@ -39,7 +39,10 @@ export function LoanOverviewCard({ loan, onRegisterPayment }: LoanOverviewCardPr
         <Text style={[styles.title, { color: colors.text }]} numberOfLines={1}>
           {t("loanDetail.title", { code: loan.code })}
         </Text>
-        <Badge tone={STATUS_TONE[loan.status]} label={t(`loanDetail.status.${loan.status}`).toUpperCase()} />
+        <View style={styles.badgeColumn}>
+          <Badge tone={STATUS_TONE[loan.status]} label={t(`loanDetail.status.${loan.status}`).toUpperCase()} />
+          {loan.isLegacy ? <Badge tone="neutral" label={t("loans.legacyBadge")} /> : null}
+        </View>
       </View>
       <Text style={[styles.customerName, { color: colors.primary }]}>{loan.customerName}</Text>
 
@@ -111,6 +114,10 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontWeight: "700",
+  },
+  badgeColumn: {
+    alignItems: "flex-end",
+    gap: 6,
   },
   customerName: {
     fontSize: 14,

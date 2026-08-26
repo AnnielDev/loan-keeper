@@ -42,6 +42,7 @@ export type CustomerLoanSummary = {
   type: LoanType;
   principal: number;
   totalAmount: number;
+  isLegacy: boolean;
   paidAmount: number;
   progressPercent: number;
   status: LoanStatus;

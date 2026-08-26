@@ -31,6 +31,10 @@ export function LoanCompactRow({ loan, onPress }: LoanCompactRowProps) {
         ? t("loans.footer.nextPayment", { date: formatShortDate(loan.nextPaymentDate, i18n.language) })
         : null;
 
+  const secondaryLine = loan.isLegacy
+    ? [t("loans.legacyBadge"), statusLabel].filter(Boolean).join(" · ")
+    : statusLabel;
+
   const pendingAmount = loan.totalAmount - loan.paidAmount;
 
   return (
@@ -42,7 +46,7 @@ export function LoanCompactRow({ loan, onPress }: LoanCompactRowProps) {
         <Text style={[styles.title, { color: colors.text }]} numberOfLines={1}>
           {t(`loans.type.${loan.type}`)} #{loan.code}
         </Text>
-        {statusLabel ? <Text style={[styles.status, { color: accentColor }]}>{statusLabel}</Text> : null}
+        {secondaryLine ? <Text style={[styles.status, { color: accentColor }]}>{secondaryLine}</Text> : null}
       </View>
       <Text style={[styles.amount, { color: colors.text }]}>
         {formatCurrency(pendingAmount, currency, i18n.language)}

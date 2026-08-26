@@ -142,6 +142,10 @@
       "overdue": "Vencidos",
       "paid": "Pagados"
     },
+    "originFilters": {
+      "new": "Nuevos",
+      "legacy": "Migrados"
+    },
     "status": {
       "active": "Al Día",
       "overdue": "Vencido",
@@ -151,6 +155,7 @@
       "personal": "Personal",
       "micro_credito": "Micro-crédito"
     },
+    "legacyBadge": "Migrado",
     "totalSuffix": "total",
     "progress": "Progreso",
     "footer": {
@@ -184,7 +189,8 @@
       "interestType": "Tipo Interés",
       "frequency": "Frecuencia",
       "installmentsCount": "Cuotas",
-      "startDate": "Fecha Inicio"
+      "startDate": "Fecha Inicio",
+      "loanOrigin": "Origen"
     },
     "placeholders": {
       "principal": "$ 0.00",
@@ -194,6 +200,11 @@
     "interestType": {
       "simple": "Simple",
       "compound": "Compuesto"
+    },
+    "loanOrigin": {
+      "new": "Nuevo",
+      "legacy": "Migrado",
+      "legacyHint": "Registra el préstamo sin afectar tu balance ni los reportes — para préstamos que ya llevabas antes de usar esta app."
     },
     "frequency": {
       "monthly": "Mensual",

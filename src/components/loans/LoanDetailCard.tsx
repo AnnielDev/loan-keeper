@@ -49,7 +49,12 @@ export function LoanDetailCard({
       <Card style={styles.card}>
         <View style={styles.topRow}>
           <View style={styles.identity}>
-            <Badge tone="warning" label={t(`loans.type.${loan.type}`)} />
+            <View style={styles.identityBadges}>
+              <Badge tone="warning" label={t(`loans.type.${loan.type}`)} />
+              {loan.isLegacy ? (
+                <Badge tone="neutral" label={t("loans.legacyBadge")} />
+              ) : null}
+            </View>
             <Text style={[styles.code, { color: colors.textSecondary }]}>
               #{loan.code}
             </Text>
@@ -124,6 +129,10 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   identity: {
+    gap: 6,
+  },
+  identityBadges: {
+    flexDirection: "row",
     gap: 6,
   },
   code: {

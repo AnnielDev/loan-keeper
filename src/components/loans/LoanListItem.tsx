@@ -70,11 +70,14 @@ export function LoanListItem({ loan, onPress }: LoanListItemProps) {
               {loan.customerName}
             </Text>
           </View>
-          <Badge
-            tone={statusTone}
-            label={t(`loans.status.${loan.status}`)}
-            icon={<Icon family="Ionicons" name={STATUS_ICON[loan.status]} size={12} color={statusColor} />}
-          />
+          <View style={styles.badgeColumn}>
+            <Badge
+              tone={statusTone}
+              label={t(`loans.status.${loan.status}`)}
+              icon={<Icon family="Ionicons" name={STATUS_ICON[loan.status]} size={12} color={statusColor} />}
+            />
+            {loan.isLegacy ? <Badge tone="neutral" label={t("loans.legacyBadge")} /> : null}
+          </View>
         </View>
 
         <Text style={styles.amountLine}>
@@ -121,6 +124,10 @@ const styles = StyleSheet.create({
   identity: {
     flex: 1,
     gap: 2,
+  },
+  badgeColumn: {
+    alignItems: "flex-end",
+    gap: 6,
   },
   code: {
     fontSize: 12,

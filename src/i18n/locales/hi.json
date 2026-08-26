@@ -142,6 +142,10 @@
       "overdue": "अतिदेय",
       "paid": "चुकाए गए"
     },
+    "originFilters": {
+      "new": "नए",
+      "legacy": "स्थानांतरित"
+    },
     "status": {
       "active": "अद्यतित",
       "overdue": "अतिदेय",
@@ -151,6 +155,7 @@
       "personal": "व्यक्तिगत",
       "micro_credito": "माइक्रो-क्रेडिट"
     },
+    "legacyBadge": "स्थानांतरित",
     "totalSuffix": "कुल",
     "progress": "प्रगति",
     "footer": {
@@ -184,7 +189,8 @@
       "interestType": "ब्याज प्रकार",
       "frequency": "आवृत्ति",
       "installmentsCount": "किश्तें",
-      "startDate": "प्रारंभ तिथि"
+      "startDate": "प्रारंभ तिथि",
+      "loanOrigin": "मूल"
     },
     "placeholders": {
       "principal": "$ 0.00",
@@ -194,6 +200,11 @@
     "interestType": {
       "simple": "साधारण",
       "compound": "चक्रवृद्धि"
+    },
+    "loanOrigin": {
+      "new": "नया",
+      "legacy": "स्थानांतरित",
+      "legacyHint": "आपके बैलेंस या रिपोर्ट को प्रभावित किए बिना ऋण दर्ज करता है — उन ऋणों के लिए जिन्हें आप इस ऐप से पहले ही ट्रैक कर रहे थे।"
     },
     "frequency": {
       "monthly": "मासिक",

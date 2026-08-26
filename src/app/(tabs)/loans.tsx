@@ -24,21 +24,30 @@ import { useLoans } from "@/hooks/useLoans";
 import { ApiError } from "@/services/api";
 import { deleteLoan } from "@/services/loans";
 import { useApiAlertStore } from "@/store/apiAlert";
-import type { LoanStatusFilter, LoanSummary } from "@/types/loan";
+import type {
+  LoanFilterValue,
+  LoanOriginFilter,
+  LoanStatusFilter,
+  LoanSummary,
+} from "@/types/loan";
 
 export default function LoansTabScreen() {
   const { t } = useTranslation();
   const { colors } = useAppTheme();
   const [search, setSearch] = useState("");
-  const [status, setStatus] = useState<LoanStatusFilter>("all");
-  const { data, isLoading, isRefreshing, error, refetch } = useLoans(search, status);
+  const [filter, setFilter] = useState<LoanFilterValue>("all");
+  const status: LoanStatusFilter = filter === "new" || filter === "legacy" ? "all" : filter;
+  const origin: LoanOriginFilter = filter === "new" || filter === "legacy" ? filter : "all";
+  const { data, isLoading, isRefreshing, error, refetch } = useLoans(search, status, origin);
   const showApiAlert = useApiAlertStore((state) => state.showApiAlert);
 
-  const filterOptions: { label: string; value: LoanStatusFilter }[] = [
+  const filterOptions: { label: string; value: LoanFilterValue }[] = [
     { label: t("loans.filters.all"), value: "all" },
     { label: t("loans.filters.active"), value: "active" },
     { label: t("loans.filters.overdue"), value: "overdue" },
     { label: t("loans.filters.paid"), value: "paid" },
+    { label: t("loans.originFilters.new"), value: "new" },
+    { label: t("loans.originFilters.legacy"), value: "legacy" },
   ];
 
   const handleDelete = async (loan: LoanSummary) => {
@@ -104,7 +113,7 @@ export default function LoansTabScreen() {
               onChangeText={setSearch}
               placeholder={t("loans.searchPlaceholder")}
             />
-            <SegmentedControl options={filterOptions} value={status} onChange={setStatus} scrollable />
+            <SegmentedControl options={filterOptions} value={filter} onChange={setFilter} scrollable />
           </View>
         }
         ListEmptyComponent={

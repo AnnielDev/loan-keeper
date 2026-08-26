@@ -1,5 +1,10 @@
 export type LoanStatus = "active" | "overdue" | "paid";
 export type LoanStatusFilter = "all" | "active" | "overdue" | "paid";
+export type LoanOriginFilter = "all" | "new" | "legacy";
+
+/** Single combined value driving the loans screen's one filter control —
+ * splits into a status and an origin query param before hitting the API. */
+export type LoanFilterValue = LoanStatusFilter | "new" | "legacy";
 
 export type LoanType = "personal" | "micro_credito";
 export type InterestType = "simple" | "compound";
@@ -14,6 +19,7 @@ export type LoanSummary = {
   customerName: string;
   customerAvatarUrl: string | null;
   totalAmount: number;
+  isLegacy: boolean;
   progressPercent: number;
   status: LoanStatus;
   nextPaymentDate: string | null;
@@ -29,6 +35,7 @@ export type CreateLoanPayload = {
   frequency: PaymentFrequency;
   installmentsCount: number;
   startDate: string;
+  isLegacy: boolean;
 };
 
 export type Installment = {
@@ -56,6 +63,7 @@ export type Loan = {
   startDate: string;
   totalInterest: number;
   totalAmount: number;
+  isLegacy: boolean;
   installments: Installment[];
   registeredBy: string;
   createdAt: string;
@@ -88,6 +96,7 @@ export type LoanDetail = {
   startDate: string;
   totalInterest: number;
   totalAmount: number;
+  isLegacy: boolean;
   paidAmount: number;
   remainingBalance: number;
   progressPercent: number;
@@ -114,6 +123,7 @@ export type PaymentDetail = {
   loanId: string;
   loanCode: string;
   loanType: LoanType;
+  isLegacy: boolean;
   customerName: string;
   customerAvatarUrl: string | null;
   amount: number;

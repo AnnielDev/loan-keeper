@@ -142,6 +142,10 @@
       "overdue": "Overdue",
       "paid": "Paid"
     },
+    "originFilters": {
+      "new": "New",
+      "legacy": "Migrated"
+    },
     "status": {
       "active": "Current",
       "overdue": "Overdue",
@@ -151,6 +155,7 @@
       "personal": "Personal",
       "micro_credito": "Micro-credit"
     },
+    "legacyBadge": "Migrated",
     "totalSuffix": "total",
     "progress": "Progress",
     "footer": {
@@ -184,7 +189,8 @@
       "interestType": "Interest Type",
       "frequency": "Frequency",
       "installmentsCount": "Installments",
-      "startDate": "Start Date"
+      "startDate": "Start Date",
+      "loanOrigin": "Origin"
     },
     "placeholders": {
       "principal": "$ 0.00",
@@ -194,6 +200,11 @@
     "interestType": {
       "simple": "Simple",
       "compound": "Compound"
+    },
+    "loanOrigin": {
+      "new": "New",
+      "legacy": "Migrated",
+      "legacyHint": "Registers the loan without affecting your balance or reports — for loans you were already tracking before this app."
     },
     "frequency": {
       "monthly": "Monthly",

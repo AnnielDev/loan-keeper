@@ -142,6 +142,10 @@
       "overdue": "En retard",
       "paid": "Payés"
     },
+    "originFilters": {
+      "new": "Nouveaux",
+      "legacy": "Migrés"
+    },
     "status": {
       "active": "À jour",
       "overdue": "En retard",
@@ -151,6 +155,7 @@
       "personal": "Personnel",
       "micro_credito": "Micro-crédit"
     },
+    "legacyBadge": "Migré",
     "totalSuffix": "total",
     "progress": "Progression",
     "footer": {
@@ -184,7 +189,8 @@
       "interestType": "Type d'intérêt",
       "frequency": "Fréquence",
       "installmentsCount": "Échéances",
-      "startDate": "Date de début"
+      "startDate": "Date de début",
+      "loanOrigin": "Origine"
     },
     "placeholders": {
       "principal": "$ 0.00",
@@ -194,6 +200,11 @@
     "interestType": {
       "simple": "Simple",
       "compound": "Composé"
+    },
+    "loanOrigin": {
+      "new": "Nouveau",
+      "legacy": "Migré",
+      "legacyHint": "Enregistre le prêt sans affecter votre solde ni vos rapports — pour les prêts que vous suiviez déjà avant cette application."
     },
     "frequency": {
       "monthly": "Mensuel",

@@ -46,7 +46,10 @@ export function LoanHistoryListItem({ loan, onPress }: LoanHistoryListItemProps)
               </Text>
               <Text style={[styles.code, { color: colors.textSecondary }]}>#{loan.code}</Text>
             </View>
-            <Badge tone={BADGE_TONE[loan.status]} label={t(`customerHistory.status.${loan.status}`)} />
+            <View style={styles.badgeColumn}>
+              <Badge tone={BADGE_TONE[loan.status]} label={t(`customerHistory.status.${loan.status}`)} />
+              {loan.isLegacy ? <Badge tone="neutral" label={t("loans.legacyBadge")} /> : null}
+            </View>
           </View>
 
           <Text style={[styles.issued, { color: colors.textSecondary }]}>
@@ -91,6 +94,10 @@ const styles = StyleSheet.create({
   },
   identity: {
     gap: 2,
+  },
+  badgeColumn: {
+    alignItems: "flex-end",
+    gap: 6,
   },
   type: {
     fontSize: 15,

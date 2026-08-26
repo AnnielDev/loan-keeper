@@ -4,16 +4,22 @@ import type {
   CreateLoanPayload,
   Loan,
   LoanDetail,
+  LoanOriginFilter,
   LoanStatusFilter,
   LoanSummary,
   PayInstallmentPayload,
   PaymentDetail,
 } from "@/types/loan";
 
-export function getLoans(params: { search?: string; status?: LoanStatusFilter }) {
+export function getLoans(params: {
+  search?: string;
+  status?: LoanStatusFilter;
+  origin?: LoanOriginFilter;
+}) {
   const query = new URLSearchParams();
   if (params.search) query.set("search", params.search);
   if (params.status && params.status !== "all") query.set("status", params.status);
+  if (params.origin && params.origin !== "all") query.set("origin", params.origin);
 
   const qs = query.toString();
   return apiFetch<LoanSummary[]>(`/loans/mine${qs ? `?${qs}` : ""}`);

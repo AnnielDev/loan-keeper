@@ -59,6 +59,7 @@ export default function LoanFormScreen() {
     DEFAULT_INSTALLMENTS_COUNT,
   );
   const [startDate, setStartDate] = useState(() => new Date());
+  const [isLegacy, setIsLegacy] = useState(false);
   const [showSchedule, setShowSchedule] = useState(false);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -120,6 +121,11 @@ export default function LoanFormScreen() {
     { label: t("loanForm.interestType.compound"), value: "compound" },
   ];
 
+  const loanOriginOptions: { label: string; value: "new" | "legacy" }[] = [
+    { label: t("loanForm.loanOrigin.new"), value: "new" },
+    { label: t("loanForm.loanOrigin.legacy"), value: "legacy" },
+  ];
+
   const parsedPrincipal = parseMoneyInput(principal);
   const parsedInterestRate = parseMoneyInput(interestRate);
   const parsedInstallmentsCount = Math.max(
@@ -166,6 +172,7 @@ export default function LoanFormScreen() {
         frequency,
         installmentsCount: parsedInstallmentsCount,
         startDate: toLocalDateString(startDate),
+        isLegacy,
       });
       router.back();
     } catch {
@@ -237,6 +244,24 @@ export default function LoanFormScreen() {
                   onOpen={() => setIsCustomerPickerOpen(true)}
                   onClose={() => setIsCustomerPickerOpen(false)}
                 />
+              </View>
+
+              <View style={styles.field}>
+                <Text style={[styles.label, { color: colors.textSecondary }]}>
+                  {t("loanForm.fields.loanOrigin")}
+                </Text>
+                <SegmentedToggle
+                  options={loanOriginOptions}
+                  value={isLegacy ? "legacy" : "new"}
+                  onChange={(value) => setIsLegacy(value === "legacy")}
+                />
+                {isLegacy ? (
+                  <Text
+                    style={[styles.originHint, { color: colors.textSecondary }]}
+                  >
+                    {t("loanForm.loanOrigin.legacyHint")}
+                  </Text>
+                ) : null}
               </View>
 
               <View style={styles.row}>
@@ -426,6 +451,10 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 13,
     fontWeight: "600",
+  },
+  originHint: {
+    fontSize: 12,
+    lineHeight: 16,
   },
   row: {
     flexDirection: "row",

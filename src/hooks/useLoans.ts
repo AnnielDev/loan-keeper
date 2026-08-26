@@ -2,7 +2,7 @@ import { useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { getLoans } from "@/services/loans";
-import type { LoanStatusFilter, LoanSummary } from "@/types/loan";
+import type { LoanOriginFilter, LoanStatusFilter, LoanSummary } from "@/types/loan";
 
 const SEARCH_DEBOUNCE_MS = 300;
 
@@ -14,7 +14,11 @@ type UseLoansResult = {
   refetch: () => Promise<void>;
 };
 
-export function useLoans(search: string, status: LoanStatusFilter): UseLoansResult {
+export function useLoans(
+  search: string,
+  status: LoanStatusFilter,
+  origin: LoanOriginFilter,
+): UseLoansResult {
   const [data, setData] = useState<LoanSummary[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -23,7 +27,12 @@ export function useLoans(search: string, status: LoanStatusFilter): UseLoansResu
   const hasLoadedRef = useRef(false);
 
   const runFetch = useCallback(
-    async (searchValue: string, statusValue: LoanStatusFilter, isManualRefresh: boolean) => {
+    async (
+      searchValue: string,
+      statusValue: LoanStatusFilter,
+      originValue: LoanOriginFilter,
+      isManualRefresh: boolean,
+    ) => {
       const requestId = ++requestIdRef.current;
       if (isManualRefresh) {
         setIsRefreshing(true);
@@ -35,6 +44,7 @@ export function useLoans(search: string, status: LoanStatusFilter): UseLoansResu
         const result = await getLoans({
           search: searchValue.trim() || undefined,
           status: statusValue,
+          origin: originValue,
         });
         if (requestId !== requestIdRef.current) return;
         setData(result);
@@ -53,9 +63,9 @@ export function useLoans(search: string, status: LoanStatusFilter): UseLoansResu
   );
 
   useEffect(() => {
-    const timeout = setTimeout(() => runFetch(search, status, false), SEARCH_DEBOUNCE_MS);
+    const timeout = setTimeout(() => runFetch(search, status, origin, false), SEARCH_DEBOUNCE_MS);
     return () => clearTimeout(timeout);
-  }, [search, status, runFetch]);
+  }, [search, status, origin, runFetch]);
 
   // Silent refresh when the screen regains focus (e.g. returning from the
   // create-loan form) — skipped on first mount since the effect above
@@ -63,7 +73,7 @@ export function useLoans(search: string, status: LoanStatusFilter): UseLoansResu
   useFocusEffect(
     useCallback(() => {
       if (hasLoadedRef.current) {
-        runFetch(search, status, false);
+        runFetch(search, status, origin, false);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [runFetch]),
@@ -74,6 +84,6 @@ export function useLoans(search: string, status: LoanStatusFilter): UseLoansResu
     isLoading,
     isRefreshing,
     error,
-    refetch: () => runFetch(search, status, true),
+    refetch: () => runFetch(search, status, origin, true),
   };
 }

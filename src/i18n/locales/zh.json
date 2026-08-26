@@ -140,6 +140,10 @@
       "overdue": "逾期",
       "paid": "已结清"
     },
+    "originFilters": {
+      "new": "新贷款",
+      "legacy": "已迁移"
+    },
     "status": {
       "active": "正常",
       "overdue": "逾期",
@@ -149,6 +153,7 @@
       "personal": "个人",
       "micro_credito": "小额信贷"
     },
+    "legacyBadge": "已迁移",
     "totalSuffix": "总计",
     "progress": "进度",
     "footer": {
@@ -181,7 +186,8 @@
       "interestType": "利息类型",
       "frequency": "还款频率",
       "installmentsCount": "分期数",
-      "startDate": "开始日期"
+      "startDate": "开始日期",
+      "loanOrigin": "来源"
     },
     "placeholders": {
       "principal": "$ 0.00",
@@ -191,6 +197,11 @@
     "interestType": {
       "simple": "单利",
       "compound": "复利"
+    },
+    "loanOrigin": {
+      "new": "新贷款",
+      "legacy": "已迁移",
+      "legacyHint": "登记该贷款但不影响你的余额或报表——适用于你在使用本应用前就已经在跟踪的贷款。"
     },
     "frequency": {
       "monthly": "每月",
