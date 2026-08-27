@@ -209,9 +209,7 @@ export default function SignUp() {
               balanceField.setValue(formatMoneyInput(text, i18n.language))
             }
             onBlur={balanceField.onBlur}
-            keyboardType={
-              Platform.OS === "ios" ? "numbers-and-punctuation" : "default"
-            }
+            keyboardType="decimal-pad"
             placeholder="0.00"
             placeholderTextColor={colors.textSecondary}
           />
