@@ -14,6 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Icon } from "@/components/general/Icon";
+import { LanguageSelector } from "@/components/general/LanguageSelector";
 import { ThemeToggle } from "@/components/general/ThemeToggle";
 import { Select } from "@/components/ui/Select";
 import type { ThemeColors } from "@/constants/theme";
@@ -97,15 +98,16 @@ export default function SignUp() {
     if (!currencyValue) return;
 
     try {
+      const email = emailField.value.trim();
       await signUp({
-        email: emailField.value.trim(),
+        email,
         password: passwordField.value,
         name: nameField.value.trim(),
         language: i18n.language,
         balance: parseMoneyInput(balanceField.value),
         currency: currencyValue,
       });
-      router.replace("/sign-in");
+      router.replace({ pathname: "/verify-email", params: { email } });
     } catch (err) {
       setError(
         err instanceof ApiError ? err.message : t("auth.errors.generic"),
@@ -267,6 +269,7 @@ export default function SignUp() {
 
         <View style={styles.themeToggle}>
           <ThemeToggle />
+          <LanguageSelector />
         </View>
           </View>
         </ScrollView>
@@ -289,7 +292,10 @@ const createStyles = (colors: ThemeColors) =>
       justifyContent: "center",
     },
     themeToggle: {
+      flexDirection: "row",
       alignItems: "center",
+      justifyContent: "center",
+      gap: 16,
       marginTop: 20,
     },
     form: {

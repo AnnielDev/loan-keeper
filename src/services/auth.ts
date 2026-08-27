@@ -3,9 +3,11 @@ import type {
   ApiSuccess,
   AuthResponse,
   ForgotPasswordPayload,
+  ResendVerificationPayload,
   ResetPasswordPayload,
   SignInPayload,
   SignUpPayload,
+  VerifyEmailPayload,
   VerifyResetCodePayload,
 } from "@/types/auth";
 
@@ -19,6 +21,22 @@ export function signIn(payload: SignInPayload) {
 
 export function signUp(payload: SignUpPayload) {
   return apiFetch<{ message?: string }>("/auth/signup", {
+    method: "POST",
+    body: JSON.stringify(payload),
+    skipAuth: true,
+  });
+}
+
+export function verifyEmail(payload: VerifyEmailPayload) {
+  return apiFetch<ApiSuccess<AuthResponse>>("/auth/verify-email", {
+    method: "POST",
+    body: JSON.stringify(payload),
+    skipAuth: true,
+  });
+}
+
+export function resendVerificationCode(payload: ResendVerificationPayload) {
+  return apiFetch<{ message?: string }>("/auth/resend-verification-code", {
     method: "POST",
     body: JSON.stringify(payload),
     skipAuth: true,

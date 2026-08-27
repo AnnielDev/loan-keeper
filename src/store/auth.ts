@@ -4,7 +4,12 @@ import { persist } from "zustand/middleware";
 import * as authService from "@/services/auth";
 import { setAuthAccessor } from "@/services/api";
 import { secureAuthStorage } from "@/store/secureAuthStorage";
-import type { SignInPayload, SignUpPayload, User } from "@/types/auth";
+import type {
+  SignInPayload,
+  SignUpPayload,
+  User,
+  VerifyEmailPayload,
+} from "@/types/auth";
 
 type AuthState = {
   user: User | null;
@@ -14,6 +19,7 @@ type AuthState = {
   isSubmitting: boolean;
   signIn: (payload: SignInPayload) => Promise<void>;
   signUp: (payload: SignUpPayload) => Promise<void>;
+  verifyEmail: (payload: VerifyEmailPayload) => Promise<void>;
   signOut: () => Promise<void>;
   /** Clears the session locally only — used when we can't reach the API (e.g. offline). */
   forceSignOut: () => void;
@@ -49,6 +55,21 @@ export const useAuthStore = create<AuthState>()(
         try {
           await authService.signUp(payload);
           set({ isSubmitting: false });
+        } catch (error) {
+          set({ isSubmitting: false });
+          throw error;
+        }
+      },
+      verifyEmail: async (payload) => {
+        set({ isSubmitting: true });
+        try {
+          const { data } = await authService.verifyEmail(payload);
+          set({
+            user: data.user,
+            accessToken: data.accessToken,
+            refreshToken: data.refreshToken,
+            isSubmitting: false,
+          });
         } catch (error) {
           set({ isSubmitting: false });
           throw error;

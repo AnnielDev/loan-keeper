@@ -68,6 +68,15 @@ export type ForgotPasswordPayload = {
   email: string;
 };
 
+export type VerifyEmailPayload = {
+  email: string;
+  code: string;
+};
+
+export type ResendVerificationPayload = {
+  email: string;
+};
+
 export type VerifyResetCodePayload = {
   email: string;
   code: string;

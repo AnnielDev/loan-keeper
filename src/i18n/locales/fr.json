@@ -535,6 +535,14 @@
       "resendSuccess": "Un nouveau code a été envoyé.",
       "changeEmail": "Utiliser un autre e-mail"
     },
+    "verifyEmail": {
+      "title": "Vérifiez votre e-mail",
+      "subtitle": "Nous avons envoyé un code à 6 chiffres à {{email}}",
+      "submit": "Vérifier l'e-mail",
+      "resend": "Renvoyer le code",
+      "resending": "Envoi en cours...",
+      "resendSuccess": "Un nouveau code a été envoyé."
+    },
     "resetPassword": {
       "title": "Créer un nouveau mot de passe",
       "submit": "Mettre à jour le mot de passe"

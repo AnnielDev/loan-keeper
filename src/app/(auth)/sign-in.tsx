@@ -14,6 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Icon } from "@/components/general/Icon";
+import { LanguageSelector } from "@/components/general/LanguageSelector";
 import { ThemeToggle } from "@/components/general/ThemeToggle";
 import type { ThemeColors } from "@/constants/theme";
 import { useAppTheme } from "@/hooks/useAppTheme";
@@ -244,6 +245,7 @@ export default function SignIn() {
 
         <View style={styles.themeToggle}>
           <ThemeToggle />
+          <LanguageSelector />
         </View>
           </View>
         </ScrollView>
@@ -266,7 +268,10 @@ const createStyles = (colors: ThemeColors) =>
       justifyContent: "center",
     },
     themeToggle: {
+      flexDirection: "row",
       alignItems: "center",
+      justifyContent: "center",
+      gap: 16,
       marginTop: 20,
     },
     form: {
