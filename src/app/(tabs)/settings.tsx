@@ -8,13 +8,13 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
-  Switch,
   Text,
   TextInput,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { BiometricToggle } from "@/components/general/BiometricToggle";
 import { Icon } from "@/components/general/Icon";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SecondaryButton } from "@/components/ui/SecondaryButton";
@@ -463,10 +463,10 @@ export default function SettingsTabScreen() {
             {isTogglingBiometric ? (
               <ActivityIndicator size="small" color={colors.primary} />
             ) : (
-              <Switch
+              <BiometricToggle
                 value={biometricEnabled}
                 onValueChange={handleToggleBiometric}
-                trackColor={{ false: colors.border, true: colors.primary }}
+                accessibilityLabel={t("settings.security.biometricUnlock")}
               />
             )}
           </View>
