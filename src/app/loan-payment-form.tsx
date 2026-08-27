@@ -28,7 +28,11 @@ import { useAppTheme } from "@/hooks/useAppTheme";
 import { useLoanDetail } from "@/hooks/useLoanDetail";
 import { payInstallment } from "@/services/loans";
 import type { PaymentMethod } from "@/types/loan";
-import { formatNumericDate, toLocalDateString } from "@/utils/format";
+import {
+  formatNumericDate,
+  parseCalendarDateForDisplay,
+  toLocalDateString,
+} from "@/utils/format";
 import {
   formatMoneyInput,
   moneyToInputText,
@@ -64,8 +68,12 @@ export default function LoanPaymentFormScreen() {
     if (installment && !hasPrefilled) {
       setAmount(moneyToInputText(installment.amount, i18n.language));
       setHasPrefilled(true);
+      const loanStartDate = parseCalendarDateForDisplay(data!.startDate);
+      setPaymentDate((current) =>
+        current < loanStartDate ? loanStartDate : current
+      );
     }
-  }, [installment, hasPrefilled, i18n.language]);
+  }, [installment, hasPrefilled, i18n.language, data]);
 
   const methodOptions: { label: string; value: PaymentMethod }[] = [
     { label: t("paymentForm.methods.cash"), value: "cash" },
@@ -194,6 +202,7 @@ export default function LoanPaymentFormScreen() {
             value={paymentDate}
             displayValue={formatNumericDate(paymentDate, i18n.language)}
             onChange={setPaymentDate}
+            minimumDate={parseCalendarDateForDisplay(data!.startDate)}
             doneLabel={t("loanForm.datePickerDone")}
           />
 

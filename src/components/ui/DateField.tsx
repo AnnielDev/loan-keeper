@@ -71,8 +71,13 @@ export function DateField({
         <DateTimePicker
           value={toAndroidPickerDate(value)}
           mode="date"
-          minimumDate={minimumDate ? toAndroidPickerDate(minimumDate) : undefined}
-          maximumDate={maximumDate ? toAndroidPickerDate(maximumDate) : undefined}
+          // Unlike `value`, min/maxDate go through the native module's own
+          // local-day-to-UTC-midnight conversion (selectableDates), so they
+          // must stay as plain local Dates — pre-shifting them here would
+          // double-convert and drift the boundary a day early in timezones
+          // behind UTC.
+          minimumDate={minimumDate}
+          maximumDate={maximumDate}
           onValueChange={(_, date) => {
             onChange(fromAndroidPickerDate(date));
             setIsOpen(false);
