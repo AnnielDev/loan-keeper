@@ -57,6 +57,23 @@
         "errorTitle": "Couldn't delete account",
         "errorMessage": "Something went wrong. Try again."
       }
+    },
+    "security": {
+      "biometricUnlock": "Unlock with Face ID / fingerprint",
+      "confirmPasswordTitle": "Confirm your password",
+      "confirmPasswordMessage": "Enter your password once so Face ID / fingerprint sign-in can be enabled on the sign-in screen.",
+      "confirmPasswordCancel": "Cancel",
+      "confirmPasswordConfirm": "Confirm"
+    }
+  },
+  "appLock": {
+    "title": "Welcome back",
+    "unlock": "Unlock",
+    "useBiometrics": "Use Face ID / fingerprint",
+    "biometricPrompt": "Confirm it's you",
+    "signOut": "Sign out instead",
+    "errors": {
+      "invalidPassword": "Incorrect password."
     }
   },
   "locationGate": {
@@ -495,7 +512,8 @@
       "title": "Sign in",
       "submit": "Sign in",
       "switchToSignUp": "Don't have an account? Sign up",
-      "forgotPassword": "Forgot password?"
+      "forgotPassword": "Forgot password?",
+      "useBiometricLogin": "Sign in with Face ID / fingerprint"
     },
     "signUp": {
       "title": "Create account",
@@ -537,7 +555,8 @@
       "signedOutOffline": "You were signed out because your connection was lost.",
       "signedOutApiError": "You were signed out because the server could not be reached.",
       "invalidOrExpiredCode": "That code is invalid or has expired. Try again or request a new one.",
-      "resetSessionExpired": "Your session expired. Please start again."
+      "resetSessionExpired": "Your session expired. Please start again.",
+      "biometricLoginFailed": "Couldn't sign in with Face ID / fingerprint. Try your password instead."
     }
   },
   "validation": {

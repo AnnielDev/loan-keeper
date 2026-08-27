@@ -1,0 +1,110 @@
+import type { ConfigContext, ExpoConfig } from "expo/config";
+
+// Only preview/production EAS builds disable cleartext (plain HTTP) traffic
+// at the OS level — the development profile (and plain `expo start`/`expo
+// run`, where this env var is unset) needs it to keep hitting a local
+// backend over http:// on the LAN, as configured in .env.local.
+const isHardenedBuild =
+  process.env.EAS_BUILD_PROFILE === "preview" ||
+  process.env.EAS_BUILD_PROFILE === "production";
+
+export default ({ config }: ConfigContext): ExpoConfig => ({
+  ...config,
+  name: "Loan Keeper",
+  slug: "loan-keeper",
+  version: "1.0.0",
+  orientation: "portrait",
+  icon: "./assets/images/icon.png",
+  scheme: "loankeeper",
+  userInterfaceStyle: "automatic",
+  ios: {
+    icon: "./assets/expo.icon",
+    // Blocks plain HTTP for the app's own requests on hardened (preview/
+    // production) builds; ATS default already requires HTTPS, this makes it
+    // explicit and non-overridable by a stray http:// URL. The development
+    // profile keeps arbitrary loads allowed for the LAN dev backend.
+    infoPlist: {
+      NSAppTransportSecurity: {
+        NSAllowsArbitraryLoads: !isHardenedBuild,
+      },
+    },
+  },
+  android: {
+    adaptiveIcon: {
+      backgroundColor: "#E6F4FE",
+      foregroundImage: "./assets/images/android-icon-foreground.png",
+      backgroundImage: "./assets/images/android-icon-background.png",
+      monochromeImage: "./assets/images/android-icon-monochrome.png",
+    },
+    predictiveBackGestureEnabled: false,
+    permissions: [
+      "android.permission.ACCESS_COARSE_LOCATION",
+      "android.permission.ACCESS_FINE_LOCATION",
+    ],
+    package: "com.annielfrancisco.loankeeper",
+  },
+  web: {
+    output: "static",
+    favicon: "./assets/images/favicon.png",
+  },
+  plugins: [
+    "expo-router",
+    [
+      "expo-splash-screen",
+      {
+        backgroundColor: "#208AEF",
+        image: "./assets/images/splash-icon.png",
+        imageWidth: 76,
+      },
+    ],
+    "expo-localization",
+    "expo-image",
+    "expo-secure-store",
+    [
+      "expo-location",
+      {
+        locationWhenInUsePermission:
+          "Usamos tu ubicación solo para detectar tu país y zona horaria, y así mostrar fechas correctas.",
+      },
+    ],
+    "expo-sharing",
+    "expo-notifications",
+    [
+      "expo-media-library",
+      {
+        photosPermission: "Permitimos guardar las imágenes descargadas en tu galería.",
+        savePhotosPermission: "Permitimos guardar las imágenes descargadas en tu galería.",
+      },
+    ],
+    [
+      "expo-local-authentication",
+      {
+        faceIDPermission: "Permitimos usar Face ID para desbloquear la app rápidamente.",
+      },
+    ],
+    [
+      "expo-build-properties",
+      {
+        android: {
+          usesCleartextTraffic: !isHardenedBuild,
+        },
+      },
+    ],
+  ],
+  experiments: {
+    typedRoutes: true,
+    reactCompiler: true,
+  },
+  extra: {
+    router: {},
+    eas: {
+      projectId: "d6827214-f280-4569-8a37-2940b77beba3",
+    },
+  },
+  runtimeVersion: {
+    policy: "appVersion",
+  },
+  updates: {
+    url: "https://u.expo.dev/d6827214-f280-4569-8a37-2940b77beba3",
+  },
+});

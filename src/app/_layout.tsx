@@ -11,6 +11,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ApiAlertModal } from "@/components/general/ApiAlertModal";
 import { OfflineBanner } from "@/components/general/OfflineBanner";
 import { useAppTheme } from "@/hooks/useAppTheme";
+import { useAppLockStore } from "@/store/appLock";
 import { useAuthStore } from "@/store/auth";
 import { useLocationAccessStore } from "@/store/location";
 import "@/store/network";
@@ -19,7 +20,9 @@ import "@/store/notifications";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const isHydrated = useAuthStore((state) => state.isHydrated);
+  const isAuthHydrated = useAuthStore((state) => state.isHydrated);
+  const isAppLockHydrated = useAppLockStore((state) => state.isHydrated);
+  const isHydrated = isAuthHydrated && isAppLockHydrated;
   const { colors, scheme } = useAppTheme();
 
   useEffect(() => {
@@ -57,6 +60,7 @@ function RootNavigator() {
   // location (app permission or the device-wide toggle) after granting it
   // once sends the user back to the location gate instead of staying in.
   const isLocationAccessGranted = useLocationAccessStore((state) => state.isGranted);
+  const isLocked = useAppLockStore((state) => state.isLocked);
   const { colors } = useAppTheme();
 
   useEffect(() => {
@@ -72,7 +76,11 @@ function RootNavigator() {
         contentStyle: { backgroundColor: colors.background },
       }}
     >
-      <Stack.Protected guard={isAuthenticated && canAccessApp}>
+      <Stack.Protected guard={isAuthenticated && isLocked}>
+        <Stack.Screen name="app-lock" options={{ animation: "fade" }} />
+      </Stack.Protected>
+
+      <Stack.Protected guard={isAuthenticated && !isLocked && canAccessApp}>
         <Stack.Screen name="(tabs)" options={{ animation: "simple_push" }} />
         <Stack.Screen name="customer-form" options={{ presentation: "modal" }} />
         <Stack.Screen name="loan-form" options={{ presentation: "modal" }} />
@@ -83,7 +91,7 @@ function RootNavigator() {
         <Stack.Screen name="payment-detail" />
       </Stack.Protected>
 
-      <Stack.Protected guard={isAuthenticated && !canAccessApp}>
+      <Stack.Protected guard={isAuthenticated && !isLocked && !canAccessApp}>
         <Stack.Screen name="location-permission" options={{ animation: "fade" }} />
       </Stack.Protected>
 

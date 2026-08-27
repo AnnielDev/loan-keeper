@@ -57,6 +57,23 @@
         "errorTitle": "खाता हटाया नहीं जा सका",
         "errorMessage": "कुछ गलत हो गया। फिर से प्रयास करें।"
       }
+    },
+    "security": {
+      "biometricUnlock": "Face ID / फिंगरप्रिंट से अनलॉक करें",
+      "confirmPasswordTitle": "अपने पासवर्ड की पुष्टि करें",
+      "confirmPasswordMessage": "साइन-इन स्क्रीन पर Face ID / फिंगरप्रिंट से साइन-इन सक्षम करने के लिए एक बार अपना पासवर्ड डालें।",
+      "confirmPasswordCancel": "रद्द करें",
+      "confirmPasswordConfirm": "पुष्टि करें"
+    }
+  },
+  "appLock": {
+    "title": "वापसी पर स्वागत है",
+    "unlock": "अनलॉक करें",
+    "useBiometrics": "Face ID / फिंगरप्रिंट का उपयोग करें",
+    "biometricPrompt": "पुष्टि करें कि यह आप ही हैं",
+    "signOut": "इसके बजाय साइन आउट करें",
+    "errors": {
+      "invalidPassword": "गलत पासवर्ड।"
     }
   },
   "locationGate": {
@@ -495,7 +512,8 @@
       "title": "साइन इन करें",
       "submit": "साइन इन करें",
       "switchToSignUp": "खाता नहीं है? साइन अप करें",
-      "forgotPassword": "पासवर्ड भूल गए?"
+      "forgotPassword": "पासवर्ड भूल गए?",
+      "useBiometricLogin": "Face ID / फिंगरप्रिंट से साइन इन करें"
     },
     "signUp": {
       "title": "खाता बनाएं",
@@ -537,7 +555,8 @@
       "signedOutOffline": "कनेक्शन खो जाने के कारण आपको साइन आउट कर दिया गया।",
       "signedOutApiError": "सर्वर से संपर्क न हो पाने के कारण आपको साइन आउट कर दिया गया।",
       "invalidOrExpiredCode": "यह कोड अमान्य है या समाप्त हो चुका है। फिर से कोशिश करें या नया कोड मांगें।",
-      "resetSessionExpired": "आपका सत्र समाप्त हो गया। कृपया फिर से शुरू करें।"
+      "resetSessionExpired": "आपका सत्र समाप्त हो गया। कृपया फिर से शुरू करें।",
+      "biometricLoginFailed": "Face ID / फिंगरप्रिंट से साइन इन नहीं हो सका। अपने पासवर्ड से प्रयास करें।"
     }
   },
   "validation": {

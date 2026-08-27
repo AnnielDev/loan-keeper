@@ -57,6 +57,23 @@
         "errorTitle": "Impossible de supprimer le compte",
         "errorMessage": "Une erreur s'est produite. Réessayez."
       }
+    },
+    "security": {
+      "biometricUnlock": "Déverrouiller avec Face ID / empreinte",
+      "confirmPasswordTitle": "Confirmez votre mot de passe",
+      "confirmPasswordMessage": "Saisissez votre mot de passe une fois pour activer la connexion par Face ID / empreinte sur l'écran de connexion.",
+      "confirmPasswordCancel": "Annuler",
+      "confirmPasswordConfirm": "Confirmer"
+    }
+  },
+  "appLock": {
+    "title": "Content de vous revoir",
+    "unlock": "Déverrouiller",
+    "useBiometrics": "Utiliser Face ID / empreinte",
+    "biometricPrompt": "Confirmez que c'est bien vous",
+    "signOut": "Se déconnecter à la place",
+    "errors": {
+      "invalidPassword": "Mot de passe incorrect."
     }
   },
   "locationGate": {
@@ -495,7 +512,8 @@
       "title": "Connexion",
       "submit": "Se connecter",
       "switchToSignUp": "Pas de compte ? Inscrivez-vous",
-      "forgotPassword": "Mot de passe oublié ?"
+      "forgotPassword": "Mot de passe oublié ?",
+      "useBiometricLogin": "Se connecter avec Face ID / empreinte"
     },
     "signUp": {
       "title": "Créer un compte",
@@ -537,7 +555,8 @@
       "signedOutOffline": "Vous avez été déconnecté car la connexion a été perdue.",
       "signedOutApiError": "Vous avez été déconnecté car le serveur était injoignable.",
       "invalidOrExpiredCode": "Ce code est invalide ou a expiré. Réessayez ou demandez-en un nouveau.",
-      "resetSessionExpired": "Votre session a expiré. Veuillez recommencer."
+      "resetSessionExpired": "Votre session a expiré. Veuillez recommencer.",
+      "biometricLoginFailed": "Impossible de se connecter avec Face ID / empreinte. Essayez votre mot de passe."
     }
   },
   "validation": {

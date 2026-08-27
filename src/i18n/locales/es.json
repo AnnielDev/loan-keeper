@@ -57,6 +57,23 @@
         "errorTitle": "No se pudo eliminar la cuenta",
         "errorMessage": "Algo salió mal. Intenta de nuevo."
       }
+    },
+    "security": {
+      "biometricUnlock": "Desbloquear con Face ID / huella",
+      "confirmPasswordTitle": "Confirma tu contraseña",
+      "confirmPasswordMessage": "Ingresa tu contraseña una vez para habilitar el inicio de sesión con Face ID / huella en la pantalla de login.",
+      "confirmPasswordCancel": "Cancelar",
+      "confirmPasswordConfirm": "Confirmar"
+    }
+  },
+  "appLock": {
+    "title": "Bienvenido de nuevo",
+    "unlock": "Desbloquear",
+    "useBiometrics": "Usar Face ID / huella",
+    "biometricPrompt": "Confirma que eres tú",
+    "signOut": "Cerrar sesión en su lugar",
+    "errors": {
+      "invalidPassword": "Contraseña incorrecta."
     }
   },
   "locationGate": {
@@ -495,7 +512,8 @@
       "title": "Iniciar sesión",
       "submit": "Iniciar sesión",
       "switchToSignUp": "¿No tienes una cuenta? Regístrate",
-      "forgotPassword": "¿Olvidaste tu contraseña?"
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "useBiometricLogin": "Iniciar sesión con Face ID / huella"
     },
     "signUp": {
       "title": "Crear cuenta",
@@ -537,7 +555,8 @@
       "signedOutOffline": "Se cerró tu sesión porque se perdió la conexión.",
       "signedOutApiError": "Se cerró tu sesión porque no se pudo contactar al servidor.",
       "invalidOrExpiredCode": "Ese código es inválido o expiró. Intenta de nuevo o solicita uno nuevo.",
-      "resetSessionExpired": "Tu sesión expiró. Por favor, comienza de nuevo."
+      "resetSessionExpired": "Tu sesión expiró. Por favor, comienza de nuevo.",
+      "biometricLoginFailed": "No se pudo iniciar sesión con Face ID / huella. Intenta con tu contraseña."
     }
   },
   "validation": {

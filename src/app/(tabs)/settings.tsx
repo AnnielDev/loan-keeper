@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
@@ -8,7 +8,9 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
+  Switch,
   Text,
+  TextInput,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -33,9 +35,16 @@ import {
   updateName,
 } from "@/services/settings";
 import { useApiAlertStore } from "@/store/apiAlert";
+import { useAppLockStore } from "@/store/appLock";
 import { useAuthStore } from "@/store/auth";
+import { authenticateWithBiometrics, isBiometricAvailable } from "@/utils/biometrics";
+import {
+  forgetBiometricCredential,
+  getRememberedBiometricEmail,
+  rememberBiometricCredential,
+} from "@/utils/biometricCredentials";
 import { formatCurrency } from "@/utils/format";
-import { MAX_NAME_LENGTH, required, maxLength } from "@/utils/validation";
+import { MAX_NAME_LENGTH, MAX_PASSWORD_LENGTH, required, maxLength } from "@/utils/validation";
 
 const appearanceOptions: { scheme: ColorScheme; icon: "sunny" | "moon" }[] = [
   { scheme: "light", icon: "sunny" },
@@ -46,6 +55,7 @@ export default function SettingsTabScreen() {
   const { t, i18n } = useTranslation();
   const translate = t as unknown as (key: string) => string;
   const user = useAuthStore((state) => state.user);
+  const signIn = useAuthStore((state) => state.signIn);
   const signOut = useAuthStore((state) => state.signOut);
   const forceSignOut = useAuthStore((state) => state.forceSignOut);
   const updateUser = useAuthStore((state) => state.updateUser);
@@ -65,6 +75,86 @@ export default function SettingsTabScreen() {
   const [isDeleteConfirmVisible, setIsDeleteConfirmVisible] = useState(false);
   const [isDeletingAccount, setIsDeletingAccount] = useState(false);
   const [isSignOutConfirmVisible, setIsSignOutConfirmVisible] = useState(false);
+
+  const biometricEnabled = useAppLockStore((state) => state.biometricEnabled);
+  const setBiometricEnabled = useAppLockStore((state) => state.setBiometricEnabled);
+  const [isBiometricSupported, setIsBiometricSupported] = useState(false);
+  const [isTogglingBiometric, setIsTogglingBiometric] = useState(false);
+  const [hasRememberedCredential, setHasRememberedCredential] = useState(false);
+  const [isBiometricPasswordConfirmVisible, setIsBiometricPasswordConfirmVisible] = useState(false);
+  const [isConfirmingBiometricPassword, setIsConfirmingBiometricPassword] = useState(false);
+  const [biometricPasswordError, setBiometricPasswordError] = useState<string | null>(null);
+  const biometricPasswordField = useFormField<string>(
+    "",
+    useMemo(() => [required(), maxLength(MAX_PASSWORD_LENGTH)], []),
+  );
+
+  useEffect(() => {
+    isBiometricAvailable().then(setIsBiometricSupported);
+  }, []);
+
+  useEffect(() => {
+    if (!biometricEnabled) {
+      setHasRememberedCredential(false);
+      return;
+    }
+    getRememberedBiometricEmail().then((email) => setHasRememberedCredential(!!email));
+  }, [biometricEnabled]);
+
+  const handleToggleBiometric = async (nextEnabled: boolean) => {
+    if (!nextEnabled) {
+      setBiometricEnabled(false);
+      await forgetBiometricCredential();
+      return;
+    }
+    setIsTogglingBiometric(true);
+    try {
+      const success = await authenticateWithBiometrics(t("appLock.biometricPrompt"));
+      if (success) {
+        setBiometricEnabled(true);
+        // Enabling the toggle alone can't remember a credential — we've
+        // never seen the password. Ask for it once now so the fingerprint
+        // button on the sign-in screen works immediately, instead of only
+        // after the next manual password login.
+        biometricPasswordField.setValue("");
+        setBiometricPasswordError(null);
+        setIsBiometricPasswordConfirmVisible(true);
+      }
+    } finally {
+      setIsTogglingBiometric(false);
+    }
+  };
+
+  const handleConfirmBiometricPassword = async () => {
+    if (!user) return;
+    setIsConfirmingBiometricPassword(true);
+    setBiometricPasswordError(null);
+    try {
+      await signIn({ email: user.email, password: biometricPasswordField.value });
+      await rememberBiometricCredential(
+        user.email,
+        biometricPasswordField.value,
+        t("appLock.biometricPrompt"),
+      );
+      setHasRememberedCredential(true);
+      setIsBiometricPasswordConfirmVisible(false);
+    } catch (err) {
+      setBiometricPasswordError(
+        err instanceof ApiError && (err.status === 401 || err.status === 400)
+          ? t("auth.errors.invalidCredentials")
+          : t("auth.errors.generic"),
+      );
+    } finally {
+      setIsConfirmingBiometricPassword(false);
+    }
+  };
+
+  const handleCancelBiometricPasswordConfirm = () => {
+    setIsBiometricPasswordConfirmVisible(false);
+    // Without a remembered credential the toggle would be on with no way to
+    // actually use it — turn it back off instead of leaving it in that state.
+    setBiometricEnabled(false);
+  };
 
   const {
     data: languagesResponse,
@@ -364,6 +454,24 @@ export default function SettingsTabScreen() {
           </Pressable>
         )}
 
+        {isBiometricSupported ? (
+          <View style={styles.settingsRow}>
+            <View style={styles.settingsIconWrap}>
+              <Icon family="Ionicons" name="finger-print-outline" size={18} color={colors.textSecondary} />
+            </View>
+            <Text style={styles.actionLabel}>{t("settings.security.biometricUnlock")}</Text>
+            {isTogglingBiometric ? (
+              <ActivityIndicator size="small" color={colors.primary} />
+            ) : (
+              <Switch
+                value={biometricEnabled}
+                onValueChange={handleToggleBiometric}
+                trackColor={{ false: colors.border, true: colors.primary }}
+              />
+            )}
+          </View>
+        ) : null}
+
         <Pressable
           onPress={() => setIsSignOutConfirmVisible(true)}
           style={styles.settingsRow}
@@ -463,6 +571,64 @@ export default function SettingsTabScreen() {
                   label={t("settings.account.signOutConfirm.confirm")}
                   tone="danger"
                   onPress={handleConfirmSignOut}
+                />
+              </View>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
+      <Modal
+        visible={isBiometricPasswordConfirmVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={handleCancelBiometricPasswordConfirm}
+      >
+        <Pressable
+          style={styles.backdrop}
+          onPress={() => !isConfirmingBiometricPassword && handleCancelBiometricPasswordConfirm()}
+        >
+          <Pressable style={styles.dialog} onPress={() => {}}>
+            <View style={styles.dialogIconCircle}>
+              <Icon family="Ionicons" name="finger-print-outline" size={26} color={colors.primary} />
+            </View>
+            <Text style={styles.dialogTitle}>
+              {t("settings.security.confirmPasswordTitle")}
+            </Text>
+            <Text style={styles.dialogMessage}>
+              {t("settings.security.confirmPasswordMessage")}
+            </Text>
+            <View style={styles.dialogPasswordWrapper}>
+              <TextInput
+                style={styles.dialogPasswordInput}
+                value={biometricPasswordField.value}
+                onChangeText={biometricPasswordField.setValue}
+                onBlur={biometricPasswordField.onBlur}
+                secureTextEntry
+                autoCapitalize="none"
+                autoComplete="password"
+                placeholder="••••••••"
+                placeholderTextColor={colors.textSecondary}
+                autoFocus
+              />
+            </View>
+            {biometricPasswordError ? (
+              <Text style={styles.dialogError}>{biometricPasswordError}</Text>
+            ) : null}
+            <View style={styles.dialogActions}>
+              <View style={styles.dialogButton}>
+                <SecondaryButton
+                  label={t("settings.security.confirmPasswordCancel")}
+                  onPress={handleCancelBiometricPasswordConfirm}
+                  disabled={isConfirmingBiometricPassword}
+                />
+              </View>
+              <View style={styles.dialogButton}>
+                <PrimaryButton
+                  label={t("settings.security.confirmPasswordConfirm")}
+                  onPress={handleConfirmBiometricPassword}
+                  isLoading={isConfirmingBiometricPassword}
+                  disabled={!biometricPasswordField.isValid}
                 />
               </View>
             </View>
@@ -712,5 +878,24 @@ const createStyles = (colors: ThemeColors) =>
     },
     dialogButton: {
       flex: 1,
+    },
+    dialogPasswordWrapper: {
+      width: "100%",
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 8,
+      paddingHorizontal: 12,
+      marginBottom: 4,
+    },
+    dialogPasswordInput: {
+      paddingVertical: 10,
+      fontSize: 16,
+      color: colors.text,
+    },
+    dialogError: {
+      color: colors.danger,
+      fontSize: 13,
+      textAlign: "center",
+      marginBottom: 8,
     },
   });
