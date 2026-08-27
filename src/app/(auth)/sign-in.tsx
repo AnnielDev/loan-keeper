@@ -56,6 +56,7 @@ export default function SignIn() {
   );
   const [showPassword, setShowPassword] = useState(false);
   const [rememberedEmail, setRememberedEmail] = useState<string | null>(null);
+  const [isSigningIn, setIsSigningIn] = useState(false);
   const [isBiometricSigningIn, setIsBiometricSigningIn] = useState(false);
   const signedOutOffline = useNetworkStore((state) => state.signedOutOffline);
   const acknowledgeOfflineSignOut = useNetworkStore(
@@ -93,10 +94,14 @@ export default function SignIn() {
   const translate = t as unknown as (key: string) => string;
 
   const canSubmit =
-    emailField.isValid && passwordField.isValid && !isSubmitting;
+    emailField.isValid &&
+    passwordField.isValid &&
+    !isSubmitting &&
+    !isBiometricSigningIn;
 
   const handleSubmit = async () => {
     setError(null);
+    setIsSigningIn(true);
     const email = emailField.value.trim();
     const password = passwordField.value;
     try {
@@ -112,6 +117,8 @@ export default function SignIn() {
       } else {
         setError(t("auth.errors.generic"));
       }
+    } finally {
+      setIsSigningIn(false);
     }
   };
 
@@ -216,7 +223,7 @@ export default function SignIn() {
             onPress={handleSubmit}
             disabled={!canSubmit}
           >
-            {isSubmitting ? (
+            {isSigningIn ? (
               <ActivityIndicator color={colors.onPrimary} />
             ) : (
               <Text style={styles.buttonLabel}>{t("auth.signIn.submit")}</Text>
@@ -227,7 +234,7 @@ export default function SignIn() {
             <TouchableOpacity
               style={styles.biometricIconButton}
               onPress={handleBiometricSignIn}
-              disabled={isBiometricSigningIn}
+              disabled={isBiometricSigningIn || isSubmitting}
               accessibilityLabel={t("auth.signIn.useBiometricLogin")}
             >
               {isBiometricSigningIn ? (
