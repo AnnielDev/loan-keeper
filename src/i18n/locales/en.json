@@ -217,7 +217,9 @@
     },
     "interestType": {
       "simple": "Simple",
-      "compound": "Compound"
+      "compound": "Compound",
+      "simpleHint": "Interest is calculated once on the original amount and split evenly across all installments.",
+      "compoundHint": "Interest is recalculated on each installment based on the remaining balance, like a standard amortization schedule."
     },
     "loanOrigin": {
       "new": "New",

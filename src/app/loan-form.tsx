@@ -337,6 +337,9 @@ export default function LoanFormScreen() {
                   value={interestType}
                   onChange={setInterestType}
                 />
+                <Text style={[styles.originHint, { color: colors.textSecondary }]}>
+                  {t(`loanForm.interestType.${interestType}Hint`)}
+                </Text>
               </View>
 
               <View style={styles.row}>

@@ -217,7 +217,9 @@
     },
     "interestType": {
       "simple": "Simple",
-      "compound": "Composé"
+      "compound": "Composé",
+      "simpleHint": "L'intérêt est calculé une seule fois sur le montant initial et réparti également entre toutes les échéances.",
+      "compoundHint": "L'intérêt est recalculé à chaque échéance sur le solde restant, comme un amortissement classique."
     },
     "loanOrigin": {
       "new": "Nouveau",

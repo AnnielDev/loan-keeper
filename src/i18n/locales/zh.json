@@ -214,7 +214,9 @@
     },
     "interestType": {
       "simple": "单利",
-      "compound": "复利"
+      "compound": "复利",
+      "simpleHint": "利息仅按原始本金计算一次,并平均分摊到每一期分期中。",
+      "compoundHint": "利息根据每期的剩余余额重新计算,类似标准的分期还款方式。"
     },
     "loanOrigin": {
       "new": "新贷款",

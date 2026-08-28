@@ -217,7 +217,9 @@
     },
     "interestType": {
       "simple": "Simple",
-      "compound": "Compuesto"
+      "compound": "Compuesto",
+      "simpleHint": "El interés se calcula una sola vez sobre el monto original y se reparte por igual entre todas las cuotas.",
+      "compoundHint": "El interés se recalcula en cada cuota sobre el saldo pendiente, como una amortización francesa."
     },
     "loanOrigin": {
       "new": "Nuevo",
