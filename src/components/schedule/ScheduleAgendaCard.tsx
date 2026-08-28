@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Icon } from "@/components/general/Icon";
 import { Avatar } from "@/components/ui/Avatar";
@@ -13,7 +13,7 @@ import { formatCurrency } from "@/utils/format";
 
 type ScheduleAgendaCardProps = {
   event: ScheduleEvent;
-  onAction: () => void;
+  onPress: () => void;
 };
 
 const BADGE_TONE: Record<ScheduleEvent["status"], BadgeTone> = {
@@ -30,7 +30,7 @@ const ACTION_TONE: Record<ScheduleEvent["status"], PrimaryButtonTone> = {
   completed: "primary",
 };
 
-export function ScheduleAgendaCard({ event, onAction }: ScheduleAgendaCardProps) {
+export function ScheduleAgendaCard({ event, onPress }: ScheduleAgendaCardProps) {
   const { t, i18n } = useTranslation();
   const { colors } = useAppTheme();
   const currency = useAuthStore((state) => state.user?.currency ?? "USD");
@@ -39,40 +39,42 @@ export function ScheduleAgendaCard({ event, onAction }: ScheduleAgendaCardProps)
   const actionLabel = event.status === "upcoming" ? t("schedule.actions.register") : t("schedule.actions.collect");
 
   return (
-    <Card style={styles.card}>
-      <View style={styles.topRow}>
-        <Avatar uri={event.avatarUrl} name={event.customerName} size={44} />
-        <View style={styles.identity}>
-          <Text style={[styles.name, { color: colors.text }]} numberOfLines={1}>
-            {event.customerName}
-          </Text>
-          <Text style={[styles.loanCode, { color: colors.textSecondary }]}>#{event.loanCode}</Text>
-        </View>
-        <Badge tone={BADGE_TONE[event.status]} label={statusLabel} />
-      </View>
-
-      <View style={styles.bottomRow}>
-        <View>
-          <Text style={[styles.amountLabel, { color: colors.textSecondary }]}>
-            {t("schedule.amountDue")}
-          </Text>
-          <Text style={[styles.amount, { color: colors.text }]}>
-            {formatCurrency(event.amount, currency, i18n.language)}
-          </Text>
-        </View>
-
-        {event.status !== "completed" ? (
-          <View style={styles.actionButton}>
-            <PrimaryButton
-              tone={ACTION_TONE[event.status]}
-              label={actionLabel}
-              icon={<Icon family="Ionicons" name="card-outline" size={16} color={colors.onPrimary} />}
-              onPress={onAction}
-            />
+    <Pressable onPress={onPress}>
+      <Card style={styles.card}>
+        <View style={styles.topRow}>
+          <Avatar uri={event.avatarUrl} name={event.customerName} size={44} />
+          <View style={styles.identity}>
+            <Text style={[styles.name, { color: colors.text }]} numberOfLines={1}>
+              {event.customerName}
+            </Text>
+            <Text style={[styles.loanCode, { color: colors.textSecondary }]}>#{event.loanCode}</Text>
           </View>
-        ) : null}
-      </View>
-    </Card>
+          <Badge tone={BADGE_TONE[event.status]} label={statusLabel} />
+        </View>
+
+        <View style={styles.bottomRow}>
+          <View>
+            <Text style={[styles.amountLabel, { color: colors.textSecondary }]}>
+              {t("schedule.amountDue")}
+            </Text>
+            <Text style={[styles.amount, { color: colors.text }]}>
+              {formatCurrency(event.amount, currency, i18n.language)}
+            </Text>
+          </View>
+
+          {event.status !== "completed" ? (
+            <View style={styles.actionButton}>
+              <PrimaryButton
+                tone={ACTION_TONE[event.status]}
+                label={actionLabel}
+                icon={<Icon family="Ionicons" name="card-outline" size={16} color={colors.onPrimary} />}
+                onPress={onPress}
+              />
+            </View>
+          ) : null}
+        </View>
+      </Card>
+    </Pressable>
   );
 }
 

@@ -110,6 +110,13 @@ export default function ScheduleTabScreen() {
   };
 
   const handleAction = (event: ScheduleEvent) => {
+    if (event.status === "completed") {
+      router.push({
+        pathname: "/payment-detail",
+        params: { loanId: event.loanId, installmentId: event.installmentId },
+      });
+      return;
+    }
     router.push({
       pathname: "/loan-payment-form",
       params: { loanId: event.loanId, installmentId: event.installmentId },
@@ -178,7 +185,7 @@ export default function ScheduleTabScreen() {
               <ScheduleAgendaCard
                 key={event.installmentId}
                 event={event}
-                onAction={() => handleAction(event)}
+                onPress={() => handleAction(event)}
               />
             ))}
           </View>
