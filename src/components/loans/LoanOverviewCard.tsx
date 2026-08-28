@@ -36,6 +36,10 @@ export function LoanOverviewCard({
   const { colors } = useAppTheme();
   const currency = useAuthStore((state) => state.user?.currency ?? "USD");
 
+  const nextCollectionDate =
+    loan.installments.find((installment) => installment._id === loan.nextInstallmentId)
+      ?.dueDate ?? loan.collectionDate;
+
   return (
     <Card style={styles.card}>
       <View style={styles.topRow}>
@@ -107,7 +111,7 @@ export function LoanOverviewCard({
             {t("loanDetail.fields.collectionDate")}
           </Text>
           <Text style={[styles.fieldValue, { color: colors.text }]}>
-            {formatMediumDate(loan.collectionDate, i18n.language)}
+            {formatMediumDate(nextCollectionDate, i18n.language)}
           </Text>
         </View>
       </View>
