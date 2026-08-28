@@ -30,7 +30,11 @@ import { getCustomers } from "@/services/customers";
 import { createLoan } from "@/services/loans";
 import type { CustomerSummary } from "@/types/customer";
 import type { InterestType, PaymentFrequency } from "@/types/loan";
-import { formatNumericDate, toLocalDateString } from "@/utils/format";
+import {
+  formatNumericDate,
+  getStartOfToday,
+  toLocalDateString,
+} from "@/utils/format";
 import { calculateLoan } from "@/utils/loanCalculator";
 import { formatMoneyInput, parseMoneyInput } from "@/utils/moneyInput";
 
@@ -69,6 +73,7 @@ export default function LoanFormScreen() {
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const hasLoadedCustomersRef = useRef(false);
+  const todayStart = useMemo(() => getStartOfToday(), []);
 
   // Silent refresh on refocus so returning from the "add a customer" empty
   // state (or the customer-form modal) picks up the newly created customer.
@@ -161,6 +166,13 @@ export default function LoanFormScreen() {
   const handleStartDateChange = (date: Date) => {
     setStartDate(date);
     setCollectionDate((current) => (current < date ? date : current));
+  };
+
+  const handleLoanOriginChange = (value: "new" | "legacy") => {
+    setIsLegacy(value === "legacy");
+    if (value === "new" && startDate < todayStart) {
+      handleStartDateChange(todayStart);
+    }
   };
 
   const canSubmit =
@@ -264,7 +276,7 @@ export default function LoanFormScreen() {
                 <SegmentedToggle
                   options={loanOriginOptions}
                   value={isLegacy ? "legacy" : "new"}
-                  onChange={(value) => setIsLegacy(value === "legacy")}
+                  onChange={handleLoanOriginChange}
                 />
                 {isLegacy ? (
                   <Text
@@ -367,6 +379,7 @@ export default function LoanFormScreen() {
                     value={startDate}
                     displayValue={formatNumericDate(startDate, i18n.language)}
                     onChange={handleStartDateChange}
+                    minimumDate={isLegacy ? undefined : todayStart}
                     doneLabel={t("loanForm.datePickerDone")}
                   />
                 </View>
