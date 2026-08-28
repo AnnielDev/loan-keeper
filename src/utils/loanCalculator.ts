@@ -44,8 +44,14 @@ function calculateCompoundInstallment(principal: number, rate: number, n: number
   return round((principal * rate * growth) / (growth - 1));
 }
 
+function monthsPerFrequency(frequency: PaymentFrequency): number {
+  if (frequency === "every_2_months") return 2;
+  if (frequency === "every_3_months") return 3;
+  return 1;
+}
+
 function calculateTotalInterest(input: LoanCalculationInput): number {
-  const rate = input.interestRate / 100;
+  const rate = (input.interestRate / 100) * monthsPerFrequency(input.frequency);
   const n = input.installmentsCount;
 
   if (input.interestType === "compound") {
@@ -59,13 +65,7 @@ function calculateTotalInterest(input: LoanCalculationInput): number {
 
 function addPeriods(startDate: Date, frequency: PaymentFrequency, periods: number): Date {
   const date = new Date(startDate);
-  if (frequency === "every_2_months") {
-    date.setMonth(date.getMonth() + periods * 2);
-  } else if (frequency === "every_3_months") {
-    date.setMonth(date.getMonth() + periods * 3);
-  } else {
-    date.setMonth(date.getMonth() + periods);
-  }
+  date.setMonth(date.getMonth() + periods * monthsPerFrequency(frequency));
   return date;
 }
 
@@ -80,7 +80,7 @@ export function calculateLoan(input: LoanCalculationInput): LoanCalculation {
     return { totalInterest, totalAmount, installmentAmount: 0, installments: [] };
   }
 
-  const rate = input.interestRate / 100;
+  const rate = (input.interestRate / 100) * monthsPerFrequency(input.frequency);
 
   // Para "compound" usamos la cuota fija de la amortización francesa directamente,
   // en vez de derivarla de totalAmount / count, para evitar descuadres de redondeo.
@@ -102,7 +102,7 @@ export function calculateLoan(input: LoanCalculationInput): LoanCalculation {
 export function calculateCompoundAmortizationSchedule(
   input: LoanCalculationInput
 ): AmortizationRow[] {
-  const rate = input.interestRate / 100;
+  const rate = (input.interestRate / 100) * monthsPerFrequency(input.frequency);
   const n = Math.max(Math.trunc(input.installmentsCount) || 0, 0);
   if (n === 0) return [];
 
