@@ -204,6 +204,7 @@
       "frequency": "还款频率",
       "installmentsCount": "分期数",
       "startDate": "开始日期",
+      "collectionDate": "收款日期",
       "loanOrigin": "来源"
     },
     "placeholders": {
@@ -415,6 +416,8 @@
       "paid": "已还清"
     },
     "fields": {
+      "startDate": "开始日期",
+      "collectionDate": "收款日期",
       "principal": "申请金额",
       "interestRate": "月利率",
       "totalAmount": "应还总额",

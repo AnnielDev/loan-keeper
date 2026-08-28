@@ -83,16 +83,7 @@ export default function ScheduleTabScreen() {
     [data, selectedDate],
   );
 
-  const handleChangeMonth = (delta: number) => {
-    let month = viewedMonth + delta;
-    let year = viewedYear;
-    if (month < 1) {
-      month = 12;
-      year -= 1;
-    } else if (month > 12) {
-      month = 1;
-      year += 1;
-    }
+  const goToMonth = (month: number, year: number) => {
     setViewedMonth(month);
     setViewedYear(year);
 
@@ -103,6 +94,19 @@ export default function ScheduleTabScreen() {
     const daysInNewMonth = new Date(year, month, 0).getDate();
     const clampedDay = Math.min(currentDay, daysInNewMonth);
     setSelectedDate(`${year}-${String(month).padStart(2, "0")}-${String(clampedDay).padStart(2, "0")}`);
+  };
+
+  const handleChangeMonth = (delta: number) => {
+    let month = viewedMonth + delta;
+    let year = viewedYear;
+    if (month < 1) {
+      month = 12;
+      year -= 1;
+    } else if (month > 12) {
+      month = 1;
+      year += 1;
+    }
+    goToMonth(month, year);
   };
 
   const handleAction = (event: ScheduleEvent) => {
@@ -151,6 +155,7 @@ export default function ScheduleTabScreen() {
           dotsByDay={dotsByDay}
           onSelectDate={setSelectedDate}
           onChangeMonth={handleChangeMonth}
+          onJumpToMonth={goToMonth}
         />
 
         <Text style={[styles.agendaHeading, { color: colors.text }]}>

@@ -68,9 +68,9 @@ export default function LoanPaymentFormScreen() {
     if (installment && !hasPrefilled) {
       setAmount(moneyToInputText(installment.amount, i18n.language));
       setHasPrefilled(true);
-      const loanStartDate = parseCalendarDateForDisplay(data!.startDate);
+      const loanCollectionDate = parseCalendarDateForDisplay(data!.collectionDate);
       setPaymentDate((current) =>
-        current < loanStartDate ? loanStartDate : current
+        current < loanCollectionDate ? loanCollectionDate : current
       );
     }
   }, [installment, hasPrefilled, i18n.language, data]);
@@ -202,7 +202,7 @@ export default function LoanPaymentFormScreen() {
             value={paymentDate}
             displayValue={formatNumericDate(paymentDate, i18n.language)}
             onChange={setPaymentDate}
-            minimumDate={parseCalendarDateForDisplay(data!.startDate)}
+            minimumDate={parseCalendarDateForDisplay(data!.collectionDate)}
             doneLabel={t("loanForm.datePickerDone")}
           />
 

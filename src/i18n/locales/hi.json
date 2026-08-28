@@ -207,6 +207,7 @@
       "frequency": "आवृत्ति",
       "installmentsCount": "किश्तें",
       "startDate": "प्रारंभ तिथि",
+      "collectionDate": "वसूली तिथि",
       "loanOrigin": "मूल"
     },
     "placeholders": {
@@ -419,6 +420,8 @@
       "paid": "भुगतान हो गया"
     },
     "fields": {
+      "startDate": "प्रारंभ तिथि",
+      "collectionDate": "वसूली तिथि",
       "principal": "अनुरोधित राशि",
       "interestRate": "मासिक ब्याज",
       "totalAmount": "कुल देय राशि",

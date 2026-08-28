@@ -1,4 +1,9 @@
-import { useMemo } from "react";
+import {
+  BottomSheetModal,
+  BottomSheetView,
+  type BottomSheetMethods,
+} from "@expo/ui/community/bottom-sheet";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -19,6 +24,7 @@ type ScheduleCalendarProps = {
   dotsByDay: Record<string, CalendarDotStatus>;
   onSelectDate: (isoDate: string) => void;
   onChangeMonth: (delta: number) => void;
+  onJumpToMonth: (month: number, year: number) => void;
 };
 
 type DayCell = {
@@ -76,9 +82,23 @@ export function ScheduleCalendar({
   dotsByDay,
   onSelectDate,
   onChangeMonth,
+  onJumpToMonth,
 }: ScheduleCalendarProps) {
   const { t, i18n } = useTranslation();
   const { colors } = useAppTheme();
+
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const [pickerYear, setPickerYear] = useState(year);
+  const pickerSheetRef = useRef<BottomSheetMethods>(null);
+
+  useEffect(() => {
+    if (isPickerOpen) {
+      setPickerYear(year);
+      pickerSheetRef.current?.present();
+    } else {
+      pickerSheetRef.current?.dismiss();
+    }
+  }, [isPickerOpen, year]);
 
   const cells = useMemo(() => buildMonthGrid(month, year), [month, year]);
   const weekdayLabels = useMemo(() => getWeekdayLabels(i18n.language), [i18n.language]);
@@ -89,6 +109,15 @@ export function ScheduleCalendar({
       ),
     [month, year, i18n.language],
   );
+  const monthOptionLabels = useMemo(() => {
+    const formatter = new Intl.DateTimeFormat(i18n.language, { month: "short" });
+    return Array.from({ length: 12 }, (_, index) => formatter.format(new Date(2023, index, 1)));
+  }, [i18n.language]);
+
+  const handlePickMonth = (pickedMonth: number) => {
+    setIsPickerOpen(false);
+    onJumpToMonth(pickedMonth, pickerYear);
+  };
 
   const dotColor: Record<CalendarDotStatus, string> = {
     overdue: colors.danger,
@@ -99,7 +128,18 @@ export function ScheduleCalendar({
   return (
     <Card style={styles.card}>
       <View style={styles.header}>
-        <Text style={[styles.monthLabel, { color: colors.text }]}>{monthLabel}</Text>
+        <Pressable
+          onPress={() => setIsPickerOpen(true)}
+          hitSlop={8}
+          style={({ pressed }) => [
+            styles.monthLabelButton,
+            { backgroundColor: colors.tabPillActive },
+            pressed && styles.monthLabelButtonPressed,
+          ]}
+        >
+          <Text style={[styles.monthLabel, { color: colors.primary }]}>{monthLabel}</Text>
+          <Icon family="Ionicons" name="chevron-down" size={16} color={colors.primary} />
+        </Pressable>
         <View style={styles.navButtons}>
           <CircleIconButton
             tone="neutral"
@@ -175,6 +215,56 @@ export function ScheduleCalendar({
           </Text>
         </View>
       </View>
+
+      <BottomSheetModal
+        ref={pickerSheetRef}
+        enableDynamicSizing
+        enablePanDownToClose
+        onDismiss={() => setIsPickerOpen(false)}
+        backgroundStyle={{ backgroundColor: colors.card }}
+      >
+        <BottomSheetView style={styles.pickerContent}>
+          <View style={styles.pickerYearRow}>
+            <CircleIconButton
+              tone="neutral"
+              onPress={() => setPickerYear((current) => current - 1)}
+              icon={<Icon family="Ionicons" name="chevron-back" size={18} color={colors.text} />}
+            />
+            <Text style={[styles.pickerYearLabel, { color: colors.text }]}>{pickerYear}</Text>
+            <CircleIconButton
+              tone="neutral"
+              onPress={() => setPickerYear((current) => current + 1)}
+              icon={<Icon family="Ionicons" name="chevron-forward" size={18} color={colors.text} />}
+            />
+          </View>
+
+          <View style={styles.pickerMonthGrid}>
+            {monthOptionLabels.map((label, index) => {
+              const pickedMonth = index + 1;
+              const isActive = pickerYear === year && pickedMonth === month;
+              return (
+                <Pressable
+                  key={label}
+                  onPress={() => handlePickMonth(pickedMonth)}
+                  style={[
+                    styles.pickerMonthCell,
+                    isActive && { backgroundColor: colors.tabPillActive },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.pickerMonthLabel,
+                      { color: isActive ? colors.primary : colors.text },
+                    ]}
+                  >
+                    {label}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        </BottomSheetView>
+      </BottomSheetModal>
     </Card>
   );
 }
@@ -190,13 +280,58 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
+  monthLabelButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 20,
+  },
+  monthLabelButtonPressed: {
+    opacity: 0.7,
+  },
   monthLabel: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "700",
   },
   navButtons: {
     flexDirection: "row",
     gap: 8,
+  },
+  pickerContent: {
+    padding: 16,
+    paddingBottom: 24,
+    gap: 20,
+    alignItems: "stretch",
+  },
+  pickerYearRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 24,
+  },
+  pickerYearLabel: {
+    fontSize: 18,
+    fontWeight: "700",
+    minWidth: 64,
+    textAlign: "center",
+  },
+  pickerMonthGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  pickerMonthCell: {
+    flexBasis: "33.333%",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 14,
+    borderRadius: 12,
+  },
+  pickerMonthLabel: {
+    fontSize: 15,
+    fontWeight: "600",
+    textTransform: "capitalize",
   },
   weekdayRow: {
     flexDirection: "row",

@@ -207,6 +207,7 @@
       "frequency": "Frecuencia",
       "installmentsCount": "Cuotas",
       "startDate": "Fecha Inicio",
+      "collectionDate": "Fecha de Cobro",
       "loanOrigin": "Origen"
     },
     "placeholders": {
@@ -419,6 +420,8 @@
       "paid": "Pagado"
     },
     "fields": {
+      "startDate": "Fecha Inicio",
+      "collectionDate": "Fecha de Cobro",
       "principal": "Monto Solicitado",
       "interestRate": "Interés Mensual",
       "totalAmount": "Total a Pagar",

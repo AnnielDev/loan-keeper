@@ -7,6 +7,7 @@ export type LoanCalculationInput = {
   installmentsCount: number;
   frequency: PaymentFrequency;
   startDate: Date;
+  collectionDate: Date;
 };
 
 export type LoanInstallmentPreview = {
@@ -91,7 +92,7 @@ export function calculateLoan(input: LoanCalculationInput): LoanCalculation {
   const installments = Array.from({ length: count }, (_, index) => {
     const isLast = index === count - 1;
     const amount = isLast ? round(totalAmount - baseAmount * (count - 1)) : baseAmount;
-    return { dueDate: addPeriods(input.startDate, input.frequency, index + 1), amount };
+    return { dueDate: addPeriods(input.collectionDate, input.frequency, index + 1), amount };
   });
 
   return { totalInterest, totalAmount, installmentAmount: baseAmount, installments };
@@ -119,7 +120,7 @@ export function calculateCompoundAmortizationSchedule(
 
     rows.push({
       period,
-      dueDate: addPeriods(input.startDate, input.frequency, period),
+      dueDate: addPeriods(input.collectionDate, input.frequency, period),
       startingBalance: round(balance),
       interest,
       principalPaid,

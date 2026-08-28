@@ -207,6 +207,7 @@
       "frequency": "Fréquence",
       "installmentsCount": "Échéances",
       "startDate": "Date de début",
+      "collectionDate": "Date de recouvrement",
       "loanOrigin": "Origine"
     },
     "placeholders": {
@@ -419,6 +420,8 @@
       "paid": "Payé"
     },
     "fields": {
+      "startDate": "Date de début",
+      "collectionDate": "Date de recouvrement",
       "principal": "Montant Demandé",
       "interestRate": "Intérêt Mensuel",
       "totalAmount": "Total à Payer",

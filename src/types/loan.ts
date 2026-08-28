@@ -35,6 +35,7 @@ export type CreateLoanPayload = {
   frequency: PaymentFrequency;
   installmentsCount: number;
   startDate: string;
+  collectionDate: string;
   isLegacy: boolean;
 };
 
@@ -61,6 +62,7 @@ export type Loan = {
   interestType: InterestType;
   frequency: PaymentFrequency;
   startDate: string;
+  collectionDate: string;
   totalInterest: number;
   totalAmount: number;
   isLegacy: boolean;
@@ -94,6 +96,7 @@ export type LoanDetail = {
   interestType: InterestType;
   frequency: PaymentFrequency;
   startDate: string;
+  collectionDate: string;
   totalInterest: number;
   totalAmount: number;
   isLegacy: boolean;

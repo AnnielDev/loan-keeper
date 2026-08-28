@@ -61,6 +61,7 @@ export default function LoanFormScreen() {
     DEFAULT_INSTALLMENTS_COUNT,
   );
   const [startDate, setStartDate] = useState(() => new Date());
+  const [collectionDate, setCollectionDate] = useState(() => new Date());
   const [isLegacy, setIsLegacy] = useState(false);
   const [showSchedule, setShowSchedule] = useState(false);
 
@@ -144,6 +145,7 @@ export default function LoanFormScreen() {
         installmentsCount: parsedInstallmentsCount,
         frequency,
         startDate,
+        collectionDate,
       }),
     [
       parsedPrincipal,
@@ -152,8 +154,14 @@ export default function LoanFormScreen() {
       parsedInstallmentsCount,
       frequency,
       startDate,
+      collectionDate,
     ],
   );
+
+  const handleStartDateChange = (date: Date) => {
+    setStartDate(date);
+    setCollectionDate((current) => (current < date ? date : current));
+  };
 
   const canSubmit =
     !!customerId &&
@@ -174,6 +182,7 @@ export default function LoanFormScreen() {
         frequency,
         installmentsCount: parsedInstallmentsCount,
         startDate: toLocalDateString(startDate),
+        collectionDate: toLocalDateString(collectionDate),
         isLegacy,
       });
       router.back();
@@ -307,17 +316,18 @@ export default function LoanFormScreen() {
                 </View>
               </View>
 
+              <View style={styles.field}>
+                <Text style={[styles.label, { color: colors.textSecondary }]}>
+                  {t("loanForm.fields.interestType")}
+                </Text>
+                <SegmentedToggle
+                  options={interestTypeOptions}
+                  value={interestType}
+                  onChange={setInterestType}
+                />
+              </View>
+
               <View style={styles.row}>
-                <View style={styles.flex}>
-                  <Text style={[styles.label, { color: colors.textSecondary }]}>
-                    {t("loanForm.fields.interestType")}
-                  </Text>
-                  <SegmentedToggle
-                    options={interestTypeOptions}
-                    value={interestType}
-                    onChange={setInterestType}
-                  />
-                </View>
                 <View style={styles.flex}>
                   <Text style={[styles.label, { color: colors.textSecondary }]}>
                     {t("loanForm.fields.frequency")}
@@ -331,9 +341,6 @@ export default function LoanFormScreen() {
                     onClose={() => setIsFrequencyPickerOpen(false)}
                   />
                 </View>
-              </View>
-
-              <View style={styles.row}>
                 <View style={styles.flex}>
                   <TextField
                     label={t("loanForm.fields.installmentsCount")}
@@ -351,12 +358,25 @@ export default function LoanFormScreen() {
                     keyboardType="number-pad"
                   />
                 </View>
+              </View>
+
+              <View style={styles.row}>
                 <View style={styles.flex}>
                   <DateField
                     label={t("loanForm.fields.startDate")}
                     value={startDate}
                     displayValue={formatNumericDate(startDate, i18n.language)}
-                    onChange={setStartDate}
+                    onChange={handleStartDateChange}
+                    doneLabel={t("loanForm.datePickerDone")}
+                  />
+                </View>
+                <View style={styles.flex}>
+                  <DateField
+                    label={t("loanForm.fields.collectionDate")}
+                    value={collectionDate}
+                    displayValue={formatNumericDate(collectionDate, i18n.language)}
+                    onChange={setCollectionDate}
+                    minimumDate={startDate}
                     doneLabel={t("loanForm.datePickerDone")}
                   />
                 </View>
