@@ -340,7 +340,7 @@ export default function LoanFormScreen() {
               </View>
 
               <View style={styles.row}>
-                <View style={styles.flex}>
+                <View style={[styles.flex, { gap: 6 }]}>
                   <Text style={[styles.label, { color: colors.textSecondary }]}>
                     {t("loanForm.fields.frequency")}
                   </Text>
@@ -387,7 +387,10 @@ export default function LoanFormScreen() {
                   <DateField
                     label={t("loanForm.fields.collectionDate")}
                     value={collectionDate}
-                    displayValue={formatNumericDate(collectionDate, i18n.language)}
+                    displayValue={formatNumericDate(
+                      collectionDate,
+                      i18n.language,
+                    )}
                     onChange={setCollectionDate}
                     minimumDate={startDate}
                     doneLabel={t("loanForm.datePickerDone")}
@@ -493,6 +496,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
+    alignItems: "center",
     gap: 12,
   },
   scheduleToggle: {
