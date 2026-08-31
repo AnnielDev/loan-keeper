@@ -229,7 +229,7 @@ export default function HomeTabScreen() {
           />
         </View>
 
-        <MonthlyIncomeChart data={data.monthlyIncome} />
+        <MonthlyIncomeChart data={data.monthlyIncome} currency={currency} />
 
         <UpcomingDueDatesCard items={data.upcomingDueDates} />
       </ScrollView>

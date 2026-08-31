@@ -104,7 +104,12 @@
       "overdue": "En retard"
     },
     "chart": {
-      "title": "Revenus mensuels"
+      "title": "Revenus mensuels",
+      "legend": {
+        "collected": "Encaissé",
+        "loaned": "Prêté"
+      },
+      "close": "Fermer"
     },
     "upcoming": {
       "title": "Prochaines échéances",
@@ -225,6 +230,11 @@
       "new": "Nouveau",
       "legacy": "Migré",
       "legacyHint": "Enregistre le prêt sans affecter votre solde ni vos rapports — pour les prêts que vous suiviez déjà avant cette application."
+    },
+    "legacyInstallments": {
+      "selectAll": "Tout sélectionner",
+      "deselectAll": "Tout désélectionner",
+      "selectedCount": "{{count}} sur {{total}} sélectionnées"
     },
     "frequency": {
       "monthly": "Mensuel",

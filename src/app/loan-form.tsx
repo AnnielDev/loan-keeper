@@ -27,7 +27,7 @@ import { Select } from "@/components/ui/Select";
 import { TextField } from "@/components/ui/TextField";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { getCustomers } from "@/services/customers";
-import { createLoan } from "@/services/loans";
+import { createLoan, payInstallment } from "@/services/loans";
 import type { CustomerSummary } from "@/types/customer";
 import type { InterestType, PaymentFrequency } from "@/types/loan";
 import { formatNumericDate, toLocalDateString } from "@/utils/format";
@@ -64,6 +64,9 @@ export default function LoanFormScreen() {
   const [collectionDate, setCollectionDate] = useState(() => new Date());
   const [isLegacy, setIsLegacy] = useState(false);
   const [showSchedule, setShowSchedule] = useState(false);
+  const [checkedInstallments, setCheckedInstallments] = useState<Set<number>>(
+    new Set(),
+  );
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -165,6 +168,32 @@ export default function LoanFormScreen() {
 
   const handleLoanOriginChange = (value: "new" | "legacy") => {
     setIsLegacy(value === "legacy");
+    setCheckedInstallments(new Set());
+    if (value === "legacy") setShowSchedule(true);
+  };
+
+  const toggleInstallment = (index: number) => {
+    setCheckedInstallments((prev) => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+  };
+
+  const allInstallmentsChecked =
+    calculation.installments.length > 0 &&
+    checkedInstallments.size === calculation.installments.length;
+
+  const toggleAllInstallments = () => {
+    setCheckedInstallments(
+      allInstallmentsChecked
+        ? new Set()
+        : new Set(calculation.installments.map((_, index) => index)),
+    );
   };
 
   const canSubmit =
@@ -177,7 +206,7 @@ export default function LoanFormScreen() {
     setSubmitError(null);
     setIsSubmitting(true);
     try {
-      await createLoan({
+      const { data: loan } = await createLoan({
         customerId,
         type: "personal",
         principal: parsedPrincipal,
@@ -189,6 +218,24 @@ export default function LoanFormScreen() {
         collectionDate: toLocalDateString(collectionDate),
         isLegacy,
       });
+
+      if (isLegacy && checkedInstallments.size > 0) {
+        const results = await Promise.allSettled(
+          Array.from(checkedInstallments).map((index) => {
+            const installment = loan.installments[index];
+            if (!installment) return Promise.resolve();
+            return payInstallment(loan._id, installment._id, {
+              paymentDate: installment.dueDate,
+              paymentMethod: "cash",
+            });
+          }),
+        );
+        if (results.some((result) => result.status === "rejected")) {
+          router.replace(`/loan/${loan._id}`);
+          return;
+        }
+      }
+
       router.back();
     } catch {
       setSubmitError(t("loanForm.errors.generic"));
@@ -419,9 +466,49 @@ export default function LoanFormScreen() {
               </Pressable>
 
               {showSchedule ? (
-                <InstallmentScheduleList
-                  installments={calculation.installments}
-                />
+                <>
+                  {isLegacy ? (
+                    <View style={styles.legacySelectionHeader}>
+                      <Text
+                        style={[
+                          styles.legacySelectionCount,
+                          { color: colors.textSecondary },
+                        ]}
+                      >
+                        {t("loanForm.legacyInstallments.selectedCount", {
+                          count: checkedInstallments.size,
+                          total: calculation.installments.length,
+                        })}
+                      </Text>
+                      <Pressable onPress={toggleAllInstallments}>
+                        <Text
+                          style={[
+                            styles.legacySelectionAction,
+                            { color: colors.primary },
+                          ]}
+                        >
+                          {t(
+                            allInstallmentsChecked
+                              ? "loanForm.legacyInstallments.deselectAll"
+                              : "loanForm.legacyInstallments.selectAll",
+                          )}
+                        </Text>
+                      </Pressable>
+                    </View>
+                  ) : null}
+                  <InstallmentScheduleList
+                    installments={calculation.installments}
+                    selection={
+                      isLegacy
+                        ? {
+                            isChecked: (index) =>
+                              checkedInstallments.has(index),
+                            onToggle: toggleInstallment,
+                          }
+                        : undefined
+                    }
+                  />
+                </>
               ) : null}
 
               {submitError ? (
@@ -503,6 +590,20 @@ const styles = StyleSheet.create({
   scheduleToggleLabel: {
     fontSize: 14,
     fontWeight: "600",
+  },
+  legacySelectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: -8,
+  },
+  legacySelectionCount: {
+    fontSize: 12,
+    fontWeight: "500",
+  },
+  legacySelectionAction: {
+    fontSize: 13,
+    fontWeight: "700",
   },
   submitError: {
     fontSize: 13,

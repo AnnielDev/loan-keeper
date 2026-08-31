@@ -104,7 +104,12 @@
       "overdue": "Overdue"
     },
     "chart": {
-      "title": "Monthly income"
+      "title": "Monthly income",
+      "legend": {
+        "collected": "Collected",
+        "loaned": "Loaned"
+      },
+      "close": "Close"
     },
     "upcoming": {
       "title": "Upcoming due dates",
@@ -225,6 +230,11 @@
       "new": "New",
       "legacy": "Migrated",
       "legacyHint": "Registers the loan without affecting your balance or reports — for loans you were already tracking before this app."
+    },
+    "legacyInstallments": {
+      "selectAll": "Select all",
+      "deselectAll": "Deselect all",
+      "selectedCount": "{{count}} of {{total}} selected"
     },
     "frequency": {
       "monthly": "Monthly",

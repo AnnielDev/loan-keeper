@@ -103,7 +103,12 @@
       "overdue": "已逾期"
     },
     "chart": {
-      "title": "月度收入"
+      "title": "月度收入",
+      "legend": {
+        "collected": "已收款",
+        "loaned": "已放款"
+      },
+      "close": "关闭"
     },
     "upcoming": {
       "title": "即将到期",
@@ -222,6 +227,11 @@
       "new": "新贷款",
       "legacy": "已迁移",
       "legacyHint": "登记该贷款但不影响你的余额或报表——适用于你在使用本应用前就已经在跟踪的贷款。"
+    },
+    "legacyInstallments": {
+      "selectAll": "全选",
+      "deselectAll": "取消全选",
+      "selectedCount": "已选择 {{count}} / {{total}}"
     },
     "frequency": {
       "monthly": "每月",

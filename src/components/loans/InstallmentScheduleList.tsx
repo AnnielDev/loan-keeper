@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
+import { Checkbox } from "@/components/ui/Checkbox";
 import { useAppTheme } from "@/hooks/useAppTheme";
 import { useAuthStore } from "@/store/auth";
 import { formatCurrency, formatShortDateFromDate } from "@/utils/format";
@@ -8,10 +9,15 @@ import type { LoanInstallmentPreview } from "@/utils/loanCalculator";
 
 type InstallmentScheduleListProps = {
   installments: LoanInstallmentPreview[];
+  selection?: {
+    isChecked: (index: number) => boolean;
+    onToggle: (index: number) => void;
+  };
 };
 
 export function InstallmentScheduleList({
   installments,
+  selection,
 }: InstallmentScheduleListProps) {
   const { t, i18n } = useTranslation();
   const { colors } = useAppTheme();
@@ -20,8 +26,9 @@ export function InstallmentScheduleList({
   return (
     <View style={[styles.container, { backgroundColor: colors.surface }]}>
       {installments.map((installment, index) => (
-        <View
+        <Pressable
           key={index}
+          onPress={selection ? () => selection.onToggle(index) : undefined}
           style={[
             styles.row,
             index > 0 && {
@@ -30,6 +37,12 @@ export function InstallmentScheduleList({
             },
           ]}
         >
+          {selection ? (
+            <Checkbox
+              checked={selection.isChecked(index)}
+              onToggle={() => selection.onToggle(index)}
+            />
+          ) : null}
           <Text
             style={[styles.installmentNumber, { color: colors.textSecondary }]}
           >
@@ -41,7 +54,7 @@ export function InstallmentScheduleList({
           <Text style={[styles.amount, { color: colors.text }]}>
             {formatCurrency(installment.amount, currency, i18n.language)}
           </Text>
-        </View>
+        </Pressable>
       ))}
     </View>
   );

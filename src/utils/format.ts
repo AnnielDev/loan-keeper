@@ -56,17 +56,6 @@ export function formatCurrencyCompact(amount: number, currency: string, locale: 
   return parts.map((part, index) => (index === suffixAfterIndex ? part.value + scale.suffix : part.value)).join("");
 }
 
-export function formatCompactNumber(amount: number, locale: string): string {
-  const numberLocale = moneyNumberLocale(locale);
-  const scale = pickCompactScale(amount);
-  if (!scale) {
-    return new Intl.NumberFormat(numberLocale, { maximumFractionDigits: 1 }).format(amount);
-  }
-
-  const formatted = new Intl.NumberFormat(numberLocale, { maximumFractionDigits: 1 }).format(amount / scale.value);
-  return `${formatted}${scale.suffix}`;
-}
-
 /** Date-only strings ("YYYY-MM-DD") parse as UTC midnight per spec, which
  * rolls the calendar day back by one once formatted in a timezone behind
  * UTC. They carry no time-of-day, so they should be read as a local

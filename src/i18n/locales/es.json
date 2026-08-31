@@ -104,7 +104,12 @@
       "overdue": "Vencidos"
     },
     "chart": {
-      "title": "Ingresos mensuales"
+      "title": "Ingresos mensuales",
+      "legend": {
+        "collected": "Cobrado",
+        "loaned": "Prestado"
+      },
+      "close": "Cerrar"
     },
     "upcoming": {
       "title": "Próximos vencimientos",
@@ -225,6 +230,11 @@
       "new": "Nuevo",
       "legacy": "Migrado",
       "legacyHint": "Registra el préstamo sin afectar tu balance ni los reportes — para préstamos que ya llevabas antes de usar esta app."
+    },
+    "legacyInstallments": {
+      "selectAll": "Marcar todos",
+      "deselectAll": "Desmarcar todos",
+      "selectedCount": "{{count}} de {{total}} seleccionadas"
     },
     "frequency": {
       "monthly": "Mensual",
