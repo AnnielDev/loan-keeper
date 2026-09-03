@@ -56,6 +56,14 @@
         "confirm": "Supprimer le compte",
         "errorTitle": "Impossible de supprimer le compte",
         "errorMessage": "Une erreur s'est produite. Réessayez."
+      },
+      "planLabel": "Abonnement",
+      "planStatus": {
+        "trialing_one": "Essai — {{count}} jour restant",
+        "trialing_other": "Essai — {{count}} jours restants",
+        "trialEnded": "Essai terminé",
+        "active": "Actif — 12 $/mois",
+        "expired": "Expiré — abonnez-vous pour continuer"
       }
     },
     "security": {
@@ -535,6 +543,8 @@
       "submit": "S'inscrire",
       "switchToSignIn": "Déjà un compte ? Connectez-vous"
     },
+    "continueWithGoogle": "Continuer avec Google",
+    "orDivider": "ou",
     "forgotPassword": {
       "title": "Réinitialisez votre mot de passe",
       "subtitle": "Saisissez votre e-mail et nous vous enverrons un code à 6 chiffres.",
@@ -579,7 +589,38 @@
       "signedOutApiError": "Vous avez été déconnecté car le serveur était injoignable.",
       "invalidOrExpiredCode": "Ce code est invalide ou a expiré. Réessayez ou demandez-en un nouveau.",
       "resetSessionExpired": "Votre session a expiré. Veuillez recommencer.",
-      "biometricLoginFailed": "Impossible de se connecter avec Face ID / empreinte. Essayez votre mot de passe."
+      "biometricLoginFailed": "Impossible de se connecter avec Face ID / empreinte. Essayez votre mot de passe.",
+      "googleSignInFailed": "Impossible de se connecter avec Google. Réessayez."
+    }
+  },
+  "plan": {
+    "title": "Votre abonnement",
+    "priceLabel": "12,00 $ / mois",
+    "welcome": {
+      "title": "Bienvenue sur Loan Keeper !",
+      "subtitle_one": "Vous avez {{count}} jour d'essai gratuit pour tout découvrir.",
+      "subtitle_other": "Vous avez {{count}} jours d'essai gratuit pour tout découvrir."
+    },
+    "continue": "Continuer",
+    "trialing": {
+      "title": "Essai gratuit",
+      "daysLeft_one": "Il reste {{count}} jour d'essai gratuit",
+      "daysLeft_other": "Il reste {{count}} jours d'essai gratuit",
+      "lastDay": "Votre essai gratuit se termine aujourd'hui"
+    },
+    "expired": {
+      "title": "Votre essai est terminé",
+      "description": "Abonnez-vous pour 12 $/mois pour continuer à utiliser Loan Keeper."
+    },
+    "active": {
+      "title": "Vous êtes abonné",
+      "description": "Merci de soutenir Loan Keeper !"
+    },
+    "subscribe": "S'abonner pour 12 $/mois",
+    "subscribing": "Traitement en cours...",
+    "errors": {
+      "purchaseFailed": "Impossible de finaliser l'achat. Réessayez.",
+      "verifyFailed": "Nous n'avons pas pu vérifier votre achat. Réessayez ou contactez le support."
     }
   },
   "validation": {

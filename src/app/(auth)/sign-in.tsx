@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { GoogleSignInButton } from "@/components/general/GoogleSignInButton";
 import { Icon } from "@/components/general/Icon";
 import { LanguageSelector } from "@/components/general/LanguageSelector";
 import { ThemeToggle } from "@/components/general/ThemeToggle";
@@ -250,6 +251,9 @@ export default function SignIn() {
           <Text style={styles.link}>{t("auth.signIn.switchToSignUp")}</Text>
         </TouchableOpacity>
 
+        <Text style={styles.orDivider}>{t("auth.orDivider")}</Text>
+        <GoogleSignInButton onError={setError} />
+
         <View style={styles.themeToggle}>
           <ThemeToggle />
           <LanguageSelector />
@@ -361,6 +365,13 @@ const createStyles = (colors: ThemeColors) =>
       fontSize: 14,
       textAlign: "center",
       marginTop: 12,
+    },
+    orDivider: {
+      color: colors.textSecondary,
+      fontSize: 13,
+      textAlign: "center",
+      marginTop: 16,
+      marginBottom: 4,
     },
     biometricIconButton: {
       width: 48,

@@ -3,6 +3,7 @@ import type {
   ApiSuccess,
   AuthResponse,
   ForgotPasswordPayload,
+  GoogleSignInPayload,
   ResendVerificationPayload,
   ResetPasswordPayload,
   SignInPayload,
@@ -13,6 +14,14 @@ import type {
 
 export function signIn(payload: SignInPayload) {
   return apiFetch<ApiSuccess<AuthResponse>>("/auth/signin", {
+    method: "POST",
+    body: JSON.stringify(payload),
+    skipAuth: true,
+  });
+}
+
+export function signInWithGoogle(payload: GoogleSignInPayload) {
+  return apiFetch<ApiSuccess<AuthResponse>>("/auth/google", {
     method: "POST",
     body: JSON.stringify(payload),
     skipAuth: true,

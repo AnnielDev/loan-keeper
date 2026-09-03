@@ -44,6 +44,7 @@ import {
   rememberBiometricCredential,
 } from "@/utils/biometricCredentials";
 import { formatCurrency } from "@/utils/format";
+import { router } from "@/utils/navigation";
 import { MAX_NAME_LENGTH, MAX_PASSWORD_LENGTH, required, maxLength } from "@/utils/validation";
 
 const appearanceOptions: { scheme: ColorScheme; icon: "sunny" | "moon" }[] = [
@@ -92,6 +93,23 @@ export default function SettingsTabScreen() {
   useEffect(() => {
     isBiometricAvailable().then(setIsBiometricSupported);
   }, []);
+
+  const planStatusLabel = useMemo(() => {
+    if (!user) return "";
+    if (user.subscriptionStatus === "active") {
+      return t("settings.account.planStatus.active");
+    }
+    if (user.subscriptionStatus === "trialing") {
+      const daysLeft = Math.max(
+        0,
+        Math.ceil((new Date(user.trialEndsAt).getTime() - Date.now()) / (24 * 60 * 60 * 1000)),
+      );
+      return daysLeft > 0
+        ? t("settings.account.planStatus.trialing", { count: daysLeft })
+        : t("settings.account.planStatus.trialEnded");
+    }
+    return t("settings.account.planStatus.expired");
+  }, [user, t]);
 
   useEffect(() => {
     if (!biometricEnabled) {
@@ -454,6 +472,17 @@ export default function SettingsTabScreen() {
           </Pressable>
         )}
 
+        <Pressable onPress={() => router.push("/plan")} style={styles.planRow}>
+          <View style={styles.planIconWrap}>
+            <Icon family="Ionicons" name="star" size={18} color={colors.onPrimary} />
+          </View>
+          <View style={styles.settingsRowTextWrap}>
+            <Text style={styles.planRowLabel}>{t("settings.account.planLabel")}</Text>
+            <Text style={styles.planRowValue}>{planStatusLabel}</Text>
+          </View>
+          <Icon family="Ionicons" name="chevron-forward" size={18} color={colors.primary} />
+        </Pressable>
+
         {isBiometricSupported ? (
           <View style={styles.settingsRow}>
             <View style={styles.settingsIconWrap}>
@@ -808,6 +837,35 @@ const createStyles = (colors: ThemeColors) =>
       fontSize: 15,
       fontWeight: "700",
       color: colors.text,
+    },
+    planRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 12,
+      paddingVertical: 12,
+      paddingHorizontal: 14,
+      borderRadius: 16,
+      backgroundColor: colors.tabPillActive,
+      borderWidth: 1,
+      borderColor: colors.primary,
+    },
+    planIconWrap: {
+      width: 34,
+      height: 34,
+      borderRadius: 17,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: colors.primary,
+    },
+    planRowLabel: {
+      fontSize: 12,
+      fontWeight: "600",
+      color: colors.primary,
+    },
+    planRowValue: {
+      fontSize: 15,
+      fontWeight: "700",
+      color: colors.primary,
     },
     actionLabel: {
       flex: 1,

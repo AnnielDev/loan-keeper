@@ -56,6 +56,14 @@
         "confirm": "Eliminar cuenta",
         "errorTitle": "No se pudo eliminar la cuenta",
         "errorMessage": "Algo salió mal. Intenta de nuevo."
+      },
+      "planLabel": "Plan",
+      "planStatus": {
+        "trialing_one": "Prueba — queda {{count}} día",
+        "trialing_other": "Prueba — quedan {{count}} días",
+        "trialEnded": "Prueba finalizada",
+        "active": "Activo — $12/mes",
+        "expired": "Vencido — suscríbete para continuar"
       }
     },
     "security": {
@@ -535,6 +543,8 @@
       "submit": "Registrarse",
       "switchToSignIn": "¿Ya tienes una cuenta? Inicia sesión"
     },
+    "continueWithGoogle": "Continuar con Google",
+    "orDivider": "o",
     "forgotPassword": {
       "title": "Restablece tu contraseña",
       "subtitle": "Ingresa tu correo y te enviaremos un código de 6 dígitos.",
@@ -579,7 +589,38 @@
       "signedOutApiError": "Se cerró tu sesión porque no se pudo contactar al servidor.",
       "invalidOrExpiredCode": "Ese código es inválido o expiró. Intenta de nuevo o solicita uno nuevo.",
       "resetSessionExpired": "Tu sesión expiró. Por favor, comienza de nuevo.",
-      "biometricLoginFailed": "No se pudo iniciar sesión con Face ID / huella. Intenta con tu contraseña."
+      "biometricLoginFailed": "No se pudo iniciar sesión con Face ID / huella. Intenta con tu contraseña.",
+      "googleSignInFailed": "No se pudo iniciar sesión con Google. Intenta de nuevo."
+    }
+  },
+  "plan": {
+    "title": "Tu plan",
+    "priceLabel": "$12.00 / mes",
+    "welcome": {
+      "title": "¡Bienvenido a Loan Keeper!",
+      "subtitle_one": "Tienes {{count}} día de prueba gratuita para explorar todo.",
+      "subtitle_other": "Tienes {{count}} días de prueba gratuita para explorar todo."
+    },
+    "continue": "Continuar",
+    "trialing": {
+      "title": "Prueba gratuita",
+      "daysLeft_one": "Queda {{count}} día de tu prueba gratuita",
+      "daysLeft_other": "Quedan {{count}} días de tu prueba gratuita",
+      "lastDay": "Tu prueba gratuita termina hoy"
+    },
+    "expired": {
+      "title": "Tu prueba terminó",
+      "description": "Suscríbete por $12/mes para seguir usando Loan Keeper."
+    },
+    "active": {
+      "title": "Estás suscrito",
+      "description": "¡Gracias por apoyar a Loan Keeper!"
+    },
+    "subscribe": "Suscribirse por $12/mes",
+    "subscribing": "Procesando...",
+    "errors": {
+      "purchaseFailed": "No se pudo completar la compra. Intenta de nuevo.",
+      "verifyFailed": "No pudimos verificar tu compra. Intenta de nuevo o contacta con soporte."
     }
   },
   "validation": {

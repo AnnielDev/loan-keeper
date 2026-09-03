@@ -56,6 +56,14 @@
         "confirm": "删除账户",
         "errorTitle": "账户删除失败",
         "errorMessage": "出了点问题，请重试。"
+      },
+      "planLabel": "订阅",
+      "planStatus": {
+        "trialing_one": "试用中 — 剩余 {{count}} 天",
+        "trialing_other": "试用中 — 剩余 {{count}} 天",
+        "trialEnded": "试用已结束",
+        "active": "已订阅 — 每月 $12",
+        "expired": "已过期 — 请订阅以继续使用"
       }
     },
     "security": {
@@ -531,6 +539,8 @@
       "submit": "注册",
       "switchToSignIn": "已经有账户？登录"
     },
+    "continueWithGoogle": "使用 Google 继续",
+    "orDivider": "或",
     "forgotPassword": {
       "title": "重置密码",
       "subtitle": "输入您的邮箱，我们将发送一个6位数验证码。",
@@ -575,7 +585,38 @@
       "signedOutApiError": "由于无法连接服务器，您已被登出。",
       "invalidOrExpiredCode": "验证码无效或已过期。请重试或重新获取。",
       "resetSessionExpired": "您的会话已过期，请重新开始。",
-      "biometricLoginFailed": "无法使用 Face ID / 指纹登录，请改用密码。"
+      "biometricLoginFailed": "无法使用 Face ID / 指纹登录，请改用密码。",
+      "googleSignInFailed": "无法使用 Google 登录，请重试。"
+    }
+  },
+  "plan": {
+    "title": "您的订阅",
+    "priceLabel": "$12.00 / 月",
+    "welcome": {
+      "title": "欢迎使用 Loan Keeper！",
+      "subtitle_one": "您有 {{count}} 天免费试用期，尽情体验所有功能。",
+      "subtitle_other": "您有 {{count}} 天免费试用期，尽情体验所有功能。"
+    },
+    "continue": "继续",
+    "trialing": {
+      "title": "免费试用",
+      "daysLeft_one": "您的免费试用还剩 {{count}} 天",
+      "daysLeft_other": "您的免费试用还剩 {{count}} 天",
+      "lastDay": "您的免费试用今天到期"
+    },
+    "expired": {
+      "title": "您的试用已结束",
+      "description": "订阅每月 $12 以继续使用 Loan Keeper。"
+    },
+    "active": {
+      "title": "您已订阅",
+      "description": "感谢您支持 Loan Keeper！"
+    },
+    "subscribe": "订阅 每月 $12",
+    "subscribing": "处理中...",
+    "errors": {
+      "purchaseFailed": "无法完成购买，请重试。",
+      "verifyFailed": "我们无法验证您的购买，请重试或联系支持。"
     }
   },
   "validation": {

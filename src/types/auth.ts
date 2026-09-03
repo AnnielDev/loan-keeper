@@ -1,3 +1,5 @@
+export type SubscriptionStatus = "trialing" | "active" | "expired" | "canceled";
+
 export type User = {
   _id: string;
   email: string;
@@ -10,6 +12,9 @@ export type User = {
   lastLoginAt: string;
   createdAt: string;
   updatedAt: string;
+  subscriptionStatus: SubscriptionStatus;
+  trialEndsAt: string;
+  subscriptionExpiresAt?: string;
 };
 
 export type AuthResponse = {
@@ -85,4 +90,19 @@ export type VerifyResetCodePayload = {
 export type ResetPasswordPayload = {
   email: string;
   password: string;
+};
+
+export type GoogleSignInPayload = {
+  idToken: string;
+};
+
+export type SubscriptionStatusResponse = {
+  subscriptionStatus: SubscriptionStatus;
+  trialEndsAt: string;
+  subscriptionExpiresAt?: string;
+};
+
+export type VerifyPurchasePayload = {
+  purchaseToken: string;
+  productId: string;
 };

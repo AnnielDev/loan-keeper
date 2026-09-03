@@ -18,7 +18,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   scheme: "loankeeper",
   userInterfaceStyle: "automatic",
   ios: {
-    icon: "./assets/expo.icon",
+    icon: "./assets/images/icon.png",
     // Blocks plain HTTP for the app's own requests on hardened (preview/
     // production) builds; ATS default already requires HTTPS, this makes it
     // explicit and non-overridable by a stray http:// URL. The development
@@ -31,7 +31,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   android: {
     adaptiveIcon: {
-      backgroundColor: "#E6F4FE",
+      backgroundColor: "#FFFFFF",
       foregroundImage: "./assets/images/android-icon-foreground.png",
       backgroundImage: "./assets/images/android-icon-background.png",
       monochromeImage: "./assets/images/android-icon-monochrome.png",
@@ -69,6 +69,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
     "expo-sharing",
     "expo-notifications",
+    "@react-native-google-signin/google-signin",
     [
       "expo-media-library",
       {

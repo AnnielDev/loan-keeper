@@ -56,6 +56,14 @@
         "confirm": "Delete account",
         "errorTitle": "Couldn't delete account",
         "errorMessage": "Something went wrong. Try again."
+      },
+      "planLabel": "Plan",
+      "planStatus": {
+        "trialing_one": "Trial — {{count}} day left",
+        "trialing_other": "Trial — {{count}} days left",
+        "trialEnded": "Trial ended",
+        "active": "Active — $12/month",
+        "expired": "Expired — subscribe to continue"
       }
     },
     "security": {
@@ -535,6 +543,8 @@
       "submit": "Sign up",
       "switchToSignIn": "Already have an account? Sign in"
     },
+    "continueWithGoogle": "Continue with Google",
+    "orDivider": "or",
     "forgotPassword": {
       "title": "Reset your password",
       "subtitle": "Enter your email and we'll send you a 6-digit code.",
@@ -579,7 +589,38 @@
       "signedOutApiError": "You were signed out because the server could not be reached.",
       "invalidOrExpiredCode": "That code is invalid or has expired. Try again or request a new one.",
       "resetSessionExpired": "Your session expired. Please start again.",
-      "biometricLoginFailed": "Couldn't sign in with Face ID / fingerprint. Try your password instead."
+      "biometricLoginFailed": "Couldn't sign in with Face ID / fingerprint. Try your password instead.",
+      "googleSignInFailed": "Couldn't sign in with Google. Try again."
+    }
+  },
+  "plan": {
+    "title": "Your plan",
+    "priceLabel": "$12.00 / month",
+    "welcome": {
+      "title": "Welcome to Loan Keeper!",
+      "subtitle_one": "You have {{count}} day of free trial to explore everything.",
+      "subtitle_other": "You have {{count}} days of free trial to explore everything."
+    },
+    "continue": "Continue",
+    "trialing": {
+      "title": "Free trial",
+      "daysLeft_one": "{{count}} day left in your free trial",
+      "daysLeft_other": "{{count}} days left in your free trial",
+      "lastDay": "Your free trial ends today"
+    },
+    "expired": {
+      "title": "Your trial has ended",
+      "description": "Subscribe for $12/month to keep using Loan Keeper."
+    },
+    "active": {
+      "title": "You're subscribed",
+      "description": "Thanks for supporting Loan Keeper!"
+    },
+    "subscribe": "Subscribe for $12/month",
+    "subscribing": "Processing...",
+    "errors": {
+      "purchaseFailed": "Couldn't complete the purchase. Try again.",
+      "verifyFailed": "We couldn't verify your purchase. Try again or contact support."
     }
   },
   "validation": {

@@ -14,6 +14,7 @@ import { useAppTheme } from "@/hooks/useAppTheme";
 import { useAppLockStore } from "@/store/appLock";
 import { useAuthStore } from "@/store/auth";
 import { useLocationAccessStore } from "@/store/location";
+import { usePlanIntroStore } from "@/store/planIntro";
 import "@/store/network";
 import "@/store/notifications";
 
@@ -22,7 +23,8 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const isAuthHydrated = useAuthStore((state) => state.isHydrated);
   const isAppLockHydrated = useAppLockStore((state) => state.isHydrated);
-  const isHydrated = isAuthHydrated && isAppLockHydrated;
+  const isPlanIntroHydrated = usePlanIntroStore((state) => state.isHydrated);
+  const isHydrated = isAuthHydrated && isAppLockHydrated && isPlanIntroHydrated;
   const { colors, scheme } = useAppTheme();
 
   useEffect(() => {
@@ -61,6 +63,13 @@ function RootNavigator() {
   // once sends the user back to the location gate instead of staying in.
   const isLocationAccessGranted = useLocationAccessStore((state) => state.isGranted);
   const isLocked = useAppLockStore((state) => state.isLocked);
+  const subscriptionStatus = useAuthStore((state) => state.user?.subscriptionStatus);
+  const trialEndsAt = useAuthStore((state) => state.user?.trialEndsAt);
+  const userId = useAuthStore((state) => state.user?._id);
+  // Whether this user has dismissed the one-time "welcome, here's your trial"
+  // screen — persisted locally per user id so switching accounts on the same
+  // device doesn't skip the intro for a different user.
+  const hasSeenPlanIntro = usePlanIntroStore((state) => (userId ? state.seenUserIds.includes(userId) : true));
   const { colors } = useAppTheme();
 
   useEffect(() => {
@@ -68,6 +77,11 @@ function RootNavigator() {
   }, []);
 
   const canAccessApp = hasLocation && isLocationAccessGranted;
+  const isTrialing = subscriptionStatus === "trialing" && !!trialEndsAt && new Date(trialEndsAt) > new Date();
+  const isEntitled = subscriptionStatus === "active" || isTrialing;
+  // First entry: the trial just started and the user hasn't seen the plan
+  // details yet — shown once, ahead of the tabs, instead of the (tabs) gate.
+  const showPlanIntro = isTrialing && !hasSeenPlanIntro;
 
   return (
     <Stack
@@ -80,7 +94,7 @@ function RootNavigator() {
         <Stack.Screen name="app-lock" options={{ animation: "fade" }} />
       </Stack.Protected>
 
-      <Stack.Protected guard={isAuthenticated && !isLocked && canAccessApp}>
+      <Stack.Protected guard={isAuthenticated && !isLocked && canAccessApp && isEntitled && !showPlanIntro}>
         <Stack.Screen name="(tabs)" options={{ animation: "simple_push" }} />
         <Stack.Screen name="customer-form" options={{ presentation: "modal" }} />
         <Stack.Screen name="loan-form" options={{ presentation: "modal" }} />
@@ -89,6 +103,15 @@ function RootNavigator() {
         <Stack.Screen name="customer-history" />
         <Stack.Screen name="loan/[id]" />
         <Stack.Screen name="payment-detail" />
+        <Stack.Screen name="plan" options={{ presentation: "modal" }} />
+      </Stack.Protected>
+
+      <Stack.Protected guard={isAuthenticated && !isLocked && canAccessApp && showPlanIntro}>
+        <Stack.Screen name="plan" options={{ animation: "fade" }} />
+      </Stack.Protected>
+
+      <Stack.Protected guard={isAuthenticated && !isLocked && canAccessApp && !isEntitled}>
+        <Stack.Screen name="plan" options={{ animation: "fade" }} />
       </Stack.Protected>
 
       <Stack.Protected guard={isAuthenticated && !isLocked && !canAccessApp}>
