@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -15,6 +16,16 @@ import { usePlanIntroStore } from "@/store/planIntro";
 function getDaysLeft(trialEndsAt: string) {
   const msLeft = new Date(trialEndsAt).getTime() - Date.now();
   return Math.max(0, Math.ceil(msLeft / (24 * 60 * 60 * 1000)));
+}
+
+// This screen is reachable both as a forced gate (no back stack) and as a
+// screen pushed from Settings — go back if possible, otherwise land on tabs.
+function leavePlanScreen() {
+  if (router.canGoBack()) {
+    router.back();
+  } else {
+    router.replace("/(tabs)");
+  }
 }
 
 export default function PlanScreen() {
@@ -44,6 +55,7 @@ export default function PlanScreen() {
         });
         updateUser(data);
         await finishTransaction({ purchase, isConsumable: false });
+        leavePlanScreen();
       } catch {
         setError(t("plan.errors.verifyFailed"));
       } finally {
@@ -97,6 +109,7 @@ export default function PlanScreen() {
 
   const handleContinue = () => {
     if (user?._id) markPlanIntroSeen(user._id);
+    leavePlanScreen();
   };
 
   return (

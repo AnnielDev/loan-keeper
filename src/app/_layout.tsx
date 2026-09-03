@@ -103,14 +103,17 @@ function RootNavigator() {
         <Stack.Screen name="customer-history" />
         <Stack.Screen name="loan/[id]" />
         <Stack.Screen name="payment-detail" />
-        <Stack.Screen name="plan" options={{ presentation: "modal" }} />
       </Stack.Protected>
 
-      <Stack.Protected guard={isAuthenticated && !isLocked && canAccessApp && showPlanIntro}>
-        <Stack.Screen name="plan" options={{ animation: "fade" }} />
-      </Stack.Protected>
-
-      <Stack.Protected guard={isAuthenticated && !isLocked && canAccessApp && !isEntitled}>
+      {/*
+        A single "plan" registration covers three cases: the forced paywall
+        (not entitled), the one-time trial welcome (showPlanIntro), and a
+        regular pushable screen from Settings once entitled — the guard here
+        can't flip false on its own to trigger the usual Stack.Protected
+        auto-redirect, so plan.tsx navigates away explicitly (back, or
+        replace to tabs) once the user continues or subscribes.
+      */}
+      <Stack.Protected guard={isAuthenticated && !isLocked && canAccessApp}>
         <Stack.Screen name="plan" options={{ animation: "fade" }} />
       </Stack.Protected>
 
