@@ -13,7 +13,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { GoogleSignInButton } from "@/components/general/GoogleSignInButton";
 import { Icon } from "@/components/general/Icon";
 import { LanguageSelector } from "@/components/general/LanguageSelector";
 import { ThemeToggle } from "@/components/general/ThemeToggle";
@@ -73,9 +72,7 @@ export default function SignUp() {
     refetch: refetchCurrencies,
   } = useApiResource(getCurrencies);
   const currencies = currenciesResponse?.data ?? [];
-  const [selectedCurrency, setSelectedCurrency] = useState<string | null>(
-    null,
-  );
+  const [selectedCurrency, setSelectedCurrency] = useState<string | null>(null);
   const [isCurrencyPickerOpen, setIsCurrencyPickerOpen] = useState(false);
   const currencyValue =
     selectedCurrency &&
@@ -129,152 +126,151 @@ export default function SignUp() {
           <View style={styles.form}>
             <Text style={styles.title}>{t("auth.signUp.title")}</Text>
 
-        <View style={styles.field}>
-          <Text style={styles.label}>{t("auth.fields.name")}</Text>
-          <TextInput
-            style={styles.input}
-            value={nameField.value}
-            onChangeText={nameField.setValue}
-            onBlur={nameField.onBlur}
-            autoComplete="name"
-            maxLength={MAX_NAME_LENGTH}
-            placeholder="Juan Pérez"
-            placeholderTextColor={colors.textSecondary}
-          />
-          {nameField.errorKey ? (
-            <Text style={styles.fieldError}>
-              {translate(nameField.errorKey)}
-            </Text>
-          ) : null}
-        </View>
-
-        <View style={styles.field}>
-          <Text style={styles.label}>{t("auth.fields.email")}</Text>
-          <TextInput
-            style={styles.input}
-            value={emailField.value}
-            onChangeText={emailField.setValue}
-            onBlur={emailField.onBlur}
-            autoCapitalize="none"
-            autoComplete="email"
-            keyboardType="email-address"
-            maxLength={MAX_EMAIL_LENGTH}
-            placeholder="you@example.com"
-            placeholderTextColor={colors.textSecondary}
-          />
-          {emailField.errorKey ? (
-            <Text style={styles.fieldError}>
-              {translate(emailField.errorKey)}
-            </Text>
-          ) : null}
-        </View>
-
-        <View style={styles.field}>
-          <Text style={styles.label}>{t("auth.fields.password")}</Text>
-          <View style={styles.passwordWrapper}>
-            <TextInput
-              style={styles.passwordInput}
-              value={passwordField.value}
-              onChangeText={passwordField.setValue}
-              onBlur={passwordField.onBlur}
-              secureTextEntry={!showPassword}
-              autoCapitalize="none"
-              autoComplete="password-new"
-              maxLength={MAX_PASSWORD_LENGTH}
-              placeholder="••••••••"
-              placeholderTextColor={colors.textSecondary}
-            />
-            <TouchableOpacity
-              onPress={() => setShowPassword((prev) => !prev)}
-              hitSlop={8}
-            >
-              <Icon
-                family="Ionicons"
-                name={showPassword ? "eye-off-outline" : "eye-outline"}
-                size={20}
-                color={colors.textSecondary}
+            <View style={styles.field}>
+              <Text style={styles.label}>{t("auth.fields.name")}</Text>
+              <TextInput
+                style={styles.input}
+                value={nameField.value}
+                onChangeText={nameField.setValue}
+                onBlur={nameField.onBlur}
+                autoComplete="name"
+                maxLength={MAX_NAME_LENGTH}
+                placeholder="Juan Pérez"
+                placeholderTextColor={colors.textSecondary}
               />
+              {nameField.errorKey ? (
+                <Text style={styles.fieldError}>
+                  {translate(nameField.errorKey)}
+                </Text>
+              ) : null}
+            </View>
+
+            <View style={styles.field}>
+              <Text style={styles.label}>{t("auth.fields.email")}</Text>
+              <TextInput
+                style={styles.input}
+                value={emailField.value}
+                onChangeText={emailField.setValue}
+                onBlur={emailField.onBlur}
+                autoCapitalize="none"
+                autoComplete="email"
+                keyboardType="email-address"
+                maxLength={MAX_EMAIL_LENGTH}
+                placeholder="you@example.com"
+                placeholderTextColor={colors.textSecondary}
+              />
+              {emailField.errorKey ? (
+                <Text style={styles.fieldError}>
+                  {translate(emailField.errorKey)}
+                </Text>
+              ) : null}
+            </View>
+
+            <View style={styles.field}>
+              <Text style={styles.label}>{t("auth.fields.password")}</Text>
+              <View style={styles.passwordWrapper}>
+                <TextInput
+                  style={styles.passwordInput}
+                  value={passwordField.value}
+                  onChangeText={passwordField.setValue}
+                  onBlur={passwordField.onBlur}
+                  secureTextEntry={!showPassword}
+                  autoCapitalize="none"
+                  autoComplete="password-new"
+                  maxLength={MAX_PASSWORD_LENGTH}
+                  placeholder="••••••••"
+                  placeholderTextColor={colors.textSecondary}
+                />
+                <TouchableOpacity
+                  onPress={() => setShowPassword((prev) => !prev)}
+                  hitSlop={8}
+                >
+                  <Icon
+                    family="Ionicons"
+                    name={showPassword ? "eye-off-outline" : "eye-outline"}
+                    size={20}
+                    color={colors.textSecondary}
+                  />
+                </TouchableOpacity>
+              </View>
+              {passwordField.errorKey ? (
+                <Text style={styles.fieldError}>
+                  {translate(passwordField.errorKey)}
+                </Text>
+              ) : null}
+            </View>
+
+            <View style={styles.field}>
+              <Text style={styles.label}>{t("auth.fields.balance")}</Text>
+              <TextInput
+                style={styles.input}
+                value={balanceField.value}
+                onChangeText={(text) =>
+                  balanceField.setValue(formatMoneyInput(text, i18n.language))
+                }
+                onBlur={balanceField.onBlur}
+                keyboardType="decimal-pad"
+                placeholder="0.00"
+                placeholderTextColor={colors.textSecondary}
+              />
+              {balanceField.errorKey ? (
+                <Text style={styles.fieldError}>
+                  {translate(balanceField.errorKey)}
+                </Text>
+              ) : null}
+            </View>
+
+            <View style={styles.field}>
+              <Text style={styles.label}>{t("auth.fields.currency")}</Text>
+              {isLoadingCurrencies && (
+                <ActivityIndicator size="large" color={colors.primary} />
+              )}
+              {currenciesError && !isLoadingCurrencies && (
+                <TouchableOpacity onPress={refetchCurrencies}>
+                  <Text style={styles.error}>
+                    {t("settings.currency.errors.loadFailed")}
+                  </Text>
+                </TouchableOpacity>
+              )}
+              {!isLoadingCurrencies && !currenciesError && currencyValue && (
+                <Select
+                  options={currencies.map((currency) => ({
+                    label: `${currency.code}  ${currency.symbol}`,
+                    value: currency.code,
+                  }))}
+                  value={currencyValue}
+                  onChange={setSelectedCurrency}
+                  isOpen={isCurrencyPickerOpen}
+                  onOpen={() => setIsCurrencyPickerOpen(true)}
+                  onClose={() => setIsCurrencyPickerOpen(false)}
+                />
+              )}
+            </View>
+
+            {error ? <Text style={styles.error}>{error}</Text> : null}
+
+            <TouchableOpacity
+              style={[styles.button, !canSubmit && styles.buttonDisabled]}
+              onPress={handleSubmit}
+              disabled={!canSubmit}
+            >
+              {isSubmitting ? (
+                <ActivityIndicator color={colors.onPrimary} />
+              ) : (
+                <Text style={styles.buttonLabel}>
+                  {t("auth.signUp.submit")}
+                </Text>
+              )}
             </TouchableOpacity>
-          </View>
-          {passwordField.errorKey ? (
-            <Text style={styles.fieldError}>
-              {translate(passwordField.errorKey)}
-            </Text>
-          ) : null}
-        </View>
 
-        <View style={styles.field}>
-          <Text style={styles.label}>{t("auth.fields.balance")}</Text>
-          <TextInput
-            style={styles.input}
-            value={balanceField.value}
-            onChangeText={(text) =>
-              balanceField.setValue(formatMoneyInput(text, i18n.language))
-            }
-            onBlur={balanceField.onBlur}
-            keyboardType="decimal-pad"
-            placeholder="0.00"
-            placeholderTextColor={colors.textSecondary}
-          />
-          {balanceField.errorKey ? (
-            <Text style={styles.fieldError}>
-              {translate(balanceField.errorKey)}
-            </Text>
-          ) : null}
-        </View>
-
-        <View style={styles.field}>
-          <Text style={styles.label}>{t("auth.fields.currency")}</Text>
-          {isLoadingCurrencies && (
-            <ActivityIndicator size="large" color={colors.primary} />
-          )}
-          {currenciesError && !isLoadingCurrencies && (
-            <TouchableOpacity onPress={refetchCurrencies}>
-              <Text style={styles.error}>
-                {t("settings.currency.errors.loadFailed")}
-              </Text>
+            <TouchableOpacity onPress={() => router.push("/sign-in")}>
+              <Text style={styles.link}>{t("auth.signUp.switchToSignIn")}</Text>
             </TouchableOpacity>
-          )}
-          {!isLoadingCurrencies && !currenciesError && currencyValue && (
-            <Select
-              options={currencies.map((currency) => ({
-                label: `${currency.code}  ${currency.symbol}`,
-                value: currency.code,
-              }))}
-              value={currencyValue}
-              onChange={setSelectedCurrency}
-              isOpen={isCurrencyPickerOpen}
-              onOpen={() => setIsCurrencyPickerOpen(true)}
-              onClose={() => setIsCurrencyPickerOpen(false)}
-            />
-          )}
-        </View>
 
-        {error ? <Text style={styles.error}>{error}</Text> : null}
-
-        <TouchableOpacity
-          style={[styles.button, !canSubmit && styles.buttonDisabled]}
-          onPress={handleSubmit}
-          disabled={!canSubmit}
-        >
-          {isSubmitting ? (
-            <ActivityIndicator color={colors.onPrimary} />
-          ) : (
-            <Text style={styles.buttonLabel}>{t("auth.signUp.submit")}</Text>
-          )}
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => router.push("/sign-in")}>
-          <Text style={styles.link}>{t("auth.signUp.switchToSignIn")}</Text>
-        </TouchableOpacity>
-
-        <Text style={styles.orDivider}>{t("auth.orDivider")}</Text>
-        <GoogleSignInButton onError={setError} />
-
-        <View style={styles.themeToggle}>
-          <ThemeToggle />
-          <LanguageSelector />
-        </View>
+            <View style={styles.themeToggle}>
+              <ThemeToggle />
+              <LanguageSelector />
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -372,12 +368,5 @@ const createStyles = (colors: ThemeColors) =>
       fontSize: 14,
       textAlign: "center",
       marginTop: 12,
-    },
-    orDivider: {
-      color: colors.textSecondary,
-      fontSize: 13,
-      textAlign: "center",
-      marginTop: 16,
-      marginBottom: 4,
     },
   });

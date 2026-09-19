@@ -543,8 +543,6 @@
       "submit": "Sign up",
       "switchToSignIn": "Already have an account? Sign in"
     },
-    "continueWithGoogle": "Continue with Google",
-    "orDivider": "or",
     "forgotPassword": {
       "title": "Reset your password",
       "subtitle": "Enter your email and we'll send you a 6-digit code.",
@@ -589,8 +587,7 @@
       "signedOutApiError": "You were signed out because the server could not be reached.",
       "invalidOrExpiredCode": "That code is invalid or has expired. Try again or request a new one.",
       "resetSessionExpired": "Your session expired. Please start again.",
-      "biometricLoginFailed": "Couldn't sign in with Face ID / fingerprint. Try your password instead.",
-      "googleSignInFailed": "Couldn't sign in with Google. Try again."
+      "biometricLoginFailed": "Couldn't sign in with Face ID / fingerprint. Try your password instead."
     }
   },
   "plan": {

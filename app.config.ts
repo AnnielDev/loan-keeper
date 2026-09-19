@@ -69,7 +69,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
     "expo-sharing",
     "expo-notifications",
-    "@react-native-google-signin/google-signin",
     [
       "expo-media-library",
       {

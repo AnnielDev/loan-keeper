@@ -92,10 +92,6 @@ export type ResetPasswordPayload = {
   password: string;
 };
 
-export type GoogleSignInPayload = {
-  idToken: string;
-};
-
 export type SubscriptionStatusResponse = {
   subscriptionStatus: SubscriptionStatus;
   trialEndsAt: string;

@@ -543,8 +543,6 @@
       "submit": "S'inscrire",
       "switchToSignIn": "Déjà un compte ? Connectez-vous"
     },
-    "continueWithGoogle": "Continuer avec Google",
-    "orDivider": "ou",
     "forgotPassword": {
       "title": "Réinitialisez votre mot de passe",
       "subtitle": "Saisissez votre e-mail et nous vous enverrons un code à 6 chiffres.",
@@ -589,8 +587,7 @@
       "signedOutApiError": "Vous avez été déconnecté car le serveur était injoignable.",
       "invalidOrExpiredCode": "Ce code est invalide ou a expiré. Réessayez ou demandez-en un nouveau.",
       "resetSessionExpired": "Votre session a expiré. Veuillez recommencer.",
-      "biometricLoginFailed": "Impossible de se connecter avec Face ID / empreinte. Essayez votre mot de passe.",
-      "googleSignInFailed": "Impossible de se connecter avec Google. Réessayez."
+      "biometricLoginFailed": "Impossible de se connecter avec Face ID / empreinte. Essayez votre mot de passe."
     }
   },
   "plan": {

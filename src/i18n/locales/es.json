@@ -543,8 +543,6 @@
       "submit": "Registrarse",
       "switchToSignIn": "¿Ya tienes una cuenta? Inicia sesión"
     },
-    "continueWithGoogle": "Continuar con Google",
-    "orDivider": "o",
     "forgotPassword": {
       "title": "Restablece tu contraseña",
       "subtitle": "Ingresa tu correo y te enviaremos un código de 6 dígitos.",
@@ -589,8 +587,7 @@
       "signedOutApiError": "Se cerró tu sesión porque no se pudo contactar al servidor.",
       "invalidOrExpiredCode": "Ese código es inválido o expiró. Intenta de nuevo o solicita uno nuevo.",
       "resetSessionExpired": "Tu sesión expiró. Por favor, comienza de nuevo.",
-      "biometricLoginFailed": "No se pudo iniciar sesión con Face ID / huella. Intenta con tu contraseña.",
-      "googleSignInFailed": "No se pudo iniciar sesión con Google. Intenta de nuevo."
+      "biometricLoginFailed": "No se pudo iniciar sesión con Face ID / huella. Intenta con tu contraseña."
     }
   },
   "plan": {

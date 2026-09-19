@@ -5,7 +5,6 @@ import * as authService from "@/services/auth";
 import { setAuthAccessor } from "@/services/api";
 import { secureAuthStorage } from "@/store/secureAuthStorage";
 import type {
-  GoogleSignInPayload,
   SignInPayload,
   SignUpPayload,
   User,
@@ -19,7 +18,6 @@ type AuthState = {
   isHydrated: boolean;
   isSubmitting: boolean;
   signIn: (payload: SignInPayload) => Promise<void>;
-  signInWithGoogle: (payload: GoogleSignInPayload) => Promise<void>;
   signUp: (payload: SignUpPayload) => Promise<void>;
   verifyEmail: (payload: VerifyEmailPayload) => Promise<void>;
   signOut: () => Promise<void>;
@@ -41,21 +39,6 @@ export const useAuthStore = create<AuthState>()(
         set({ isSubmitting: true });
         try {
           const { data } = await authService.signIn(payload);
-          set({
-            user: data.user,
-            accessToken: data.accessToken,
-            refreshToken: data.refreshToken,
-            isSubmitting: false,
-          });
-        } catch (error) {
-          set({ isSubmitting: false });
-          throw error;
-        }
-      },
-      signInWithGoogle: async (payload) => {
-        set({ isSubmitting: true });
-        try {
-          const { data } = await authService.signInWithGoogle(payload);
           set({
             user: data.user,
             accessToken: data.accessToken,

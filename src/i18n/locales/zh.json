@@ -539,8 +539,6 @@
       "submit": "注册",
       "switchToSignIn": "已经有账户？登录"
     },
-    "continueWithGoogle": "使用 Google 继续",
-    "orDivider": "或",
     "forgotPassword": {
       "title": "重置密码",
       "subtitle": "输入您的邮箱，我们将发送一个6位数验证码。",
@@ -585,8 +583,7 @@
       "signedOutApiError": "由于无法连接服务器，您已被登出。",
       "invalidOrExpiredCode": "验证码无效或已过期。请重试或重新获取。",
       "resetSessionExpired": "您的会话已过期，请重新开始。",
-      "biometricLoginFailed": "无法使用 Face ID / 指纹登录，请改用密码。",
-      "googleSignInFailed": "无法使用 Google 登录，请重试。"
+      "biometricLoginFailed": "无法使用 Face ID / 指纹登录，请改用密码。"
     }
   },
   "plan": {
